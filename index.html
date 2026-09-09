@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consulta DJEN - NEs Trabalhistas</title>
+<style>
+:root{--verde:#2F4F4F;--verde-esc:#203636;--borda:#dddddd;--bg:#f4f6f6;--ok:#1e7b45;--erro:#b3261e;--azul:#34495e}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#333;font-family:"Segoe UI",Georgia,serif;font-size:15px}
+header{background:var(--verde);color:#fff;padding:18px 24px}
+header h1{margin:0;font-size:20px;font-weight:600}
+header p{margin:4px 0 0;font-size:13px;opacity:.85}
+main{max-width:1400px;margin:0 auto;padding:20px}
+.card{background:#fff;border:1px solid var(--borda);border-radius:8px;padding:18px;margin-bottom:18px}
+.card h2{margin:0 0 12px;font-size:16px;color:var(--verde);border-bottom:1px solid var(--borda);padding-bottom:8px}
+.tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.tabs button{background:#fff;border:1px solid var(--borda);border-radius:6px;padding:9px 16px;cursor:pointer;font-size:14px}
+.tabs button.ativo{background:var(--verde);color:#fff;border-color:var(--verde)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+label{display:block;font-size:13px;font-weight:600;margin-bottom:5px}
+input,select,textarea{width:100%;padding:8px 10px;border:1px solid var(--borda);border-radius:6px;font-family:inherit;font-size:14px;background:#fff}
+textarea{min-height:130px;font-family:Consolas,monospace;font-size:13px;resize:vertical}
+.acoes{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.btn{background:var(--verde);color:#fff;border:none;border-radius:6px;padding:10px 18px;cursor:pointer;font-size:14px}
+.btn:hover{background:var(--verde-esc)}
+.btn.sec{background:#fff;color:var(--verde);border:1px solid var(--verde)}
+.btn.azul{background:#3498db}
+.btn.azul:hover{background:#2980b9}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+table{width:100%;border-collapse:collapse;font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:14px}
+.stat{background:#fff;border:1px solid var(--borda);border-left:4px solid var(--verde);border-radius:6px;padding:12px}
+.stat .v{font-size:22px;font-weight:700;color:var(--verde)}
+.stat .r{font-size:12px;color:#666}
+.barra{height:10px;background:#e3e8e8;border-radius:5px;overflow:hidden;margin:10px 0 6px}
+.barra i{display:block;height:100%;background:var(--verde);width:0;transition:width .2s}
+#log{background:#1b2222;color:#c8e6d0;font-family:Consolas,monospace;font-size:12px;padding:12px;border-radius:6px;max-height:240px;overflow:auto;white-space:pre-wrap}
+.pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
+.pill.ok{background:#e2f3e8;color:var(--ok)}
+.pill.zero{background:#eee;color:#666}
+.pill.erro{background:#fbe4e2;color:var(--erro)}
+.oculto{display:none!important}
+.aviso{background:#fff8e5;border:1px solid #f0dca0;border-radius:6px;padding:10px 12px;font-size:13px;margin-bottom:14px}
+.cab-lista{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:5px}
+
+/* ---- DROP ZONE ---- */
+.dropzone{border:2px dashed #b9c6c6;border-radius:8px;padding:12px;background:#fbfdfd;transition:.15s}
+.dropzone.hover{border-color:var(--verde);background:#eef5f3;box-shadow:inset 0 0 0 3px rgba(47,79,79,.08)}
+.dropzone .dica{font-size:12px;color:#777;margin:0 0 8px;display:flex;align-items:center;gap:6px}
+.dropzone.hover .dica{color:var(--verde);font-weight:600}
+#drop-overlay{position:fixed;inset:0;background:rgba(47,79,79,.88);z-index:1000;display:none;justify-content:center;align-items:center;color:#fff;font-size:2em;font-weight:bold;text-align:center;border:4px dashed #fff}
+#drop-overlay.show{display:flex}
+
+/* ---- VISUALIZADOR (VerJSON) ---- */
+.vj-top{display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap;margin-bottom:12px}
+.vj-top .filtro{flex-grow:1;min-width:260px}
+.dropdown{position:relative}
+.dropdown-button{padding:9px 15px;font-size:14px;background:var(--azul);color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:600;white-space:nowrap}
+.dropdown-content{display:none;position:absolute;right:0;background:#f9f9f9;min-width:230px;box-shadow:0 8px 16px rgba(0,0,0,.2);padding:12px 16px;z-index:100;max-height:280px;overflow-y:auto;border-radius:6px}
+.dropdown-content.show{display:block}
+.dropdown-content label{display:block;font-size:13px;padding:4px 0;font-weight:400}
+#vj-wrap{border:1px solid #ddd;background:#fff;max-height:65vh;overflow:auto}
+#vj-tabela thead th{position:sticky;top:0;background:var(--azul);color:#fff;z-index:10;padding:11px 14px;text-align:left}
+#vj-tabela th,#vj-tabela td{padding:11px 14px;border:1px solid #ddd;text-align:left;vertical-align:top}
+#vj-tabela input[type=checkbox]{width:auto;transform:scale(1.3);margin-right:12px;cursor:pointer}
+.standard-row:nth-of-type(even){background:#f8f9fa}
+.standard-row:hover{background:#e9ecef}
+.process-group-header td{background:#e8ecef;font-weight:bold;font-size:1.05em;cursor:pointer;border-top:3px solid #2c3e50;user-select:none}
+.process-group-header:hover td{background:#d1d8e0}
+.toggle-icon{display:inline-block;transition:transform .3s;margin-right:10px;font-size:.9em}
+.process-group-header.open .toggle-icon{transform:rotate(90deg)}
+.process-header-content{display:flex;justify-content:space-between;align-items:center}
+.process-title-area{display:flex;align-items:center}
+.note-badge{background:#3498db;color:#fff;border-radius:12px;padding:2px 8px;font-size:.75em;margin-left:10px}
+.process-note-row{display:none}
+.process-group-header.open ~ .process-note-row{display:table-row}
+.process-note-row:nth-of-type(even){background:#f9fbfd}
+.row-strikethrough td,.row-strikethrough .process-header-content{text-decoration:line-through;color:#95a5a6}
+.row-strikethrough{background:#f4f4f4!important}
+.tribunal-alert-orange{color:#d66c15;font-weight:bold}
+.tribunal-alert-red{color:#e74c3c;font-weight:bold}
+mark{background:#ff0;padding:.2em}
+#vj-tabela td pre{margin:0;font-family:inherit;white-space:pre-wrap;font-size:12px}
+#vj-status{text-align:center;font-size:13px;color:#333;margin:0 0 12px}
+</style>
+</head>
+<body>
+<div id="drop-overlay"><div>Solte o arquivo aqui</div></div>
+
+<header>
+  <h1>Consulta DJEN — NEs Trabalhistas</h1>
+  <p>Réplica web dos fluxos PAD: busca por Parte (texto) e Lista de Processos Monitorados — API Comunica PJe</p>
+</header>
+
+<main>
+  <div class="aviso">
+    <b>CORS:</b> se a chamada direta for bloqueada pelo navegador, selecione um proxy nas Configurações.
+    Todo o processamento é local.
+  </div>
+
+  <div class="tabs">
+    <button id="tab-partes" class="ativo" onclick="mudarAba('partes')">Busca por Parte (texto)</button>
+    <button id="tab-processos" onclick="mudarAba('processos')">Lista de Monitorados</button>
+    <button id="tab-visualizar" onclick="mudarAba('visualizar')">Visualizar resultados</button>
+    <button id="tab-tribunais" onclick="mudarAba('tribunais')">Último envio dos Tribunais</button>
+  </div>
+
+  <!-- ============ PARTES ============ -->
+  <section id="aba-partes">
+    <div class="card">
+      <h2>Parâmetros da busca por texto</h2>
+      <div class="grid">
+        <div><label>Data de disponibilização</label><input type="date" id="p-data"></div>
+        <div><label>Itens por página</label><input type="number" id="p-itens" value="100" min="10" max="100"></div>
+        <div><label>Pausa entre requisições (ms)</label><input type="number" id="p-pausa" value="2000" min="0" step="500"></div>
+        <div><label>Máx. tentativas</label><input type="number" id="p-tentativas" value="3" min="1" max="10"></div>
+      </div>
+      <div style="margin-top:14px">
+        <label>Partes monitoradas (uma por linha)</label>
+        <textarea id="p-partes">&lt;br&gt; - COMPANHIA ESTADUAL DE ENERGIA ELETRICA PARTICIPACOES - CEEE-PAR
+CEEE-PAR</textarea>
+        <p style="font-size:12px;color:#777;margin:6px 0 0">O prefixo <code>&lt;br&gt; - </code> é enviado literalmente à API, como no fluxo PAD, e vira <code>_</code> no nome do arquivo.</p>
+      </div>
+      <div class="acoes">
+        <button class="btn" id="p-btn" onclick="buscarPartes()">Executar busca</button>
+        <button class="btn sec" onclick="baixarJSON()">Baixar JSON (formato PAD)</button>
+        <button class="btn azul" onclick="abrirVisualizador()">Ver resultados</button>
+        <button class="btn azul" onclick="abrirVerJSON()">Abrir no VerJSON ↗</button>
+        <button class="btn sec" onclick="baixarCSV()">Baixar CSV</button>
+        <button class="btn sec" onclick="copiarResumoHTML()">Copiar resumo (HTML e-mail)</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MONITORADOS ============ -->
+  <section id="aba-processos" class="oculto">
+    <div class="card">
+      <h2>Parâmetros da busca por número de processo</h2>
+      <div class="grid">
+        <div><label>Data de disponibilização</label><input type="date" id="m-data"></div>
+        <div><label>Máx. tentativas por processo</label><input type="number" id="m-tentativas" value="5" min="1" max="15"></div>
+        <div><label>Pausa entre processos (ms)</label><input type="number" id="m-pausa" value="1200" min="0" step="100"></div>
+        <div><label>Espera após HTTP 429 (s)</label><input type="number" id="m-429" value="30" min="5"></div>
+      </div>
+
+      <div style="margin-top:16px">
+        <div class="cab-lista">
+          <label style="margin:0">Lista de monitorados — <span id="m-fonte" style="font-weight:400;color:#666">carregando listaMonitoradosPTRAB.txt...</span></label>
+          <span id="m-qtd" class="pill zero">0 processos</span>
+        </div>
+        <div id="m-drop" class="dropzone">
+          <p class="dica">📄 Arraste e solte aqui o arquivo <b>listaMonitoradosPTRAB.txt</b> (ou qualquer .txt/.csv com os números) — também aceita texto colado.</p>
+          <textarea id="m-processos" placeholder="Baixando a lista do OneDrive..."></textarea>
+        </div>
+        <div id="m-erro-lista" class="aviso oculto" style="margin-top:10px">
+          <b>Não foi possível baixar a lista automaticamente.</b>
+          O SharePoint exige sessão autenticada e bloqueia leitura por script. Use <i>Abrir no OneDrive</i>,
+          baixe o arquivo e arraste-o para a área acima — ou ative um proxy nas Configurações.
+        </div>
+      </div>
+
+      <div class="acoes">
+        <button class="btn" id="m-btn" onclick="buscarProcessos()">Executar busca</button>
+        <button class="btn sec" onclick="carregarListaMonitorados(true)">Recarregar lista</button>
+        <button class="btn sec" onclick="window.open(LINK_COMPARTILHADO,'_blank')">Abrir no OneDrive</button>
+        <button class="btn sec" onclick="window.open(LINK_POWERAPPS,'_blank')">Atualizar lista (Power Apps)</button>
+        <button class="btn sec" onclick="document.getElementById('m-file').click()">Carregar .txt</button>
+        <input type="file" id="m-file" accept=".txt,.csv" class="oculto" onchange="carregarTxt(event)">
+        <button class="btn sec" onclick="pararExecucao()">Parar</button>
+        <button class="btn sec" onclick="baixarJSON()">Baixar JSON (formato PAD)</button>
+        <button class="btn azul" onclick="abrirVisualizador()">Ver resultados</button>
+        <button class="btn azul" onclick="abrirVerJSON()">Abrir no VerJSON ↗</button>
+        <button class="btn sec" onclick="baixarCSV()">Baixar CSV</button>
+        <button class="btn sec" onclick="baixarLog()">Baixar log</button>
+        <button class="btn sec" onclick="copiarResumoHTML()">Copiar resumo (HTML e-mail)</button>
+      </div>
+      <div class="barra"><i id="m-barra"></i></div>
+      <div id="m-progresso" style="font-size:12px;color:#666"></div>
+    </div>
+  </section>
+
+  <!-- ============ VISUALIZADOR ============ -->
+  <section id="aba-visualizar" class="oculto">
+    <div class="card">
+      <h2>Visualizador — mesmo comportamento do VerJSON</h2>
+      <p id="vj-status">Aguardando resultados...</p>
+      <div class="vj-top">
+        <div class="filtro">
+          <label>Filtrar coluna 'texto' (use '&' para E, '|' para OU)</label>
+          <input type="text" id="vj-filtro" placeholder="Digite os termos do filtro aqui...">
+        </div>
+        <div class="dropdown">
+          <button id="vj-col-btn" class="dropdown-button">Escolher Colunas</button>
+          <div id="vj-col-cont" class="dropdown-content"></div>
+        </div>
+        <div>
+          <select id="vj-modo" class="dropdown-button" style="padding-right:30px">
+            <option value="accordion" selected>Modo Sanfona</option>
+            <option value="concat">Modo Compacto (Textos Unidos)</option>
+            <option value="flat">Modo Clássico (Linhas Soltas)</option>
+          </select>
+        </div>
+        <div><button class="btn sec" onclick="document.getElementById('vj-file').click()">Abrir JSON salvo</button>
+          <input type="file" id="vj-file" accept=".json,.txt" class="oculto" onchange="carregarJSONExterno(event)"></div>
+      </div>
+      <div id="vj-wrap"><table id="vj-tabela"><thead></thead></table></div>
+    </div>
+  </section>
+
+  <!-- ============ TRIBUNAIS ============ -->
+  <section id="aba-tribunais" class="oculto">
+    <div class="card">
+      <h2>Data do último envio por tribunal</h2>
+      <button class="btn" onclick="buscarTribunais()">Consultar tribunais</button>
+      <div id="t-saida" style="margin-top:16px"></div>
+    </div>
+  </section>
+
+  <!-- ============ CONFIG ============ -->
+  <div class="card">
+    <h2>Configurações</h2>
+    <div class="grid">
+      <div><label>Endpoint base (DJEN)</label><input id="c-base" value="https://comunicaapi.pje.jus.br/api/v1/comunicacao"></div>
+      <div><label>Proxy CORS</label>
+        <select id="c-proxy">
+          <option value="">Não usar (direto)</option>
+          <option value="https://corsproxy.io/?">corsproxy.io</option>
+          <option value="https://api.allorigins.win/raw?url=">allorigins.win</option>
+        </select>
+      </div>
+      <div><label>Timeout por requisição (s)</label><input type="number" id="c-timeout" value="30" min="5"></div>
+      <div><label>Carregar lista ao abrir</label><select id="c-autoload"><option value="1">Sim</option><option value="0">Não</option></select></div>
+    </div>
+    <div style="margin-top:14px">
+      <label>URL do listaMonitoradosPTRAB.txt (download direto)</label>
+      <input id="c-url-lista">
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Log de execução</h2>
+    <div id="log">Aguardando execução...</div>
+  </div>
+</main>
+
+<script>
+/* ================== LINKS DO FLUXO PAD ================== */
+const URL_LISTA_DOWNLOAD = "https://rsgovbr-my.sharepoint.com/personal/paulo-oliveira_pge_rs_gov_br/_layouts/15/download.aspx?SourceUrl=%2Fpersonal%2Fpaulo%2Doliveira%5Fpge%5Frs%5Fgov%5Fbr%2FDocuments%2FlistaMonitoradosPTRAB%2Etxt";
+const LINK_COMPARTILHADO  = "https://rsgovbr-my.sharepoint.com/:t:/g/personal/paulo-oliveira_pge_rs_gov_br/EVbAqAOHUjBEkIQhrasvAFYBuYEXkhX13BWWAE7fvR1A6A?e=ytdPSu";
+const LINK_POWERAPPS      = "https://apps.powerapps.com/play/e/default-15dcd909-8dc0-40e9-a1e5-cecb053cdd1a/a/9153e8a8-a9c5-46aa-9d6f-068396531413?tenantId=15dcd909-8dc0-40e9-a1e5-cecb053cdd1a";
+const URL_VERJSON         = "https://rfopaulo.github.io/VerJSON/";
+
+/* ================== ESTADO ================== */
+let ESTADO = {modo:'partes', bruto:[], resumo:{}, log:[], parar:false, inicio:null};
+const $ = id => document.getElementById(id);
+const espera = ms => new Promise(r => setTimeout(r, ms));
+
+function logar(txt){
+  const linha = `[${new Date().toLocaleTimeString('pt-BR')}] ${txt}`;
+  ESTADO.log.push(linha);
+  const el = $('log');
+  if(el.textContent.startsWith('Aguardando')) el.textContent = '';
+  el.textContent += linha + '\n'; el.scrollTop = el.scrollHeight;
+}
+function hoje(){ return new Date().toISOString().slice(0,10); }
+function brData(iso){ const [a,m,d]=iso.split('-'); return `${d}/${m}/${a}`; }
+function arqData(iso){ const [a,m,d]=iso.split('-'); return `${d}-${m}-${a}`; }
+function escapar(s){ return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+function mudarAba(nome){
+  ['partes','processos','visualizar','tribunais'].forEach(n=>{
+    $('aba-'+n).classList.toggle('oculto', n!==nome);
+    $('tab-'+n).classList.toggle('ativo', n===nome);
+  });
+  if(nome!=='visualizar') ESTADO.modo = nome==='tribunais' ? ESTADO.modo : nome;
+}
+
+function montarURL(params){
+  const base = $('c-base').value.trim();
+  const alvo = `${base}?${new URLSearchParams(params).toString()}`;
+  const proxy = $('c-proxy').value;
+  return proxy ? proxy + encodeURIComponent(alvo) : alvo;
+}
+
+/* ================== LISTA DE MONITORADOS ================== */
+function normalizarLista(txt){
+  return txt.replace(/^\uFEFF/,'').split(/[\r\n,;]+/).map(s=>s.trim())
+    .filter(s=>/^\d{7}-\d{2}\.\d{4}\.\d\.\d{2}\.\d{4}$/.test(s));
+}
+function aplicarLista(processos, fonte){
+  $('m-processos').value = processos.join('\n');
+  $('m-qtd').textContent = `${processos.length} processos`;
+  $('m-qtd').className = 'pill ' + (processos.length?'ok':'zero');
+  $('m-fonte').textContent = fonte;
+  $('m-erro-lista').classList.toggle('oculto', processos.length>0);
+}
+async function tentarBaixar(url, credenciais){
+  const ctrl = new AbortController();
+  const t = setTimeout(()=>ctrl.abort(), (+$('c-timeout').value||30)*1000);
+  try{
+    const r = await fetch(url,{signal:ctrl.signal, credentials:credenciais?'include':'omit', headers:{'Accept':'text/plain'}});
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    return await r.text();
+  } finally { clearTimeout(t); }
+}
+async function carregarListaMonitorados(manual){
+  const urlBase = $('c-url-lista').value.trim() || URL_LISTA_DOWNLOAD;
+  $('m-fonte').textContent = 'baixando listaMonitoradosPTRAB.txt...';
+  logar('Baixando lista de monitorados do OneDrive...');
+  const tentativas = [
+    {url:urlBase, cred:true, nome:'OneDrive (sessão autenticada)'},
+    {url:LINK_COMPARTILHADO+'&download=1', cred:true, nome:'link compartilhado'}
+  ];
+  const proxy = $('c-proxy').value;
+  if(proxy) tentativas.push({url:proxy+encodeURIComponent(urlBase), cred:false, nome:'proxy CORS'});
+  for(const t of tentativas){
+    try{
+      const procs = normalizarLista(await tentarBaixar(t.url, t.cred));
+      if(!procs.length) throw new Error('arquivo sem números de processo válidos');
+      aplicarLista(procs, `${procs.length} processos via ${t.nome} — ${new Date().toLocaleString('pt-BR')}`);
+      logar(`Lista carregada: ${procs.length} processo(s) via ${t.nome}.`);
+      try{ localStorage.setItem('djen_lista', JSON.stringify({procs, quando:Date.now()})); }catch(e){}
+      return true;
+    }catch(e){ logar(`  Falha via ${t.nome}: ${e.message}`); }
+  }
+  try{
+    const c = JSON.parse(localStorage.getItem('djen_lista')||'null');
+    if(c && c.procs && c.procs.length){
+      aplicarLista(c.procs, `${c.procs.length} processos do cache local — ${new Date(c.quando).toLocaleString('pt-BR')}`);
+      logar(`Usando cache local (${c.procs.length} processos).`);
+      $('m-erro-lista').classList.remove('oculto'); return true;
+    }
+  }catch(e){}
+  aplicarLista([], 'falha no download automático');
+  $('m-erro-lista').classList.remove('oculto');
+  if(manual) alert('Não foi possível baixar a lista. Arraste o .txt para a área indicada ou use um proxy.');
+  return false;
+}
+function processarArquivoLista(file){
+  if(!file) return;
+  const fr = new FileReader();
+  fr.onload = e => {
+    const procs = normalizarLista(e.target.result);
+    if(!procs.length){ alert(`Nenhum número de processo válido encontrado em ${file.name}.`); return; }
+    aplicarLista(procs, `${procs.length} processos do arquivo ${file.name}`);
+    try{ localStorage.setItem('djen_lista', JSON.stringify({procs, quando:Date.now()})); }catch(err){}
+    logar(`Lista carregada de ${file.name}: ${procs.length} processo(s).`);
+    mudarAba('processos');
+  };
+  fr.readAsText(file, 'UTF-8');
+}
+function carregarTxt(ev){ processarArquivoLista(ev.target.files[0]); ev.target.value=''; }
+
+/* ---- DRAG & DROP (área da lista + janela inteira) ---- */
+(function(){
+  const zona = () => $('m-drop');
+  ['dragenter','dragover','dragleave','drop'].forEach(ev =>
+    document.body.addEventListener(ev, e => { e.preventDefault(); e.stopPropagation(); }));
+  let contador = 0;
+  document.body.addEventListener('dragenter', ()=>{ contador++; $('drop-overlay').classList.add('show'); });
+  document.body.addEventListener('dragleave', ()=>{ contador--; if(contador<=0){contador=0; $('drop-overlay').classList.remove('show');} });
+  document.body.addEventListener('drop', e => {
+    contador = 0; $('drop-overlay').classList.remove('show'); zona().classList.remove('hover');
+    const f = e.dataTransfer.files[0]; if(!f) return;
+    if(/\.json$/i.test(f.name)) carregarJSONArquivo(f);
+    else processarArquivoLista(f);
+  });
+  document.addEventListener('DOMContentLoaded', ()=>{
+    const z = zona();
+    z.addEventListener('dragover', ()=> z.classList.add('hover'));
+    z.addEventListener('dragleave', ()=> z.classList.remove('hover'));
+  });
+})();
+
+/* ================== REQUISIÇÃO ================== */
+async function requisitar(url, maxTent, espera429){
+  let tentativa = 0;
+  while(tentativa < maxTent){
+    if(ESTADO.parar) throw new Error('Execução interrompida pelo usuário');
+    tentativa++;
+    const ctrl = new AbortController();
+    const t = setTimeout(()=>ctrl.abort(), (+$('c-timeout').value||30)*1000);
+    try{
+      const r = await fetch(url,{signal:ctrl.signal, headers:{'Accept':'application/json'}});
+      clearTimeout(t);
+      if(r.status===200) return await r.json();
+      if(r.status===429){ logar(`  HTTP 429 — aguardando ${espera429}s (tentativa ${tentativa}/${maxTent})`); await espera(espera429*1000); continue; }
+      logar(`  StatusCode ${r.status} — tentativa ${tentativa}/${maxTent}`);
+      await espera(1000*tentativa);
+    }catch(e){
+      clearTimeout(t);
+      logar(`  Erro: ${e.message} — tentativa ${tentativa}/${maxTent}`);
+      await espera(1000*tentativa);
+    }
+  }
+  throw new Error(`Número máximo de tentativas (${maxTent}) atingido`);
+}
+
+/* ================== FLUXO 1: PARTES ================== */
+async function buscarPartes(){
+  const data = $('p-data').value || hoje();
+  const itensPorPagina = +$('p-itens').value || 100;
+  const maxTent = +$('p-tentativas').value || 3;
+  const pausa = +$('p-pausa').value || 0;
+  const partes = $('p-partes').value.split('\n').map(s=>s.trim()).filter(Boolean);
+  if(!partes.length){ alert('Informe ao menos uma parte.'); return; }
+
+  ESTADO = {modo:'partes', bruto:[], resumo:{}, log:[], parar:false, inicio:Date.now()};
+  $('log').textContent=''; $('p-btn').disabled = true;
+  logar(`Início — data ${brData(data)} — ${partes.length} filtro(s)`);
+
+  try{
+    for(const parte of partes){
+      if(ESTADO.parar) break;
+      logar(`Filtro: ${parte}`);
+      const p1 = await requisitar(montarURL({texto:parte, dataDisponibilizacaoInicio:data,
+        dataDisponibilizacaoFim:data, pagina:1, itensPorPagina}), maxTent, 30);
+      const total = p1.count || 0;
+      let itens = p1.items || [];
+      logar(`  count = ${total}`);
+      if(total > itensPorPagina){
+        const paginas = Math.ceil(total/itensPorPagina);
+        for(let pg=2; pg<=paginas; pg++){
+          if(ESTADO.parar) break;
+          logar(`  página ${pg}/${paginas}`);
+          const r = await requisitar(montarURL({texto:parte, dataDisponibilizacaoInicio:data,
+            dataDisponibilizacaoFim:data, pagina:pg, itensPorPagina}), maxTent, 30);
+          itens = itens.concat(r.items||[]);
+          if(pausa) await espera(pausa);
+        }
+      }
+      /* objeto no mesmo formato do PAD: resposta completa com items consolidados */
+      const objeto = {...p1, items: itens};
+      ESTADO.bruto.push({filtro: parte, objeto});
+      if(pausa) await espera(pausa);
+    }
+  }catch(e){ logar(`ERRO FATAL: ${e.message}`); alert('Busca interrompida: '+e.message); }
+
+  ESTADO.resumo = {data, tipo:'partes',
+    filtros: ESTADO.bruto.map(b=>({nome:b.filtro, registros:b.objeto.count||0})),
+    totalRegistros: ESTADO.bruto.reduce((s,b)=>s+(b.objeto.count||0),0), tempo: tempoExec()};
+  $('p-btn').disabled = false;
+  logar(`Fim — ${ESTADO.resumo.totalRegistros} registro(s) em ${ESTADO.resumo.tempo}`);
+  carregarNoVisualizador();
+}
+
+/* ================== FLUXO 2: MONITORADOS ================== */
+async function buscarProcessos(){
+  const data = $('m-data').value || hoje();
+  const maxTent = +$('m-tentativas').value || 5;
+  const pausa = +$('m-pausa').value || 0;
+  const esp429 = +$('m-429').value || 30;
+  let lista = normalizarLista($('m-processos').value);
+  if(!lista.length){
+    logar('Lista vazia — tentando baixar do OneDrive...');
+    await carregarListaMonitorados(false);
+    lista = normalizarLista($('m-processos').value);
+    if(!lista.length){ alert('Não há processos na lista de monitorados.'); return; }
+  }
+
+  ESTADO = {modo:'processos', bruto:[], resumo:{}, log:[], parar:false, inicio:Date.now()};
+  $('log').textContent=''; $('m-btn').disabled = true;
+  logar(`Início — data ${brData(data)} — ${lista.length} processo(s)`);
+
+  let comRegistro = 0, totalNEs = 0; const positivos = [];
+  for(let i=0;i<lista.length;i++){
+    if(ESTADO.parar){ logar('Execução interrompida.'); break; }
+    const proc = lista[i];
+    logar(`${i+1}º processo — ${proc}`);
+    $('m-barra').style.width = (i/lista.length*100).toFixed(1)+'%';
+    $('m-progresso').textContent = `${i} de ${lista.length} processados — ${totalNEs} NE(s) em ${comRegistro} processo(s)`;
+    try{
+      const r = await requisitar(montarURL({numeroProcesso:proc,
+        dataDisponibilizacaoInicio:data, dataDisponibilizacaoFim:data}), maxTent, esp429);
+      /* par [processo, objeto] — mesma estrutura de resultado_prov do PAD */
+      ESTADO.bruto.push([proc, r]);
+      const c = r.count || 0;
+      logar(`  count = ${c}`);
+      if(c>0){ comRegistro++; totalNEs += c; positivos.push(proc); }
+    }catch(e){
+      logar(`  FALHA: ${e.message}`);
+      ESTADO.bruto.push([proc, {status:'erro', message:e.message, count:0, items:[]}]);
+    }
+    if(pausa) await espera(pausa);
+  }
+  $('m-barra').style.width='100%';
+  $('m-progresso').textContent = `${lista.length} de ${lista.length} processados`;
+  ESTADO.resumo = {data, tipo:'processos', pesquisados:lista.length, totalRegistros:totalNEs,
+    processosComRegistro:comRegistro, positivos, tempo:tempoExec()};
+  $('m-btn').disabled = false;
+  logar(`Fim — ${totalNEs} NE(s) em ${comRegistro} processo(s) — ${ESTADO.resumo.tempo}`);
+  carregarNoVisualizador();
+}
+function pararExecucao(){ ESTADO.parar = true; logar('Solicitada parada...'); }
+function tempoExec(){ const s = Math.round((Date.now()-ESTADO.inicio)/1000); return `${Math.floor(s/60)} min e ${s%60} seg`; }
+
+/* ================== GERAÇÃO DO ARQUIVO NO FORMATO DO PAD ================== */
+/* Monitorados: cada bloco = linha com o nº do processo + linha com o JSON da resposta
+   (equivale a resultado_prov = [processo, objeto] escrito por File.WriteText).
+   Partes: o arquivo é o próprio objeto da resposta (count + items). */
+function gerarConteudoPAD(){
+  if(ESTADO.modo === 'processos'){
+    return ESTADO.bruto.map(([proc, obj]) => `${proc}\n${JSON.stringify(obj)}`).join('\n');
+  }
+  return ESTADO.bruto.map(b => JSON.stringify(b.objeto)).join('\n');
+}
+function nomeArquivoPAD(indice){
+  const r = ESTADO.resumo;
+  if(r.tipo === 'processos'){
+    let n = `TODOS_monitorados_${arqData(r.data)}`;
+    if(r.processosComRegistro>0) n += `_POSITIVO_[${r.totalRegistros}NEs][${r.processosComRegistro}Procs]`;
+    return n + '.json';
+  }
+  const b = ESTADO.bruto[indice||0];
+  const replaced = b.filtro.replace(/<br> - /g,'_');
+  return `[${arqData(r.data)}] (Filtro)${replaced} [${b.objeto.count||0}-Registros].json`.replace(/[\\/:*?"<>|]/g,'_');
+}
+
+/* ================== VISUALIZADOR (lógica do VerJSON) ================== */
+let VJ = {itens:[], agrupado:new Map(), arquivo:'', contagem:0, modo:'accordion',
+          marcadosProc:new Set(), marcadosFlat:new Set()};
+
+function carregarNoVisualizador(){
+  const itens = [];
+  let contagem = 0;
+  if(ESTADO.modo === 'processos'){
+    ESTADO.bruto.forEach(([proc, obj]) => {
+      contagem += obj.count || 0;
+      (obj.items||[]).forEach(it => itens.push({...it, numero_processo_principal: proc}));
+    });
+    VJ.arquivo = nomeArquivoPAD();
+  }else{
+    ESTADO.bruto.forEach(b => {
+      contagem += b.objeto.count || 0;
+      (b.objeto.items||[]).forEach(it => itens.push({...it, filtro_origem: b.filtro}));
+    });
+    VJ.arquivo = ESTADO.bruto.length ? nomeArquivoPAD(0) : '';
+  }
+  VJ.itens = itens; VJ.contagem = contagem;
+  VJ.marcadosProc.clear(); VJ.marcadosFlat.clear();
+  $('vj-filtro').value = '';
+  agruparVJ(); montarSeletorColunas(); renderVJ(); 
+}
+function abrirVisualizador(){
+  if(!VJ.itens.length && !ESTADO.bruto.length){ alert('Execute uma busca antes.'); return; }
+  mudarAba('visualizar');
+}
+function agruparVJ(){
+  VJ.agrupado = new Map();
+  VJ.itens.forEach(item => {
+    const k = item.numeroprocessocommascara || item.numero_processo_principal || 'Sem Número';
+    if(!VJ.agrupado.has(k)) VJ.agrupado.set(k, []);
+    VJ.agrupado.get(k).push(item);
+  });
+}
+function montarSeletorColunas(){
+  const cont = $('vj-col-cont'); cont.innerHTML = '';
+  if(!VJ.itens.length) return;
+  const chaves = new Set();
+  VJ.itens.forEach(i => Object.keys(i).forEach(k => chaves.add(k)));
+  const padrao = ["siglaTribunal","nomeOrgao","texto","nomeClasse","numeroprocessocommascara"];
+  Array.from(chaves).forEach(k => {
+    const lb = document.createElement('label');
+    const cb = document.createElement('input');
+    cb.type='checkbox'; cb.value=k; cb.checked = padrao.includes(k);
+    cb.style.width='auto'; cb.style.transform='scale(1.2)'; cb.style.marginRight='8px';
+    cb.addEventListener('change', renderVJ);
+    lb.appendChild(cb); lb.appendChild(document.createTextNode(' '+k));
+    cont.appendChild(lb);
+  });
+}
+function escapeRegExp(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
+function realcar(txt, termos){
+  if(!termos.length || !txt) return txt;
+  return txt.replace(new RegExp(`(${termos.map(escapeRegExp).join('|')})`,'gi'), '<mark>$1</mark>');
+}
+function passaFiltro(item, q){
+  if(!q) return true;
+  const t = (item.texto||'').toLowerCase();
+  return q.split('|').map(s=>s.trim()).some(grupo => {
+    const e = grupo.split('&').map(s=>s.trim()).filter(Boolean);
+    if(!e.length) return t.includes(grupo);
+    return e.every(x => t.includes(x));
+  });
+}
+function renderVJ(){
+  const tabela = $('vj-tabela');
+  tabela.innerHTML = '<thead></thead>';
+  const thead = tabela.querySelector('thead');
+  const cols = Array.from(document.querySelectorAll('#vj-col-cont input:checked')).map(c=>c.value);
+  const tr = thead.insertRow();
+  if(VJ.modo==='flat'){ ['Nº','Riscar'].forEach(t=>{const th=document.createElement('th');th.textContent=t;tr.appendChild(th);}); }
+  cols.forEach(t=>{ const th=document.createElement('th'); th.textContent=t; tr.appendChild(th); });
+
+  const q = $('vj-filtro').value.trim().toLowerCase();
+  const termos = q ? [...new Set(q.split(/[&|]/).map(s=>s.trim()).filter(Boolean))] : [];
+  if(!VJ.itens.length){
+    const tb = tabela.createTBody();
+    tb.innerHTML = `<tr><td colspan="${Math.max(cols.length,1)}" style="text-align:center;color:#888;padding:30px">Nenhum registro carregado.</td></tr>`;
+    $('vj-status').textContent = 'Aguardando resultados...';
+    return;
+  }
+  if(VJ.modo==='accordion') vjSanfona(tabela, cols, q, termos);
+  else if(VJ.modo==='concat') vjCompacto(tabela, cols, q, termos);
+  else vjClassico(tabela, cols, q, termos);
+}
+function vjSanfona(tabela, cols, q, termos){
+  let notas=0, procs=0;
+  VJ.agrupado.forEach((lista, numero) => {
+    const filtradas = lista.filter(i => passaFiltro(i,q));
+    if(!filtradas.length) return;
+    procs++; notas += filtradas.length;
+    const tbody = document.createElement('tbody'); tabela.appendChild(tbody);
+    const trH = document.createElement('tr'); trH.className='process-group-header';
+    if(q) trH.classList.add('open');
+    const td = document.createElement('td'); td.colSpan = Math.max(cols.length,1);
+    const cont = document.createElement('div'); cont.className='process-header-content';
+    const area = document.createElement('div'); area.className='process-title-area';
+    area.innerHTML = `<span class="toggle-icon">▶</span><span>Processo ${numero}</span><span class="note-badge">${filtradas.length} nota${filtradas.length>1?'s':''}</span>`;
+    const cb = document.createElement('input'); cb.type='checkbox'; cb.title='Marcar como resolvido/riscar';
+    cb.addEventListener('click', e=>e.stopPropagation());
+    cb.addEventListener('change', e=>{
+      const on = e.target.checked;
+      on ? VJ.marcadosProc.add(numero) : VJ.marcadosProc.delete(numero);
+      trH.classList.toggle('row-strikethrough', on);
+      tbody.querySelectorAll('.process-note-row').forEach(r=>r.classList.toggle('row-strikethrough', on));
+    });
+    cont.appendChild(area); cont.appendChild(cb); td.appendChild(cont); trH.appendChild(td); tbody.appendChild(trH);
+    trH.addEventListener('click', ()=> trH.classList.toggle('open'));
+    const marcado = VJ.marcadosProc.has(numero);
+    if(marcado){ cb.checked = true; trH.classList.add('row-strikethrough'); }
+    filtradas.forEach(item => {
+      const row = document.createElement('tr'); row.className='process-note-row';
+      if(marcado) row.classList.add('row-strikethrough');
+      cols.forEach(c => { const t=document.createElement('td'); t.appendChild(celula(item,c,termos)); row.appendChild(t); });
+      tbody.appendChild(row);
+    });
+  });
+  status(`<b>Origem:</b> ${VJ.arquivo||'busca atual'} | <b>Processos:</b> ${procs} | <b>Notas Exibidas:</b> ${notas} | <b>Contagem Oficial:</b> ${VJ.contagem}`);
+}
+function vjCompacto(tabela, cols, q, termos){
+  const tbody = document.createElement('tbody'); tabela.appendChild(tbody);
+  const mapa = new Map();
+  VJ.itens.forEach(item => {
+    const k = item.numeroprocessocommascara || item.numero_processo_principal || 'Sem Número';
+    if(!mapa.has(k)) mapa.set(k, JSON.parse(JSON.stringify(item)));
+    else{
+      const ex = mapa.get(k);
+      if(item.texto) ex.texto = (ex.texto||'') + '<br><hr style="border-top:2px dashed #bbb;"><br>' + item.texto;
+      if(Array.isArray(item.destinatarios)) ex.destinatarios = (ex.destinatarios||[]).concat(item.destinatarios);
+      if(Array.isArray(item.destinatarioadvogados)) ex.destinatarioadvogados = (ex.destinatarioadvogados||[]).concat(item.destinatarioadvogados);
+    }
+  });
+  let visiveis = 0;
+  Array.from(mapa.values()).forEach(item => {
+    if(!passaFiltro(item,q)) return;
+    visiveis++;
+    const numero = item.numeroprocessocommascara || item.numero_processo_principal || 'Sem Número';
+    const row = document.createElement('tr'); row.className='standard-row';
+    const cb = document.createElement('input'); cb.type='checkbox'; cb.style.cssFloat='right';
+    cb.addEventListener('change', e=>{
+      row.classList.toggle('row-strikethrough', e.target.checked);
+      e.target.checked ? VJ.marcadosProc.add(numero) : VJ.marcadosProc.delete(numero);
+    });
+    if(VJ.marcadosProc.has(numero)){ cb.checked=true; row.classList.add('row-strikethrough'); }
+    cols.forEach((c,idx)=>{
+      const td=document.createElement('td'); td.appendChild(celula(item,c,termos));
+      if(idx===0) td.insertBefore(cb, td.firstChild);
+      row.appendChild(td);
+    });
+    tbody.appendChild(row);
+  });
+  status(`<b>Origem:</b> ${VJ.arquivo||'busca atual'} | <b>Processos Exibidos:</b> ${visiveis} | <b>Contagem Oficial:</b> ${VJ.contagem}`);
+}
+function vjClassico(tabela, cols, q, termos){
+  const tbody = document.createElement('tbody'); tabela.appendChild(tbody);
+  let visiveis = 0;
+  VJ.itens.forEach((item, idx) => {
+    if(!passaFiltro(item,q)) return;
+    visiveis++;
+    const row = document.createElement('tr'); row.className='standard-row';
+    row.insertCell().textContent = idx+1;
+    const tdc = row.insertCell();
+    const cb = document.createElement('input'); cb.type='checkbox';
+    cb.addEventListener('change', e=>{
+      row.classList.toggle('row-strikethrough', e.target.checked);
+      e.target.checked ? VJ.marcadosFlat.add(idx) : VJ.marcadosFlat.delete(idx);
+    });
+    tdc.appendChild(cb);
+    if(VJ.marcadosFlat.has(idx)){ cb.checked=true; row.classList.add('row-strikethrough'); }
+    cols.forEach(c=>{ const td=document.createElement('td'); td.appendChild(celula(item,c,termos)); row.appendChild(td); });
+    tbody.appendChild(row);
+  });
+  status(`<b>Origem:</b> ${VJ.arquivo||'busca atual'} | <b>Notas Exibidas:</b> ${visiveis} (Total: ${VJ.itens.length}) | <b>Contagem Oficial:</b> ${VJ.contagem}`);
+}
+function celula(item, col, termos){
+  const div = document.createElement('div');
+  let c = item[col]; if(c==null) c='';
+  if(Array.isArray(c)){
+    if(col==='destinatarios' && c.length)
+      div.innerHTML = Array.from(new Set(c.map(d=>`${d.nome||'N/A'} (Polo: ${d.polo||'N/A'})`))).join('<br>');
+    else if(col==='destinatarioadvogados' && c.length)
+      div.innerHTML = Array.from(new Set(c.map(a=> a.advogado ? `${a.advogado.nome||'N/A'} (OAB: ${a.advogado.numero_oab||'N/A'}/${a.advogado.uf_oab||'N/A'})` : 'Advogado inválido'))).join('<br>');
+    else div.innerHTML = `<pre>${escapar(JSON.stringify(c,null,2))}</pre>`;
+  }else if(typeof c === 'object'){
+    div.innerHTML = `<pre>${escapar(JSON.stringify(c,null,2))}</pre>`;
+  }else{
+    c = String(c);
+    if(col==='texto' && termos.length) div.innerHTML = realcar(c, termos);
+    else if(col==='siglaTribunal' && !c.includes('TRT')) div.innerHTML = `<span class="tribunal-alert-red">${c}</span>`;
+    else if(col==='siglaTribunal' && !c.includes('TRT4')) div.innerHTML = `<span class="tribunal-alert-orange">${c}</span>`;
+    else if(col==='numeroprocessocommascara' && c.includes('0000164-13.2017.5.09.0965'))
+      div.innerHTML = `<span class="tribunal-alert-orange">${c} (PF - Movimentar CPJ 50299993120128210001)</span>`;
+    else div.innerHTML = c;
+  }
+  return div;
+}
+function status(html){ $('vj-status').innerHTML = html; }
+
+/* Abrir JSON já salvo (mesmo parser do VerJSON: formato antigo e formato por blocos) */
+function carregarJSONExterno(ev){ carregarJSONArquivo(ev.target.files[0]); ev.target.value=''; }
+function carregarJSONArquivo(file){
+  if(!file) return;
+  const fr = new FileReader();
+  fr.onload = e => {
+    const conteudo = e.target.result;
+    let itens = [], contagem = 0, formatoAntigo = false;
+    try{
+      const j = JSON.parse(conteudo);
+      if(j && typeof j.items !== 'undefined'){ formatoAntigo = true; itens = j.items||[]; contagem = j.count||0; }
+    }catch(err){}
+    if(!formatoAntigo){
+      const blocos = conteudo.split(/^\s*(?=[\d.-]{10,})/m).filter(s=>s.trim()!=='');
+      blocos.forEach(bloco => {
+        const linhas = bloco.trim().split('\n');
+        const numero = linhas.shift().trim();
+        try{
+          const j = JSON.parse(linhas.join('\n'));
+          contagem += j.count||0;
+          if(j.count>0 && Array.isArray(j.items))
+            itens.push(...j.items.map(i=>({...i, numero_processo_principal:numero})));
+        }catch(err){ console.warn('Bloco inválido em '+numero, err); }
+      });
+    }
+    VJ.itens = itens; VJ.contagem = contagem; VJ.arquivo = file.name;
+    VJ.marcadosProc.clear(); VJ.marcadosFlat.clear(); $('vj-filtro').value='';
+    agruparVJ(); montarSeletorColunas(); renderVJ(); mudarAba('visualizar');
+    logar(`JSON carregado no visualizador: ${file.name} (${itens.length} itens).`);
+  };
+  fr.readAsText(file);
+}
+
+/* ================== TRIBUNAIS ================== */
+const TRT_ALVO = {RS:['TRT4'],SP:['TRT2','TRT15'],MG:['TRT3'],BA:['TRT5'],PE:['TRT6'],PR:['TRT9'],
+  DF:['TRT10'],TO:['TRT10'],AM:['TRT11'],RR:['TRT11'],SC:['TRT12'],GO:['TRT18'],PI:['TRT22'],MT:['TRT23']};
+const COM_WEBJUR = ['TRT9','TRT10','TRT12'];
+async function buscarTribunais(){
+  logar('Consultando datas de último envio dos tribunais...');
+  try{
+    const base = $('c-base').value.trim()+'/tribunal';
+    const proxy = $('c-proxy').value;
+    const r = await fetch(proxy?proxy+encodeURIComponent(base):base, {headers:{'Accept':'application/json'}});
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const dados = await r.json(); const linhas=[];
+    dados.forEach(uf=>{
+      const alvos = TRT_ALVO[uf.uf]; if(!alvos) return;
+      (uf.instituicoes||[]).forEach(i=>{
+        if(alvos.includes(i.sigla)) linhas.push({uf:uf.uf, sigla:i.sigla,
+          webjur: COM_WEBJUR.includes(i.sigla)?'Com WebJur':'Sem WebJur', data:i.dataUltimoEnvio||'—'});
+      });
+    });
+    linhas.sort((a,b)=> a.webjur.localeCompare(b.webjur) || a.sigla.localeCompare(b.sigla,'pt',{numeric:true}));
+    $('t-saida').innerHTML = `<table><thead><tr style="background:var(--verde);color:#fff"><th>Tribunal</th><th>UF</th><th>WebJur</th><th>Último envio</th></tr></thead><tbody>${
+      linhas.map(l=>`<tr><td><b>${l.sigla}</b></td><td>${l.uf}</td><td>${l.webjur}</td><td>${l.data}</td></tr>`).join('')}</tbody></table>`;
+    logar(`Tribunais consultados: ${linhas.length} registro(s).`);
+  }catch(e){
+    $('t-saida').innerHTML = `<p style="color:var(--erro)">Erro ao consultar: ${escapar(e.message)}</p>`;
+    logar('Erro tribunais: '+e.message);
+  }
+}
+
+/* ================== EXPORTAÇÕES ================== */
+function baixar(nome, conteudo, tipo){
+  const b = new Blob([conteudo],{type:tipo+';charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(b); a.download = nome; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 4000);
+}
+function baixarJSON(){
+  if(!ESTADO.bruto.length){ alert('Nada para exportar.'); return; }
+  if(ESTADO.modo === 'processos'){
+    baixar(nomeArquivoPAD(), gerarConteudoPAD(), 'application/json');
+  }else{
+    /* o PAD gera um arquivo por filtro */
+    ESTADO.bruto.forEach((b,i)=> setTimeout(()=> baixar(nomeArquivoPAD(i), JSON.stringify(b.objeto), 'application/json'), i*400));
+  }
+  logar('Arquivo(s) JSON gerado(s) no formato do PAD.');
+}
+function abrirVerJSON(){
+  if(!ESTADO.bruto.length){ alert('Execute uma busca antes.'); return; }
+  baixarJSON();
+  setTimeout(()=>{
+    window.open(URL_VERJSON, '_blank');
+    alert('O JSON foi baixado e o VerJSON abriu em nova guia.\nArraste o arquivo da pasta Downloads para a página — ela aceita soltar em qualquer lugar.');
+  }, 600);
+}
+function baixarCSV(){
+  const linhas = VJ.itens;
+  if(!linhas.length){ alert('Nada para exportar.'); return; }
+  const cols = ['numero_processo_principal','filtro_origem','numeroprocessocommascara','siglaTribunal','nomeOrgao','nomeClasse','tipoComunicacao','data_disponibilizacao','texto'];
+  const csv = ['\uFEFF'+cols.join(';')].concat(linhas.map(l=>cols.map(c=>{
+    let v = l[c]; if(v==null) v='';
+    if(typeof v==='object') v = JSON.stringify(v);
+    return `"${String(v).replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').replace(/"/g,'""')}"`;
+  }).join(';'))).join('\n');
+  baixar(`DJEN_${ESTADO.resumo.tipo||'busca'}_${arqData(ESTADO.resumo.data||hoje())}.csv`, csv, 'text/csv');
+}
+function baixarLog(){ baixar(`Log_DJEN_${arqData(ESTADO.resumo.data||hoje())}.txt`, ESTADO.log.join('\n'), 'text/plain'); }
+function copiarResumoHTML(){
+  const r = ESTADO.resumo; if(!r || !r.data){ alert('Execute uma busca antes.'); return; }
+  const td = "padding: 12px 15px; border-bottom: 1px solid #dddddd; background-color: #ffffff;";
+  let linhas = `<tr><td style="${td}"><b>Data</b></td><td style="${td}">${brData(r.data)}</td></tr>`;
+  if(r.tipo==='processos'){
+    linhas += `<tr><td style="${td}">Número de Registros <b>Totais</b></td><td style="${td}">${r.totalRegistros}</td></tr>
+    <tr><td style="${td}">Número de <b>Processos</b> com Registros</td><td style="${td}">${r.processosComRegistro}</td></tr>
+    <tr><td style="${td}">Tempo de Execução</td><td style="${td}">${r.tempo}</td></tr>`;
+  }else{
+    r.filtros.forEach(f => linhas += `<tr><td style="${td}"><b>${escapar(f.nome)}</b></td><td style="${td}">${f.registros}</td></tr>`);
+  }
+  const html = `<div style="font-family: Georgia, serif; font-size: 16px; color: #333333;">
+  <p>Origem: Site DJEN</p><p>Prezados,</p>
+  <p>Abaixo o resumo da execução da consulta à <b>API DJEN</b>:</p>
+  <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse; font-family: 'Palatino Linotype', Palatino, Georgia, serif; font-size: 14px; margin-top: 20px; border-radius: 8px; overflow: hidden; border: 1px solid #dddddd;">
+    <thead><tr style="background-color: #2F4F4F; color: #ffffff;">
+      <th style="padding: 12px 15px; text-align: left; font-weight: normal;">Item</th>
+      <th style="padding: 12px 15px; text-align: left; font-weight: normal;">Valor</th>
+    </tr></thead><tbody>${linhas}</tbody></table>
+  ${r.tipo==='processos' && r.positivos.length ? `<p style="margin-top:30px;">Processos com NE: ${r.positivos.join('; ')}</p>`:''}
+  <p style="margin-top: 30px;">Para visualizar mais fácil o conteúdo do JSON, acesse <b><a href="${URL_VERJSON}" target="_blank" style="color:#2F4F4F;text-decoration:none;">Leitor JSON</a></b></p>
+  <p style="margin-top: 30px;">Atenciosamente,</p></div>`;
+  navigator.clipboard.writeText(html).then(
+    ()=>alert('Resumo HTML copiado — cole no corpo do e-mail (modo HTML).'),
+    ()=>alert('Não foi possível copiar automaticamente.'));
+}
+
+/* ================== INIT ================== */
+$('p-data').value = hoje();
+$('m-data').value = hoje();
+$('c-url-lista').value = URL_LISTA_DOWNLOAD;
+$('vj-filtro').addEventListener('input', renderVJ);
+$('vj-modo').addEventListener('change', e=>{
+  VJ.modo = e.target.value; VJ.marcadosProc.clear(); VJ.marcadosFlat.clear(); renderVJ();
+});
+$('vj-col-btn').addEventListener('click', ()=> $('vj-col-cont').classList.toggle('show'));
+window.addEventListener('click', e=>{ if(!e.target.matches('.dropdown-button')) $('vj-col-cont').classList.remove('show'); });
+$('vj-col-cont').addEventListener('click', e=> e.stopPropagation());
+renderVJ();
+if($('c-autoload').value === '1') carregarListaMonitorados(false);
+</script>
+</body>
+</html>
