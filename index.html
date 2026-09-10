@@ -1,258 +1,385 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-tema="escuro" data-guia="tribunais">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Consulta DJEN - NEs Trabalhistas</title>
+<title>DJEN — NEs Trabalhistas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--verde:#2F4F4F;--verde-esc:#203636;--borda:#dddddd;--bg:#f4f6f6;--ok:#1e7b45;--erro:#b3261e;--azul:#34495e}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:#333;font-family:"Segoe UI",Georgia,serif;font-size:15px}
-header{background:var(--verde);color:#fff;padding:18px 24px}
-header h1{margin:0;font-size:20px;font-weight:600}
-header p{margin:4px 0 0;font-size:13px;opacity:.85}
-main{max-width:1400px;margin:0 auto;padding:20px}
-.card{background:#fff;border:1px solid var(--borda);border-radius:8px;padding:18px;margin-bottom:18px}
-.card h2{margin:0 0 12px;font-size:16px;color:var(--verde);border-bottom:1px solid var(--borda);padding-bottom:8px}
-.tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
-.tabs button{background:#fff;border:1px solid var(--borda);border-radius:6px;padding:9px 16px;cursor:pointer;font-size:14px}
-.tabs button.ativo{background:var(--verde);color:#fff;border-color:var(--verde)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
-label{display:block;font-size:13px;font-weight:600;margin-bottom:5px}
-input,select,textarea{width:100%;padding:8px 10px;border:1px solid var(--borda);border-radius:6px;font-family:inherit;font-size:14px;background:#fff}
-textarea{min-height:130px;font-family:Consolas,monospace;font-size:13px;resize:vertical}
-.acoes{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-.btn{background:var(--verde);color:#fff;border:none;border-radius:6px;padding:10px 18px;cursor:pointer;font-size:14px}
-.btn:hover{background:var(--verde-esc)}
-.btn.sec{background:#fff;color:var(--verde);border:1px solid var(--verde)}
-.btn.azul{background:#3498db}
-.btn.azul:hover{background:#2980b9}
-.btn:disabled{opacity:.5;cursor:not-allowed}
-table{width:100%;border-collapse:collapse;font-size:13px}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:14px}
-.stat{background:#fff;border:1px solid var(--borda);border-left:4px solid var(--verde);border-radius:6px;padding:12px}
-.stat .v{font-size:22px;font-weight:700;color:var(--verde)}
-.stat .r{font-size:12px;color:#666}
-.barra{height:10px;background:#e3e8e8;border-radius:5px;overflow:hidden;margin:10px 0 6px}
-.barra i{display:block;height:100%;background:var(--verde);width:0;transition:width .2s}
-#log{background:#1b2222;color:#c8e6d0;font-family:Consolas,monospace;font-size:12px;padding:12px;border-radius:6px;max-height:240px;overflow:auto;white-space:pre-wrap}
-.pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
-.pill.ok{background:#e2f3e8;color:var(--ok)}
-.pill.zero{background:#eee;color:#666}
-.pill.erro{background:#fbe4e2;color:var(--erro)}
-.oculto{display:none!important}
-.aviso{background:#fff8e5;border:1px solid #f0dca0;border-radius:6px;padding:10px 12px;font-size:13px;margin-bottom:14px}
-.cab-lista{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:5px}
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root{
+  --bg:#F4F5F7; --surface:#FFFFFF; --ink:#101114; --ink-2:#6B7280; --line:#101114;
+  --accent:#2563EB; --accent-2:#F59E0B; --ok:#166534; --err:#B3261E;
+  --font-display:"Oswald","Archivo Black","Archivo",Impact,sans-serif;
+  --font-body:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --font-mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:20px; --s-6:24px; --s-7:32px; --s-8:48px;
+  --bw:1px; --bw-thick:3px; --radius:0px; --shadow:4px 4px 0 var(--line);
+  --brand-powerapps:#742774; --brand-onedrive:#0364B8; --brand-outlook:#0F6CBD; --brand-json:#5B21B6;
+}
+html[data-tema="escuro"]{
+  --bg:#0C0D10; --surface:#16181D; --ink:#F4F5F7; --ink-2:#8B929F; --line:#2A2D35;
+  --ok:#4ADE80; --err:#F87171;
+  --brand-powerapps:#B76FB7; --brand-onedrive:#4BA0E8; --brand-outlook:#4FA3E3; --brand-json:#A78BFA;
+}
+html[data-guia="tribunais"]{  --accent:#2563EB; }
+html[data-guia="partes"]{     --accent:#0E7490; }
+html[data-guia="processos"]{  --accent:#7C3AED; }
+html[data-guia="visualizar"]{ --accent:#B45309; }
+html[data-guia="envio"]{      --accent:#15803D; }
+html[data-guia="config"]{     --accent:#475569; }
+html[data-tema="escuro"][data-guia="tribunais"]{  --accent:#60A5FA; }
+html[data-tema="escuro"][data-guia="partes"]{     --accent:#22D3EE; }
+html[data-tema="escuro"][data-guia="processos"]{  --accent:#A78BFA; }
+html[data-tema="escuro"][data-guia="visualizar"]{ --accent:#FBBF24; }
+html[data-tema="escuro"][data-guia="envio"]{      --accent:#4ADE80; }
+html[data-tema="escuro"][data-guia="config"]{     --accent:#94A3B8; }
+html[data-tema="escuro"] .nav button.ativo,
+html[data-tema="escuro"] .btn.primary,
+html[data-tema="escuro"] .note-badge{ color:#0C0D10 }
 
-/* ---- DROP ZONE ---- */
-.dropzone{border:2px dashed #b9c6c6;border-radius:8px;padding:12px;background:#fbfdfd;transition:.15s}
-.dropzone.hover{border-color:var(--verde);background:#eef5f3;box-shadow:inset 0 0 0 3px rgba(47,79,79,.08)}
-.dropzone .dica{font-size:12px;color:#777;margin:0 0 8px;display:flex;align-items:center;gap:6px}
-.dropzone.hover .dica{color:var(--verde);font-weight:600}
-#drop-overlay{position:fixed;inset:0;background:rgba(47,79,79,.88);z-index:1000;display:none;justify-content:center;align-items:center;color:#fff;font-size:2em;font-weight:bold;text-align:center;border:4px dashed #fff}
+/* ============================================================
+   BASE
+   ============================================================ */
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-weight:400;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:-.02em;margin:0;text-transform:uppercase}
+code{font-family:var(--font-mono);font-size:.9em;background:var(--bg);border:var(--bw) solid var(--line);padding:1px 4px}
+
+.masthead{background:var(--surface);border-bottom:var(--bw-thick) solid var(--line);padding:var(--s-6) var(--s-7);display:flex;justify-content:space-between;align-items:flex-start;gap:var(--s-5);flex-wrap:wrap}
+.masthead .kicker{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-2);font-weight:600;margin:0 0 var(--s-2)}
+.masthead h1{font-size:clamp(28px,4vw,44px);line-height:1}
+.masthead .sub{color:var(--ink-2);font-size:14px;max-width:70ch;margin:var(--s-2) 0 0}
+#tema-btn{background:var(--surface);color:var(--ink);border:var(--bw) solid var(--line);padding:10px var(--s-4);cursor:pointer;font-family:var(--font-body);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap}
+#tema-btn:hover{background:var(--ink);color:var(--surface)}
+
+main{max-width:1360px;margin:0 auto;padding:var(--s-7) var(--s-6) var(--s-8)}
+.rule{border:0;border-top:var(--bw-thick) solid var(--line);margin:var(--s-7) 0}
+.band-label{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-2);font-weight:600;margin:0 0 var(--s-3)}
+
+.nav{display:flex;flex-wrap:wrap;gap:0;border:var(--bw) solid var(--line);margin-bottom:var(--s-6)}
+.nav button{flex:1 1 auto;background:var(--surface);color:var(--ink);border:0;border-right:var(--bw) solid var(--line);padding:var(--s-3) var(--s-5);cursor:pointer;font-family:var(--font-body);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap}
+.nav button:last-child{border-right:0}
+.nav button:hover{background:var(--ink);color:var(--surface)}
+.nav button.ativo{background:var(--accent);color:#fff}
+
+.card{background:var(--surface);border:var(--bw) solid var(--line);border-radius:var(--radius);padding:var(--s-6);margin-bottom:var(--s-5)}
+.card.raised{box-shadow:var(--shadow)}
+.card > h2{font-size:20px;padding-bottom:var(--s-3);margin-bottom:var(--s-5);border-bottom:var(--bw-thick) solid var(--line)}
+.card > h2 .num{color:var(--accent);margin-right:var(--s-2)}
+.card h3{font-size:14px;margin:var(--s-6) 0 var(--s-3)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s-5)}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s-5)}
+.full{grid-column:1/-1}
+@media (max-width:820px){.grid,.grid-4{grid-template-columns:1fr}main{padding:var(--s-5) var(--s-4)}.masthead{padding:var(--s-5) var(--s-4)}}
+
+label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-2);margin-bottom:var(--s-2)}
+input,select,textarea{width:100%;padding:10px var(--s-3);border:var(--bw) solid var(--line);border-radius:var(--radius);background:var(--surface);color:var(--ink);font-family:var(--font-body);font-size:14px}
+input:focus,select:focus,textarea:focus{outline:var(--bw-thick) solid var(--accent);outline-offset:-3px}
+textarea{min-height:128px;font-family:var(--font-mono);font-size:13px;resize:vertical;line-height:1.5}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--ink) 50%),linear-gradient(135deg,var(--ink) 50%,transparent 50%);background-position:calc(100% - 16px) 50%,calc(100% - 11px) 50%;background-size:5px 5px;background-repeat:no-repeat;padding-right:var(--s-7)}
+.hint{font-size:12px;color:var(--ink-2);margin:var(--s-2) 0 0}
+.check-linha{display:flex;align-items:center;gap:var(--s-2);margin-top:var(--s-4)}
+.check-linha input{width:auto;accent-color:var(--accent);transform:scale(1.2)}
+.check-linha label{margin:0;text-transform:none;letter-spacing:0;font-size:13px;font-weight:400;color:var(--ink);cursor:pointer}
+
+.acoes{display:flex;flex-wrap:wrap;gap:var(--s-2);margin-top:var(--s-5)}
+.btn{background:var(--surface);color:var(--ink);border:var(--bw) solid var(--line);border-radius:var(--radius);padding:10px var(--s-4);cursor:pointer;font-family:var(--font-body);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.btn:hover{background:var(--ink);color:var(--surface)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn.primary:hover{background:var(--surface);color:var(--accent)}
+.btn.block{display:block;width:100%;padding:var(--s-4);font-size:14px;letter-spacing:.1em}
+.btn.amber{background:var(--accent-2);border-color:var(--accent-2);color:#101114}
+.btn.amber:hover{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.btn.brand{color:#fff}
+.btn.brand:hover{background:var(--surface)}
+.btn.powerapps{background:var(--brand-powerapps);border-color:var(--brand-powerapps)}
+.btn.powerapps:hover{color:var(--brand-powerapps)}
+.btn.onedrive{background:var(--brand-onedrive);border-color:var(--brand-onedrive)}
+.btn.onedrive:hover{color:var(--brand-onedrive)}
+.btn.outlook{background:var(--brand-outlook);border-color:var(--brand-outlook)}
+.btn.outlook:hover{color:var(--brand-outlook)}
+.btn.json{background:var(--brand-json);border-color:var(--brand-json)}
+.btn.json:hover{color:var(--brand-json)}
+html[data-tema="escuro"] .btn.brand{color:#0C0D10}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn:disabled:hover{background:var(--surface);color:var(--ink)}
+
+.note{border:var(--bw) solid var(--line);border-left:var(--bw-thick) solid var(--accent);padding:var(--s-3) var(--s-4);font-size:13px;margin-bottom:var(--s-5);background:var(--surface)}
+.note.warn{border-left-color:var(--accent-2)}
+.tag{display:inline-block;padding:2px var(--s-2);border:var(--bw) solid var(--line);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.tag.ok{background:var(--accent);color:#fff;border-color:var(--accent)}
+html[data-tema="escuro"] .tag.ok{color:#0C0D10}
+.tag.zero{background:transparent;color:var(--ink-2)}
+.tag.dup{background:var(--accent-2);color:#101114;border-color:var(--accent-2)}
+
+.progress{height:12px;border:var(--bw) solid var(--line);margin-top:var(--s-5)}
+.progress i{display:block;height:100%;background:var(--accent);width:0;transition:width .2s linear}
+.progress-txt{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-2);margin-top:var(--s-2);font-weight:600}
+
+#log{background:var(--ink);color:var(--bg);border:var(--bw) solid var(--line);font-family:var(--font-mono);font-size:12px;line-height:1.5;padding:var(--s-4);max-height:260px;overflow:auto;white-space:pre-wrap}
+html[data-tema="escuro"] #log{background:#000;color:#D6DAE2}
+
+.dropzone{border:var(--bw-thick) dashed var(--line);padding:var(--s-4);background:var(--surface)}
+.dropzone.hover{border-color:var(--accent);background:var(--bg)}
+.dropzone .dica{font-size:12px;color:var(--ink-2);margin:0 0 var(--s-3);text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+.dropzone.hover .dica{color:var(--accent)}
+#drop-overlay{position:fixed;inset:0;background:var(--accent);z-index:1000;display:none;justify-content:center;align-items:center;color:#fff;font-family:var(--font-display);font-size:clamp(24px,5vw,56px);text-transform:uppercase;letter-spacing:-.02em;text-align:center;border:var(--s-2) solid var(--ink)}
 #drop-overlay.show{display:flex}
 
-/* ---- VISUALIZADOR (VerJSON) ---- */
-.vj-top{display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap;margin-bottom:12px}
-.vj-top .filtro{flex-grow:1;min-width:260px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:var(--s-3) var(--s-4);text-align:left;vertical-align:top;border:var(--bw) solid var(--line)}
+thead th{background:var(--ink);color:var(--surface);font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:700;position:sticky;top:0;z-index:10}
+html[data-tema="escuro"] thead th{background:#000;color:var(--ink)}
+tr.destaque td{background:var(--accent);color:#fff;font-weight:700}
+html[data-tema="escuro"] tr.destaque td{color:#0C0D10}
+
+.vj-bar{display:grid;grid-template-columns:1fr auto auto auto;gap:var(--s-3);align-items:end;margin-bottom:var(--s-5)}
+@media (max-width:820px){.vj-bar{grid-template-columns:1fr}}
 .dropdown{position:relative}
-.dropdown-button{padding:9px 15px;font-size:14px;background:var(--azul);color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:600;white-space:nowrap}
-.dropdown-content{display:none;position:absolute;right:0;background:#f9f9f9;min-width:230px;box-shadow:0 8px 16px rgba(0,0,0,.2);padding:12px 16px;z-index:100;max-height:280px;overflow-y:auto;border-radius:6px}
+.dropdown-content{display:none;position:absolute;right:0;top:calc(100% + 4px);background:var(--surface);border:var(--bw) solid var(--line);box-shadow:var(--shadow);min-width:240px;max-height:300px;overflow-y:auto;padding:var(--s-4);z-index:100}
 .dropdown-content.show{display:block}
-.dropdown-content label{display:block;font-size:13px;padding:4px 0;font-weight:400}
-#vj-wrap{border:1px solid #ddd;background:#fff;max-height:65vh;overflow:auto}
-#vj-tabela thead th{position:sticky;top:0;background:var(--azul);color:#fff;z-index:10;padding:11px 14px;text-align:left}
-#vj-tabela th,#vj-tabela td{padding:11px 14px;border:1px solid #ddd;text-align:left;vertical-align:top}
-#vj-tabela input[type=checkbox]{width:auto;transform:scale(1.3);margin-right:12px;cursor:pointer}
-.standard-row:nth-of-type(even){background:#f8f9fa}
-.standard-row:hover{background:#e9ecef}
-.process-group-header td{background:#e8ecef;font-weight:bold;font-size:1.05em;cursor:pointer;border-top:3px solid #2c3e50;user-select:none}
-.process-group-header:hover td{background:#d1d8e0}
-.toggle-icon{display:inline-block;transition:transform .3s;margin-right:10px;font-size:.9em}
+.dropdown-content label{display:flex;align-items:center;gap:var(--s-2);padding:var(--s-1) 0;text-transform:none;letter-spacing:0;font-size:13px;font-weight:400;color:var(--ink);cursor:pointer}
+.dropdown-content input[type=checkbox]{width:auto;margin:0;accent-color:var(--accent)}
+#vj-wrap{border:var(--bw) solid var(--line);max-height:64vh;overflow:auto;background:var(--surface)}
+#vj-tabela input[type=checkbox]{width:auto;transform:scale(1.2);margin-right:var(--s-3);accent-color:var(--accent);cursor:pointer}
+.standard-row:hover{background:var(--bg)}
+.process-group-header td{background:var(--bg);font-family:var(--font-display);font-size:15px;text-transform:uppercase;letter-spacing:-.01em;cursor:pointer;user-select:none;border-top:var(--bw-thick) solid var(--line)}
+.process-group-header:hover td{background:var(--accent);color:#fff}
+html[data-tema="escuro"] .process-group-header:hover td{color:#0C0D10}
+.toggle-icon{display:inline-block;transition:transform .2s;margin-right:var(--s-3)}
 .process-group-header.open .toggle-icon{transform:rotate(90deg)}
-.process-header-content{display:flex;justify-content:space-between;align-items:center}
-.process-title-area{display:flex;align-items:center}
-.note-badge{background:#3498db;color:#fff;border-radius:12px;padding:2px 8px;font-size:.75em;margin-left:10px}
+.process-header-content{display:flex;justify-content:space-between;align-items:center;gap:var(--s-4)}
+.process-title-area{display:flex;align-items:center;gap:var(--s-3)}
+.note-badge{background:var(--accent);color:#fff;padding:2px var(--s-2);font-size:10px;font-family:var(--font-body);letter-spacing:.08em}
+.process-group-header:hover .note-badge{background:var(--ink)}
 .process-note-row{display:none}
 .process-group-header.open ~ .process-note-row{display:table-row}
-.process-note-row:nth-of-type(even){background:#f9fbfd}
-.row-strikethrough td,.row-strikethrough .process-header-content{text-decoration:line-through;color:#95a5a6}
-.row-strikethrough{background:#f4f4f4!important}
-.tribunal-alert-orange{color:#d66c15;font-weight:bold}
-.tribunal-alert-red{color:#e74c3c;font-weight:bold}
-mark{background:#ff0;padding:.2em}
-#vj-tabela td pre{margin:0;font-family:inherit;white-space:pre-wrap;font-size:12px}
-#vj-status{text-align:center;font-size:13px;color:#333;margin:0 0 12px}
+.row-strikethrough td,.row-strikethrough .process-header-content{text-decoration:line-through;color:var(--ink-2)}
+.tribunal-alert-orange{color:var(--accent-2);font-weight:700}
+.tribunal-alert-red{color:var(--err);font-weight:700}
+mark{background:var(--accent-2);color:#101114;padding:0 2px;font-weight:600}
+#vj-tabela td pre{margin:0;font-family:var(--font-mono);font-size:12px;white-space:pre-wrap}
+#vj-status{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-2);font-weight:600;padding-bottom:var(--s-3);border-bottom:var(--bw) solid var(--line);margin:0 0 var(--s-5)}
+#vj-status b{color:var(--ink)}
+
+#previa{border:var(--bw) solid var(--line);padding:var(--s-5);background:#fff;color:#333;max-height:360px;overflow:auto}
+.anexos-lista{border:var(--bw) solid var(--line);padding:var(--s-3) var(--s-4);font-family:var(--font-mono);font-size:12px;color:var(--ink-2);margin-top:var(--s-4)}
+.anexos-lista b{color:var(--ink);font-family:var(--font-body)}
+.oculto{display:none!important}
 </style>
 </head>
 <body>
-<div id="drop-overlay"><div>Solte o arquivo aqui</div></div>
+<div id="drop-overlay"><div>Solte o arquivo</div></div>
 
-<header>
-  <h1>Consulta DJEN — NEs Trabalhistas</h1>
-  <p>Réplica web dos fluxos PAD: busca por Parte (texto) e Lista de Processos Monitorados — API Comunica PJe</p>
+<header class="masthead">
+  <div>
+    <p class="kicker">Procuradoria-Geral do Estado · RS</p>
+    <h1>DJEN — NEs Trabalhistas</h1>
+    <p class="sub">Réplica web dos fluxos PAD: datas dos tribunais, busca por Parte no texto da nota e Lista de Processos Monitorados. API Comunica PJe.</p>
+  </div>
+  <button id="tema-btn" onclick="alternarTema()">☀ Tema claro</button>
 </header>
 
 <main>
-  <div class="aviso">
-    <b>CORS:</b> se a chamada direta for bloqueada pelo navegador, selecione um proxy nas Configurações.
-    Todo o processamento é local.
-  </div>
+  <nav class="nav">
+    <button id="tab-tribunais" class="ativo" onclick="mudarAba('tribunais')">Tribunais</button>
+    <button id="tab-partes" onclick="mudarAba('partes')">Busca por Parte</button>
+    <button id="tab-processos" onclick="mudarAba('processos')">Monitorados</button>
+    <button id="tab-visualizar" onclick="mudarAba('visualizar')">Resultados</button>
+    <button id="tab-envio" onclick="mudarAba('envio')">Enviar e-mail</button>
+    <button id="tab-config" onclick="mudarAba('config')">Configurações</button>
+  </nav>
 
-  <div class="tabs">
-    <button id="tab-partes" class="ativo" onclick="mudarAba('partes')">Busca por Parte (texto)</button>
-    <button id="tab-processos" onclick="mudarAba('processos')">Lista de Monitorados</button>
-    <button id="tab-visualizar" onclick="mudarAba('visualizar')">Visualizar resultados</button>
-    <button id="tab-tribunais" onclick="mudarAba('tribunais')">Último envio dos Tribunais</button>
-  </div>
+  <div class="note warn"><b>CORS.</b> Se a chamada à API for bloqueada pelo navegador, selecione um proxy nas Configurações. Todo o processamento é local.</div>
+
+  <!-- ============ TRIBUNAIS ============ -->
+  <section id="aba-tribunais">
+    <div class="card raised">
+      <h2><span class="num">01</span>Último envio por tribunal</h2>
+      <p class="hint" style="margin:0 0 var(--s-5)">TRT4 em primeiro; depois os demais com WebJur e, por fim, os sem WebJur — ambos em ordem numérica.</p>
+      <button class="btn primary block" onclick="buscarTribunais()">Consultar tribunais</button>
+      <div id="t-saida" style="margin-top:var(--s-5)"></div>
+    </div>
+  </section>
 
   <!-- ============ PARTES ============ -->
-  <section id="aba-partes">
-    <div class="card">
-      <h2>Parâmetros da busca por texto</h2>
-      <div class="grid">
-        <div><label>Data de disponibilização</label><input type="date" id="p-data"></div>
-        <div><label>Itens por página</label><input type="number" id="p-itens" value="100" min="10" max="100"></div>
-        <div><label>Pausa entre requisições (ms)</label><input type="number" id="p-pausa" value="2000" min="0" step="500"></div>
-        <div><label>Máx. tentativas</label><input type="number" id="p-tentativas" value="3" min="1" max="10"></div>
+  <section id="aba-partes" class="oculto">
+    <div class="card raised">
+      <h2><span class="num">02</span>Busca por texto</h2>
+      <div class="grid-4">
+        <div><label for="p-data">Data de disponibilização</label><input type="date" id="p-data"></div>
+        <div><label for="p-itens">Itens por página</label><input type="number" id="p-itens" value="100" min="10" max="100"></div>
+        <div><label for="p-pausa">Pausa entre requisições (ms)</label><input type="number" id="p-pausa" value="2000" min="0" step="500"></div>
+        <div><label for="p-tentativas">Máx. tentativas</label><input type="number" id="p-tentativas" value="3" min="1" max="10"></div>
       </div>
-      <div style="margin-top:14px">
-        <label>Partes monitoradas (uma por linha)</label>
-        <textarea id="p-partes">&lt;br&gt; - COMPANHIA ESTADUAL DE ENERGIA ELETRICA PARTICIPACOES - CEEE-PAR
+      <h3>Partes monitoradas</h3>
+      <textarea id="p-partes">&lt;br&gt; - COMPANHIA ESTADUAL DE ENERGIA ELETRICA PARTICIPACOES
+&lt;br&gt; - CEEE-PAR
+&lt;br&gt; - CEEE - PAR
+CEEE - PAR
 CEEE-PAR</textarea>
-        <p style="font-size:12px;color:#777;margin:6px 0 0">O prefixo <code>&lt;br&gt; - </code> é enviado literalmente à API, como no fluxo PAD, e vira <code>_</code> no nome do arquivo.</p>
+      <p class="hint">Uma por linha. O prefixo <code>&lt;br&gt; - </code> é enviado literalmente à API, como no fluxo PAD.</p>
+      <div class="check-linha">
+        <input type="checkbox" id="p-dedup" checked onchange="reprocessarPartes()">
+        <label for="p-dedup">Mostrar notas idênticas apenas uma vez (deduplicar entre as partes)</label>
       </div>
+      <button class="btn primary block" id="p-btn" onclick="buscarPartes()" style="margin-top:var(--s-5)">Executar busca</button>
       <div class="acoes">
-        <button class="btn" id="p-btn" onclick="buscarPartes()">Executar busca</button>
-        <button class="btn sec" onclick="baixarJSON()">Baixar JSON (formato PAD)</button>
-        <button class="btn azul" onclick="abrirVisualizador()">Ver resultados</button>
-        <button class="btn azul" onclick="abrirVerJSON()">Abrir no VerJSON ↗</button>
-        <button class="btn sec" onclick="baixarCSV()">Baixar CSV</button>
-        <button class="btn sec" onclick="copiarResumoHTML()">Copiar resumo (HTML e-mail)</button>
+        <button class="btn" onclick="baixarJSON()">Baixar JSON (PAD)</button>
+        <button class="btn" onclick="abrirVisualizador()">Ver resultados</button>
+        <button class="btn brand json" onclick="abrirVerJSON()">Abrir no VerJSON ↗</button>
+        <button class="btn" onclick="baixarLog()">Baixar log</button>
+        <button class="btn brand outlook" onclick="mudarAba('envio')">Enviar e-mail</button>
       </div>
     </div>
   </section>
 
   <!-- ============ MONITORADOS ============ -->
   <section id="aba-processos" class="oculto">
-    <div class="card">
-      <h2>Parâmetros da busca por número de processo</h2>
-      <div class="grid">
-        <div><label>Data de disponibilização</label><input type="date" id="m-data"></div>
-        <div><label>Máx. tentativas por processo</label><input type="number" id="m-tentativas" value="5" min="1" max="15"></div>
-        <div><label>Pausa entre processos (ms)</label><input type="number" id="m-pausa" value="1200" min="0" step="100"></div>
-        <div><label>Espera após HTTP 429 (s)</label><input type="number" id="m-429" value="30" min="5"></div>
+    <div class="card raised">
+      <h2><span class="num">03</span>Busca por processo</h2>
+      <div class="grid-4">
+        <div><label for="m-data">Data de disponibilização</label><input type="date" id="m-data"></div>
+        <div><label for="m-tentativas">Máx. tentativas</label><input type="number" id="m-tentativas" value="5" min="1" max="15"></div>
+        <div><label for="m-pausa">Pausa entre processos (ms)</label><input type="number" id="m-pausa" value="1200" min="0" step="100"></div>
+        <div><label for="m-429">Espera após HTTP 429 (s)</label><input type="number" id="m-429" value="30" min="5"></div>
       </div>
 
-      <div style="margin-top:16px">
-        <div class="cab-lista">
-          <label style="margin:0">Lista de monitorados — <span id="m-fonte" style="font-weight:400;color:#666">carregando listaMonitoradosPTRAB.txt...</span></label>
-          <span id="m-qtd" class="pill zero">0 processos</span>
-        </div>
-        <div id="m-drop" class="dropzone">
-          <p class="dica">📄 Arraste e solte aqui o arquivo <b>listaMonitoradosPTRAB.txt</b> (ou qualquer .txt/.csv com os números) — também aceita texto colado.</p>
-          <textarea id="m-processos" placeholder="Baixando a lista do OneDrive..."></textarea>
-        </div>
-        <div id="m-erro-lista" class="aviso oculto" style="margin-top:10px">
-          <b>Não foi possível baixar a lista automaticamente.</b>
-          O SharePoint exige sessão autenticada e bloqueia leitura por script. Use <i>Abrir no OneDrive</i>,
-          baixe o arquivo e arraste-o para a área acima — ou ative um proxy nas Configurações.
-        </div>
+      <h3 style="display:flex;justify-content:space-between;align-items:center;gap:var(--s-4);flex-wrap:wrap">
+        <span>Lista de monitorados</span>
+        <span id="m-qtd" class="tag zero">0 processos</span>
+      </h3>
+      <p class="hint" style="margin:0 0 var(--s-3)">Fonte: <span id="m-fonte">nenhuma — baixe a lista e arraste o arquivo</span></p>
+      <div id="m-drop" class="dropzone">
+        <p class="dica">Arraste e solte o listaMonitoradosPTRAB.txt aqui</p>
+        <textarea id="m-processos" placeholder="1. Clique em BAIXAR LISTA  ·  2. Arraste o arquivo para cá (ou cole os números)"></textarea>
       </div>
 
       <div class="acoes">
-        <button class="btn" id="m-btn" onclick="buscarProcessos()">Executar busca</button>
-        <button class="btn sec" onclick="carregarListaMonitorados(true)">Recarregar lista</button>
-        <button class="btn sec" onclick="window.open(LINK_COMPARTILHADO,'_blank')">Abrir no OneDrive</button>
-        <button class="btn sec" onclick="window.open(LINK_POWERAPPS,'_blank')">Atualizar lista (Power Apps)</button>
-        <button class="btn sec" onclick="document.getElementById('m-file').click()">Carregar .txt</button>
+        <button class="btn brand onedrive" onclick="baixarListaOneDrive()">⬇ Baixar lista</button>
+        <button class="btn brand powerapps" onclick="window.open(LINK_POWERAPPS,'_blank')">Atualizar lista (Power Apps)</button>
+        <button class="btn" onclick="document.getElementById('m-file').click()">Carregar .txt</button>
         <input type="file" id="m-file" accept=".txt,.csv" class="oculto" onchange="carregarTxt(event)">
-        <button class="btn sec" onclick="pararExecucao()">Parar</button>
-        <button class="btn sec" onclick="baixarJSON()">Baixar JSON (formato PAD)</button>
-        <button class="btn azul" onclick="abrirVisualizador()">Ver resultados</button>
-        <button class="btn azul" onclick="abrirVerJSON()">Abrir no VerJSON ↗</button>
-        <button class="btn sec" onclick="baixarCSV()">Baixar CSV</button>
-        <button class="btn sec" onclick="baixarLog()">Baixar log</button>
-        <button class="btn sec" onclick="copiarResumoHTML()">Copiar resumo (HTML e-mail)</button>
       </div>
-      <div class="barra"><i id="m-barra"></i></div>
-      <div id="m-progresso" style="font-size:12px;color:#666"></div>
+
+      <button class="btn primary block" id="m-btn" onclick="buscarProcessos()" style="margin-top:var(--s-5)">Executar busca</button>
+      <div class="acoes">
+        <button class="btn" onclick="pararExecucao()">Parar</button>
+        <button class="btn" onclick="baixarJSON()">Baixar JSON (PAD)</button>
+        <button class="btn" onclick="abrirVisualizador()">Ver resultados</button>
+        <button class="btn brand json" onclick="abrirVerJSON()">VerJSON ↗</button>
+        <button class="btn" onclick="baixarLog()">Baixar log</button>
+        <button class="btn brand outlook" onclick="mudarAba('envio')">Enviar e-mail</button>
+      </div>
+      <div class="progress"><i id="m-barra"></i></div>
+      <p class="progress-txt" id="m-progresso">Aguardando execução</p>
     </div>
   </section>
 
   <!-- ============ VISUALIZADOR ============ -->
   <section id="aba-visualizar" class="oculto">
-    <div class="card">
-      <h2>Visualizador — mesmo comportamento do VerJSON</h2>
-      <p id="vj-status">Aguardando resultados...</p>
-      <div class="vj-top">
-        <div class="filtro">
-          <label>Filtrar coluna 'texto' (use '&' para E, '|' para OU)</label>
-          <input type="text" id="vj-filtro" placeholder="Digite os termos do filtro aqui...">
+    <div class="card raised">
+      <h2><span class="num">04</span>Resultados</h2>
+      <p id="vj-status">Aguardando resultados…</p>
+      <div class="vj-bar">
+        <div>
+          <label for="vj-filtro">Filtrar coluna 'texto' — use &amp; para E, | para OU</label>
+          <input type="text" id="vj-filtro" placeholder="termo1 &amp; termo2 | termo3">
         </div>
         <div class="dropdown">
-          <button id="vj-col-btn" class="dropdown-button">Escolher Colunas</button>
+          <label>&nbsp;</label>
+          <button id="vj-col-btn" class="btn">Colunas</button>
           <div id="vj-col-cont" class="dropdown-content"></div>
         </div>
         <div>
-          <select id="vj-modo" class="dropdown-button" style="padding-right:30px">
-            <option value="accordion" selected>Modo Sanfona</option>
-            <option value="concat">Modo Compacto (Textos Unidos)</option>
-            <option value="flat">Modo Clássico (Linhas Soltas)</option>
+          <label for="vj-modo">Modo</label>
+          <select id="vj-modo">
+            <option value="accordion" selected>Sanfona</option>
+            <option value="concat">Compacto</option>
+            <option value="flat">Clássico</option>
           </select>
         </div>
-        <div><button class="btn sec" onclick="document.getElementById('vj-file').click()">Abrir JSON salvo</button>
-          <input type="file" id="vj-file" accept=".json,.txt" class="oculto" onchange="carregarJSONExterno(event)"></div>
+        <div>
+          <label>&nbsp;</label>
+          <button class="btn" onclick="document.getElementById('vj-file').click()">Abrir JSON</button>
+          <input type="file" id="vj-file" accept=".json,.txt" class="oculto" onchange="carregarJSONExterno(event)">
+        </div>
       </div>
       <div id="vj-wrap"><table id="vj-tabela"><thead></thead></table></div>
     </div>
   </section>
 
-  <!-- ============ TRIBUNAIS ============ -->
-  <section id="aba-tribunais" class="oculto">
+  <!-- ============ ENVIO ============ -->
+  <section id="aba-envio" class="oculto">
+    <div class="card raised">
+      <h2><span class="num">05</span>Enviar e-mail</h2>
+      <div class="grid">
+        <div class="full"><label for="e-para">Destinatários (separados por ;)</label>
+          <input id="e-para" value="paulo-oliveira@pge.rs.gov.br;marcelo-angelo@pge.rs.gov.br"></div>
+        <div class="full"><label for="e-assunto">Assunto</label><input id="e-assunto"></div>
+      </div>
+      <button class="btn amber block" onclick="baixarEML()" style="margin-top:var(--s-5)">⬇ Baixar .eml — rascunho com anexos</button>
+      <div class="acoes">
+        <button class="btn brand outlook" onclick="abrirOutlookWeb()">Outlook Web</button>
+        <button class="btn" onclick="abrirMailto()">Outlook Desktop (mailto)</button>
+        <button class="btn" onclick="copiarResumoHTML()">Copiar corpo HTML</button>
+        <button class="btn" onclick="copiarResumoTexto()">Copiar corpo texto</button>
+      </div>
+      <div class="anexos-lista" id="e-anexos">Nenhuma busca executada — os anexos aparecerão aqui.</div>
+      <div class="note warn" style="margin-top:var(--s-5);margin-bottom:0">
+        Nenhum navegador envia e-mail sozinho nem anexa arquivos via <code>mailto:</code>. O <b>.eml</b> é a opção completa: abre o rascunho no Outlook com corpo em HTML e os dois anexos.
+      </div>
+    </div>
+
     <div class="card">
-      <h2>Data do último envio por tribunal</h2>
-      <button class="btn" onclick="buscarTribunais()">Consultar tribunais</button>
-      <div id="t-saida" style="margin-top:16px"></div>
+      <h2><span class="num">06</span>Prévia do corpo</h2>
+      <div id="previa"><p style="color:#666">Execute uma busca para gerar a prévia.</p></div>
     </div>
   </section>
 
   <!-- ============ CONFIG ============ -->
-  <div class="card">
-    <h2>Configurações</h2>
-    <div class="grid">
-      <div><label>Endpoint base (DJEN)</label><input id="c-base" value="https://comunicaapi.pje.jus.br/api/v1/comunicacao"></div>
-      <div><label>Proxy CORS</label>
-        <select id="c-proxy">
-          <option value="">Não usar (direto)</option>
-          <option value="https://corsproxy.io/?">corsproxy.io</option>
-          <option value="https://api.allorigins.win/raw?url=">allorigins.win</option>
-        </select>
+  <section id="aba-config" class="oculto">
+    <div class="card raised">
+      <h2><span class="num">07</span>Configurações</h2>
+      <div class="grid">
+        <div><label for="c-base">Endpoint base (DJEN)</label><input id="c-base" value="https://comunicaapi.pje.jus.br/api/v1/comunicacao"></div>
+        <div><label for="c-proxy">Proxy CORS</label>
+          <select id="c-proxy">
+            <option value="">Não usar (direto)</option>
+            <option value="https://corsproxy.io/?">corsproxy.io</option>
+            <option value="https://api.allorigins.win/raw?url=">allorigins.win</option>
+          </select></div>
+        <div><label for="c-timeout">Timeout por requisição (s)</label><input type="number" id="c-timeout" value="30" min="5"></div>
+        <div><label for="c-tema">Tema</label>
+          <select id="c-tema" onchange="aplicarTema(this.value)">
+            <option value="escuro" selected>Escuro</option>
+            <option value="claro">Claro</option>
+          </select></div>
+        <div class="full"><label for="c-url-lista">URL de download do listaMonitoradosPTRAB.txt</label><input id="c-url-lista"></div>
       </div>
-      <div><label>Timeout por requisição (s)</label><input type="number" id="c-timeout" value="30" min="5"></div>
-      <div><label>Carregar lista ao abrir</label><select id="c-autoload"><option value="1">Sim</option><option value="0">Não</option></select></div>
     </div>
-    <div style="margin-top:14px">
-      <label>URL do listaMonitoradosPTRAB.txt (download direto)</label>
-      <input id="c-url-lista">
-    </div>
-  </div>
+  </section>
 
-  <div class="card">
-    <h2>Log de execução</h2>
-    <div id="log">Aguardando execução...</div>
-  </div>
+  <hr class="rule">
+  <p class="band-label">Log de execução</p>
+  <div id="log">Aguardando execução…</div>
 </main>
 
 <script>
-/* ================== LINKS DO FLUXO PAD ================== */
+/* ================== LINKS ================== */
 const URL_LISTA_DOWNLOAD = "https://rsgovbr-my.sharepoint.com/personal/paulo-oliveira_pge_rs_gov_br/_layouts/15/download.aspx?SourceUrl=%2Fpersonal%2Fpaulo%2Doliveira%5Fpge%5Frs%5Fgov%5Fbr%2FDocuments%2FlistaMonitoradosPTRAB%2Etxt";
-const LINK_COMPARTILHADO  = "https://rsgovbr-my.sharepoint.com/:t:/g/personal/paulo-oliveira_pge_rs_gov_br/EVbAqAOHUjBEkIQhrasvAFYBuYEXkhX13BWWAE7fvR1A6A?e=ytdPSu";
-const LINK_POWERAPPS      = "https://apps.powerapps.com/play/e/default-15dcd909-8dc0-40e9-a1e5-cecb053cdd1a/a/9153e8a8-a9c5-46aa-9d6f-068396531413?tenantId=15dcd909-8dc0-40e9-a1e5-cecb053cdd1a";
-const URL_VERJSON         = "https://rfopaulo.github.io/VerJSON/";
+const LINK_POWERAPPS  = "https://apps.powerapps.com/play/e/default-15dcd909-8dc0-40e9-a1e5-cecb053cdd1a/a/9153e8a8-a9c5-46aa-9d6f-068396531413?tenantId=15dcd909-8dc0-40e9-a1e5-cecb053cdd1a";
+const URL_VERJSON     = "https://rfopaulo.github.io/VerJSON/";
+const LISTA_SEC       = "https://rsgovbr-my.sharepoint.com/personal/paulo-oliveira_pge_rs_gov_br/Lists/SEC%20%20NEs%20Trabalhistas/AllItems.aspx?env=WebViewList";
+const LISTA_REGISTROS = "https://rsgovbr-my.sharepoint.com/personal/paulo-oliveira_pge_rs_gov_br/Lists/Registros%20NEs%20Trabalhistas/AllItems.aspx?env=WebViewList";
 
-/* ================== ESTADO ================== */
-let ESTADO = {modo:'partes', bruto:[], resumo:{}, log:[], parar:false, inicio:null};
+let ESTADO = {modo:'partes', bruto:[], unicos:[], resumo:{}, log:[], parar:false, inicio:null};
 const $ = id => document.getElementById(id);
 const espera = ms => new Promise(r => setTimeout(r, ms));
 
@@ -268,17 +395,29 @@ function brData(iso){ const [a,m,d]=iso.split('-'); return `${d}/${m}/${a}`; }
 function arqData(iso){ const [a,m,d]=iso.split('-'); return `${d}-${m}-${a}`; }
 function escapar(s){ return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
+/* ================== TEMA ================== */
+function aplicarTema(t){
+  document.documentElement.setAttribute('data-tema', t);
+  $('tema-btn').textContent = t==='escuro' ? '☀ Tema claro' : '☾ Tema escuro';
+  $('c-tema').value = t;
+  try{ localStorage.setItem('djen_tema', t); }catch(e){}
+}
+function alternarTema(){
+  aplicarTema(document.documentElement.getAttribute('data-tema')==='escuro' ? 'claro' : 'escuro');
+}
+
+/* ================== NAVEGAÇÃO ================== */
 function mudarAba(nome){
-  ['partes','processos','visualizar','tribunais'].forEach(n=>{
+  ['tribunais','partes','processos','visualizar','envio','config'].forEach(n=>{
     $('aba-'+n).classList.toggle('oculto', n!==nome);
     $('tab-'+n).classList.toggle('ativo', n===nome);
   });
-  if(nome!=='visualizar') ESTADO.modo = nome==='tribunais' ? ESTADO.modo : nome;
+  document.documentElement.setAttribute('data-guia', nome);
+  if(nome==='partes'||nome==='processos') ESTADO.modo = nome;
+  if(nome==='envio') atualizarPrevia();
 }
-
 function montarURL(params){
-  const base = $('c-base').value.trim();
-  const alvo = `${base}?${new URLSearchParams(params).toString()}`;
+  const alvo = `${$('c-base').value.trim()}?${new URLSearchParams(params).toString()}`;
   const proxy = $('c-proxy').value;
   return proxy ? proxy + encodeURIComponent(alvo) : alvo;
 }
@@ -291,193 +430,192 @@ function normalizarLista(txt){
 function aplicarLista(processos, fonte){
   $('m-processos').value = processos.join('\n');
   $('m-qtd').textContent = `${processos.length} processos`;
-  $('m-qtd').className = 'pill ' + (processos.length?'ok':'zero');
+  $('m-qtd').className = 'tag ' + (processos.length?'ok':'zero');
   $('m-fonte').textContent = fonte;
-  $('m-erro-lista').classList.toggle('oculto', processos.length>0);
 }
-async function tentarBaixar(url, credenciais){
-  const ctrl = new AbortController();
-  const t = setTimeout(()=>ctrl.abort(), (+$('c-timeout').value||30)*1000);
-  try{
-    const r = await fetch(url,{signal:ctrl.signal, credentials:credenciais?'include':'omit', headers:{'Accept':'text/plain'}});
-    if(!r.ok) throw new Error('HTTP '+r.status);
-    return await r.text();
-  } finally { clearTimeout(t); }
-}
-async function carregarListaMonitorados(manual){
-  const urlBase = $('c-url-lista').value.trim() || URL_LISTA_DOWNLOAD;
-  $('m-fonte').textContent = 'baixando listaMonitoradosPTRAB.txt...';
-  logar('Baixando lista de monitorados do OneDrive...');
-  const tentativas = [
-    {url:urlBase, cred:true, nome:'OneDrive (sessão autenticada)'},
-    {url:LINK_COMPARTILHADO+'&download=1', cred:true, nome:'link compartilhado'}
-  ];
-  const proxy = $('c-proxy').value;
-  if(proxy) tentativas.push({url:proxy+encodeURIComponent(urlBase), cred:false, nome:'proxy CORS'});
-  for(const t of tentativas){
-    try{
-      const procs = normalizarLista(await tentarBaixar(t.url, t.cred));
-      if(!procs.length) throw new Error('arquivo sem números de processo válidos');
-      aplicarLista(procs, `${procs.length} processos via ${t.nome} — ${new Date().toLocaleString('pt-BR')}`);
-      logar(`Lista carregada: ${procs.length} processo(s) via ${t.nome}.`);
-      try{ localStorage.setItem('djen_lista', JSON.stringify({procs, quando:Date.now()})); }catch(e){}
-      return true;
-    }catch(e){ logar(`  Falha via ${t.nome}: ${e.message}`); }
-  }
-  try{
-    const c = JSON.parse(localStorage.getItem('djen_lista')||'null');
-    if(c && c.procs && c.procs.length){
-      aplicarLista(c.procs, `${c.procs.length} processos do cache local — ${new Date(c.quando).toLocaleString('pt-BR')}`);
-      logar(`Usando cache local (${c.procs.length} processos).`);
-      $('m-erro-lista').classList.remove('oculto'); return true;
-    }
-  }catch(e){}
-  aplicarLista([], 'falha no download automático');
-  $('m-erro-lista').classList.remove('oculto');
-  if(manual) alert('Não foi possível baixar a lista. Arraste o .txt para a área indicada ou use um proxy.');
-  return false;
+function baixarListaOneDrive(){
+  window.open($('c-url-lista').value.trim() || URL_LISTA_DOWNLOAD, '_blank');
+  logar('Download da lista solicitado ao OneDrive.');
+  setTimeout(()=>alert('O arquivo listaMonitoradosPTRAB.txt está sendo baixado.\nArraste-o da pasta Downloads para a área tracejada.'),400);
 }
 function processarArquivoLista(file){
   if(!file) return;
   const fr = new FileReader();
   fr.onload = e => {
     const procs = normalizarLista(e.target.result);
-    if(!procs.length){ alert(`Nenhum número de processo válido encontrado em ${file.name}.`); return; }
-    aplicarLista(procs, `${procs.length} processos do arquivo ${file.name}`);
-    try{ localStorage.setItem('djen_lista', JSON.stringify({procs, quando:Date.now()})); }catch(err){}
+    if(!procs.length){ alert(`Nenhum processo válido em ${file.name}.`); return; }
+    aplicarLista(procs, `${file.name} — ${procs.length} processos — ${new Date().toLocaleString('pt-BR')}`);
+    try{ localStorage.setItem('djen_lista', JSON.stringify({procs, quando:Date.now(), nome:file.name})); }catch(err){}
     logar(`Lista carregada de ${file.name}: ${procs.length} processo(s).`);
     mudarAba('processos');
   };
-  fr.readAsText(file, 'UTF-8');
+  fr.readAsText(file,'UTF-8');
 }
 function carregarTxt(ev){ processarArquivoLista(ev.target.files[0]); ev.target.value=''; }
+function restaurarCache(){
+  try{
+    const c = JSON.parse(localStorage.getItem('djen_lista')||'null');
+    if(c && c.procs && c.procs.length)
+      aplicarLista(c.procs, `cache local (${c.nome||'arquivo'}) — ${new Date(c.quando).toLocaleString('pt-BR')}`);
+  }catch(e){}
+}
 
-/* ---- DRAG & DROP (área da lista + janela inteira) ---- */
 (function(){
-  const zona = () => $('m-drop');
   ['dragenter','dragover','dragleave','drop'].forEach(ev =>
-    document.body.addEventListener(ev, e => { e.preventDefault(); e.stopPropagation(); }));
-  let contador = 0;
-  document.body.addEventListener('dragenter', ()=>{ contador++; $('drop-overlay').classList.add('show'); });
-  document.body.addEventListener('dragleave', ()=>{ contador--; if(contador<=0){contador=0; $('drop-overlay').classList.remove('show');} });
-  document.body.addEventListener('drop', e => {
-    contador = 0; $('drop-overlay').classList.remove('show'); zona().classList.remove('hover');
+    document.body.addEventListener(ev, e=>{e.preventDefault();e.stopPropagation();}));
+  let c = 0;
+  document.body.addEventListener('dragenter', ()=>{c++; $('drop-overlay').classList.add('show');});
+  document.body.addEventListener('dragleave', ()=>{c--; if(c<=0){c=0; $('drop-overlay').classList.remove('show');}});
+  document.body.addEventListener('drop', e=>{
+    c=0; $('drop-overlay').classList.remove('show'); $('m-drop').classList.remove('hover');
     const f = e.dataTransfer.files[0]; if(!f) return;
-    if(/\.json$/i.test(f.name)) carregarJSONArquivo(f);
-    else processarArquivoLista(f);
+    /\.json$/i.test(f.name) ? carregarJSONArquivo(f) : processarArquivoLista(f);
   });
   document.addEventListener('DOMContentLoaded', ()=>{
-    const z = zona();
-    z.addEventListener('dragover', ()=> z.classList.add('hover'));
-    z.addEventListener('dragleave', ()=> z.classList.remove('hover'));
+    const z = $('m-drop');
+    z.addEventListener('dragover', ()=>z.classList.add('hover'));
+    z.addEventListener('dragleave', ()=>z.classList.remove('hover'));
   });
 })();
 
 /* ================== REQUISIÇÃO ================== */
-async function requisitar(url, maxTent, espera429){
-  let tentativa = 0;
-  while(tentativa < maxTent){
+async function requisitar(url, maxTent, esp429){
+  let t = 0;
+  while(t < maxTent){
     if(ESTADO.parar) throw new Error('Execução interrompida pelo usuário');
-    tentativa++;
+    t++;
     const ctrl = new AbortController();
-    const t = setTimeout(()=>ctrl.abort(), (+$('c-timeout').value||30)*1000);
+    const tm = setTimeout(()=>ctrl.abort(), (+$('c-timeout').value||30)*1000);
     try{
       const r = await fetch(url,{signal:ctrl.signal, headers:{'Accept':'application/json'}});
-      clearTimeout(t);
+      clearTimeout(tm);
       if(r.status===200) return await r.json();
-      if(r.status===429){ logar(`  HTTP 429 — aguardando ${espera429}s (tentativa ${tentativa}/${maxTent})`); await espera(espera429*1000); continue; }
-      logar(`  StatusCode ${r.status} — tentativa ${tentativa}/${maxTent}`);
-      await espera(1000*tentativa);
-    }catch(e){
-      clearTimeout(t);
-      logar(`  Erro: ${e.message} — tentativa ${tentativa}/${maxTent}`);
-      await espera(1000*tentativa);
-    }
+      if(r.status===429){ logar(`  HTTP 429 — aguardando ${esp429}s (tentativa ${t}/${maxTent})`); await espera(esp429*1000); continue; }
+      logar(`  StatusCode ${r.status} — tentativa ${t}/${maxTent}`); await espera(1000*t);
+    }catch(e){ clearTimeout(tm); logar(`  Erro: ${e.message} — tentativa ${t}/${maxTent}`); await espera(1000*t); }
   }
   throw new Error(`Número máximo de tentativas (${maxTent}) atingido`);
+}
+
+/* ================== DEDUPLICAÇÃO ================== */
+/* Nota idêntica = mesmo id da API; sem id, mesmo processo + data + teor normalizado */
+function normalizarTexto(t){
+  return String(t||'').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim().toLowerCase();
+}
+function chaveNota(it){
+  if(it.id != null && it.id !== '') return 'id:' + it.id;
+  if(it.hash) return 'hash:' + it.hash;
+  const proc = it.numeroprocessocommascara || it.numero_processo || '';
+  const data = it.data_disponibilizacao || it.datadisponibilizacao || '';
+  const org  = it.nomeOrgao || '';
+  return ['k', proc, data, org, normalizarTexto(it.texto)].join('|');
+}
+/* Consolida os itens de todos os filtros; se dedup, mantém a 1ª ocorrência
+   e registra em filtros_origem todas as partes que trouxeram aquela nota. */
+function consolidarPartes(dedup){
+  const mapa = new Map(), lista = [];
+  let brutos = 0;
+  ESTADO.bruto.forEach(b => {
+    (b.objeto.items||[]).forEach(it => {
+      brutos++;
+      const k = chaveNota(it);
+      if(dedup && mapa.has(k)){
+        const alvo = mapa.get(k);
+        if(alvo.filtros_origem.indexOf(b.filtro) === -1) alvo.filtros_origem.push(b.filtro);
+        alvo.ocorrencias++;
+        return;
+      }
+      const novo = Object.assign({}, it, {filtros_origem:[b.filtro], ocorrencias:1});
+      if(dedup) mapa.set(k, novo);
+      lista.push(novo);
+    });
+  });
+  return {lista, brutos, duplicadas: brutos - lista.length};
+}
+function recalcularResumoPartes(){
+  const dedup = $('p-dedup').checked;
+  const c = consolidarPartes(dedup);
+  ESTADO.unicos = c.lista;
+  const distintos = new Set();
+  c.lista.forEach(i => { const n = i.numeroprocessocommascara || i.numero_processo; if(n) distintos.add(n); });
+  const r = ESTADO.resumo;
+  r.dedup = dedup;
+  r.totalBruto = c.brutos;
+  r.totalRegistros = c.lista.length;
+  r.duplicadas = c.duplicadas;
+  r.processosDistintos = distintos.size;
+}
+function reprocessarPartes(){
+  if(ESTADO.modo !== 'partes' || !ESTADO.bruto.length) return;
+  recalcularResumoPartes();
+  logar(ESTADO.resumo.dedup
+    ? `Deduplicação ativada — ${ESTADO.resumo.duplicadas} repetição(ões) ocultada(s); ${ESTADO.resumo.totalRegistros} nota(s) única(s).`
+    : `Deduplicação desativada — exibindo as ${ESTADO.resumo.totalBruto} nota(s) retornadas.`);
+  carregarNoVisualizador(); atualizarPrevia();
 }
 
 /* ================== FLUXO 1: PARTES ================== */
 async function buscarPartes(){
   const data = $('p-data').value || hoje();
-  const itensPorPagina = +$('p-itens').value || 100;
-  const maxTent = +$('p-tentativas').value || 3;
-  const pausa = +$('p-pausa').value || 0;
+  const ipp = +$('p-itens').value || 100, maxTent = +$('p-tentativas').value || 3, pausa = +$('p-pausa').value || 0;
   const partes = $('p-partes').value.split('\n').map(s=>s.trim()).filter(Boolean);
   if(!partes.length){ alert('Informe ao menos uma parte.'); return; }
-
-  ESTADO = {modo:'partes', bruto:[], resumo:{}, log:[], parar:false, inicio:Date.now()};
+  ESTADO = {modo:'partes', bruto:[], unicos:[], resumo:{}, log:[], parar:false, inicio:Date.now()};
   $('log').textContent=''; $('p-btn').disabled = true;
   logar(`Início — data ${brData(data)} — ${partes.length} filtro(s)`);
-
   try{
     for(const parte of partes){
       if(ESTADO.parar) break;
       logar(`Filtro: ${parte}`);
-      const p1 = await requisitar(montarURL({texto:parte, dataDisponibilizacaoInicio:data,
-        dataDisponibilizacaoFim:data, pagina:1, itensPorPagina}), maxTent, 30);
-      const total = p1.count || 0;
-      let itens = p1.items || [];
+      const p1 = await requisitar(montarURL({texto:parte,dataDisponibilizacaoInicio:data,dataDisponibilizacaoFim:data,pagina:1,itensPorPagina:ipp}), maxTent, 30);
+      const total = p1.count||0; let itens = p1.items||[];
       logar(`  count = ${total}`);
-      if(total > itensPorPagina){
-        const paginas = Math.ceil(total/itensPorPagina);
-        for(let pg=2; pg<=paginas; pg++){
+      if(total > ipp){
+        const pgs = Math.ceil(total/ipp);
+        for(let pg=2; pg<=pgs; pg++){
           if(ESTADO.parar) break;
-          logar(`  página ${pg}/${paginas}`);
-          const r = await requisitar(montarURL({texto:parte, dataDisponibilizacaoInicio:data,
-            dataDisponibilizacaoFim:data, pagina:pg, itensPorPagina}), maxTent, 30);
+          logar(`  página ${pg}/${pgs}`);
+          const r = await requisitar(montarURL({texto:parte,dataDisponibilizacaoInicio:data,dataDisponibilizacaoFim:data,pagina:pg,itensPorPagina:ipp}), maxTent, 30);
           itens = itens.concat(r.items||[]);
           if(pausa) await espera(pausa);
         }
       }
-      /* objeto no mesmo formato do PAD: resposta completa com items consolidados */
-      const objeto = {...p1, items: itens};
-      ESTADO.bruto.push({filtro: parte, objeto});
+      ESTADO.bruto.push({filtro:parte, objeto:{...p1, items:itens}});
       if(pausa) await espera(pausa);
     }
   }catch(e){ logar(`ERRO FATAL: ${e.message}`); alert('Busca interrompida: '+e.message); }
 
   ESTADO.resumo = {data, tipo:'partes',
     filtros: ESTADO.bruto.map(b=>({nome:b.filtro, registros:b.objeto.count||0})),
-    totalRegistros: ESTADO.bruto.reduce((s,b)=>s+(b.objeto.count||0),0), tempo: tempoExec()};
+    tempo: tempoExec()};
+  recalcularResumoPartes();
+  const r = ESTADO.resumo;
   $('p-btn').disabled = false;
-  logar(`Fim — ${ESTADO.resumo.totalRegistros} registro(s) em ${ESTADO.resumo.tempo}`);
-  carregarNoVisualizador();
+  logar(`Fim — ${r.totalBruto} nota(s) retornada(s); ${r.duplicadas} repetida(s); ${r.totalRegistros} única(s) em ${r.processosDistintos} processo(s) — ${r.tempo}`);
+  carregarNoVisualizador(); atualizarPrevia();
 }
 
 /* ================== FLUXO 2: MONITORADOS ================== */
 async function buscarProcessos(){
   const data = $('m-data').value || hoje();
-  const maxTent = +$('m-tentativas').value || 5;
-  const pausa = +$('m-pausa').value || 0;
-  const esp429 = +$('m-429').value || 30;
-  let lista = normalizarLista($('m-processos').value);
-  if(!lista.length){
-    logar('Lista vazia — tentando baixar do OneDrive...');
-    await carregarListaMonitorados(false);
-    lista = normalizarLista($('m-processos').value);
-    if(!lista.length){ alert('Não há processos na lista de monitorados.'); return; }
-  }
-
-  ESTADO = {modo:'processos', bruto:[], resumo:{}, log:[], parar:false, inicio:Date.now()};
+  const maxTent = +$('m-tentativas').value||5, pausa = +$('m-pausa').value||0, esp429 = +$('m-429').value||30;
+  const lista = normalizarLista($('m-processos').value);
+  if(!lista.length){ alert('Não há processos na lista. Baixe o listaMonitoradosPTRAB.txt e arraste-o para a área indicada.'); return; }
+  ESTADO = {modo:'processos', bruto:[], unicos:[], resumo:{}, log:[], parar:false, inicio:Date.now()};
   $('log').textContent=''; $('m-btn').disabled = true;
   logar(`Início — data ${brData(data)} — ${lista.length} processo(s)`);
-
-  let comRegistro = 0, totalNEs = 0; const positivos = [];
+  let comReg = 0, totalNEs = 0; const positivos = [];
   for(let i=0;i<lista.length;i++){
     if(ESTADO.parar){ logar('Execução interrompida.'); break; }
     const proc = lista[i];
     logar(`${i+1}º processo — ${proc}`);
     $('m-barra').style.width = (i/lista.length*100).toFixed(1)+'%';
-    $('m-progresso').textContent = `${i} de ${lista.length} processados — ${totalNEs} NE(s) em ${comRegistro} processo(s)`;
+    $('m-progresso').textContent = `${i} de ${lista.length} processados · ${totalNEs} NE(s) em ${comReg} processo(s)`;
     try{
-      const r = await requisitar(montarURL({numeroProcesso:proc,
-        dataDisponibilizacaoInicio:data, dataDisponibilizacaoFim:data}), maxTent, esp429);
-      /* par [processo, objeto] — mesma estrutura de resultado_prov do PAD */
+      const r = await requisitar(montarURL({numeroProcesso:proc,dataDisponibilizacaoInicio:data,dataDisponibilizacaoFim:data}), maxTent, esp429);
       ESTADO.bruto.push([proc, r]);
-      const c = r.count || 0;
-      logar(`  count = ${c}`);
-      if(c>0){ comRegistro++; totalNEs += c; positivos.push(proc); }
+      const c = r.count||0; logar(`  count = ${c}`);
+      if(c>0){ comReg++; totalNEs += c; positivos.push(proc); }
     }catch(e){
       logar(`  FALHA: ${e.message}`);
       ESTADO.bruto.push([proc, {status:'erro', message:e.message, count:0, items:[]}]);
@@ -487,60 +625,190 @@ async function buscarProcessos(){
   $('m-barra').style.width='100%';
   $('m-progresso').textContent = `${lista.length} de ${lista.length} processados`;
   ESTADO.resumo = {data, tipo:'processos', pesquisados:lista.length, totalRegistros:totalNEs,
-    processosComRegistro:comRegistro, positivos, tempo:tempoExec()};
+    processosComRegistro:comReg, positivos, tempo:tempoExec()};
   $('m-btn').disabled = false;
-  logar(`Fim — ${totalNEs} NE(s) em ${comRegistro} processo(s) — ${ESTADO.resumo.tempo}`);
-  carregarNoVisualizador();
+  logar(`Fim — ${totalNEs} NE(s) em ${comReg} processo(s) — ${ESTADO.resumo.tempo}`);
+  carregarNoVisualizador(); atualizarPrevia();
 }
 function pararExecucao(){ ESTADO.parar = true; logar('Solicitada parada...'); }
 function tempoExec(){ const s = Math.round((Date.now()-ESTADO.inicio)/1000); return `${Math.floor(s/60)} min e ${s%60} seg`; }
 
-/* ================== GERAÇÃO DO ARQUIVO NO FORMATO DO PAD ================== */
-/* Monitorados: cada bloco = linha com o nº do processo + linha com o JSON da resposta
-   (equivale a resultado_prov = [processo, objeto] escrito por File.WriteText).
-   Partes: o arquivo é o próprio objeto da resposta (count + items). */
+/* ================== ARQUIVOS ================== */
 function gerarConteudoPAD(){
-  if(ESTADO.modo === 'processos'){
-    return ESTADO.bruto.map(([proc, obj]) => `${proc}\n${JSON.stringify(obj)}`).join('\n');
-  }
-  return ESTADO.bruto.map(b => JSON.stringify(b.objeto)).join('\n');
-}
-function nomeArquivoPAD(indice){
+  if(ESTADO.modo==='processos')
+    return ESTADO.bruto.map(([p,o])=>`${p}\n${JSON.stringify(o)}`).join('\n');
+  /* partes: um único objeto consolidado (count + items), compatível com o VerJSON */
   const r = ESTADO.resumo;
-  if(r.tipo === 'processos'){
-    let n = `TODOS_monitorados_${arqData(r.data)}`;
-    if(r.processosComRegistro>0) n += `_POSITIVO_[${r.totalRegistros}NEs][${r.processosComRegistro}Procs]`;
-    return n + '.json';
-  }
-  const b = ESTADO.bruto[indice||0];
-  const replaced = b.filtro.replace(/<br> - /g,'_');
-  return `[${arqData(r.data)}] (Filtro)${replaced} [${b.objeto.count||0}-Registros].json`.replace(/[\\/:*?"<>|]/g,'_');
+  return JSON.stringify({
+    status:'success',
+    deduplicado: !!r.dedup,
+    count: ESTADO.unicos.length,
+    countBruto: r.totalBruto,
+    duplicadasRemovidas: r.duplicadas,
+    filtros: (r.filtros||[]).map(f=>({texto:f.nome, count:f.registros})),
+    items: ESTADO.unicos
+  });
+}
+function nomeArquivoPAD(){
+  const r = ESTADO.resumo;
+  let n = `TODOS_monitorados_${arqData(r.data)}`;
+  if(r.processosComRegistro>0) n += `_POSITIVO_[${r.totalRegistros}NEs][${r.processosComRegistro}Procs]`;
+  return n+'.json';
+}
+function nomeAnexoJSON(){
+  const r = ESTADO.resumo;
+  if(!r.data) return 'DJEN.json';
+  if(r.tipo==='processos') return nomeArquivoPAD();
+  return `[${arqData(r.data)}] PARTES [${r.processosDistintos} processos] [${r.totalRegistros} notas].json`.replace(/[\\/:*?"<>|]/g,'_');
+}
+function nomeAnexoLog(){
+  const r = ESTADO.resumo;
+  return `LOG_DJEN_${r.tipo==='processos'?'MONITORADOS':'PARTES'}_${arqData(r.data||hoje())}.txt`;
+}
+function atualizarAnexos(){
+  const el = $('e-anexos');
+  if(!ESTADO.bruto.length){ el.textContent = 'Nenhuma busca executada — os anexos aparecerão aqui.'; return; }
+  el.innerHTML = `<b>Anexos do .eml:</b><br>1. ${escapar(nomeAnexoJSON())}<br>2. ${escapar(nomeAnexoLog())}`;
 }
 
-/* ================== VISUALIZADOR (lógica do VerJSON) ================== */
-let VJ = {itens:[], agrupado:new Map(), arquivo:'', contagem:0, modo:'accordion',
-          marcadosProc:new Set(), marcadosFlat:new Set()};
-
-function carregarNoVisualizador(){
-  const itens = [];
-  let contagem = 0;
-  if(ESTADO.modo === 'processos'){
-    ESTADO.bruto.forEach(([proc, obj]) => {
-      contagem += obj.count || 0;
-      (obj.items||[]).forEach(it => itens.push({...it, numero_processo_principal: proc}));
-    });
-    VJ.arquivo = nomeArquivoPAD();
+/* ================== E-MAIL: CORPO ================== */
+function assuntoPadrao(){
+  return ESTADO.resumo.tipo==='processos'
+    ? 'NEs Trabalhistas - Automate - TODOS Monitorados - API DJEN'
+    : 'NEs Trabalhistas - Automate - PARTES Monitoradas - API DJEN';
+}
+function linhasResumo(){
+  const r = ESTADO.resumo, L = [];
+  L.push(['Data', brData(r.data)]);
+  if(r.tipo==='processos'){
+    L.push(['Processos pesquisados', String(r.pesquisados)]);
+    L.push(['Registros totais', String(r.totalRegistros)]);
+    L.push(['Processos com registros', String(r.processosComRegistro)]);
   }else{
-    ESTADO.bruto.forEach(b => {
-      contagem += b.objeto.count || 0;
-      (b.objeto.items||[]).forEach(it => itens.push({...it, filtro_origem: b.filtro}));
-    });
-    VJ.arquivo = ESTADO.bruto.length ? nomeArquivoPAD(0) : '';
+    r.filtros.forEach(f=> L.push([f.nome, String(f.registros)]));
+    L.push(['Notas retornadas', String(r.totalBruto)]);
+    if(r.dedup) L.push(['Repetidas removidas', String(r.duplicadas)]);
+    L.push([r.dedup ? 'Notas únicas' : 'Notas exibidas', String(r.totalRegistros)]);
+    L.push(['Processos distintos', String(r.processosDistintos)]);
   }
+  L.push(['Tempo de execução', r.tempo]);
+  return L;
+}
+function corpoHTML(origem){
+  const r = ESTADO.resumo;
+  if(!r || !r.data) return '<p>Execute uma busca para gerar o corpo do e-mail.</p>';
+  const td = "padding: 12px 15px; border-bottom: 1px solid #dddddd; background-color: #ffffff;";
+  const linhas = linhasResumo().map(([k,v])=>`<tr><td style="${td}"><b>${escapar(k)}</b></td><td style="${td}">${escapar(v)}</td></tr>`).join('');
+  const intro = r.tipo==='processos'
+    ? `<p>Segue abaixo o resumo da execução do Fluxo <b>API DJEN</b> para <b>TODOS Processos Monitorados</b> (${r.pesquisados} Processos):</p>`
+    : `<p>Segue o resultado das buscas por Nome da Parte no Texto da Nota.${r.dedup?' Notas idênticas encontradas por mais de uma parte foram consolidadas em um único registro.':''}</p><p>Abaixo um resumo da execução:</p>`;
+  return `<div style="font-family: Georgia, serif; font-size: 16px; color: #333333;">
+  <p>Origem: ${origem||'Site DJEN'}</p>
+  <p>Prezados,</p>
+  ${intro}
+  <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse; font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif; font-size: 14px; margin-top: 20px; border-radius: 8px; overflow: hidden; border: 1px solid #dddddd;">
+    <thead><tr style="background-color: #2F4F4F; color: #ffffff;">
+      <th style="padding: 12px 15px; text-align: left; border-bottom: 1px solid #203636; font-weight: normal;">Item</th>
+      <th style="padding: 12px 15px; text-align: left; border-bottom: 1px solid #203636; font-weight: normal;">Valor</th>
+    </tr></thead><tbody>${linhas}</tbody></table>
+  <p style="margin-top: 30px;">Para visualizar mais fácil o conteúdo do JSON, acesse <b><a style="color:#2F4F4F;text-decoration:none;" href="${URL_VERJSON}" target="_blank">Leitor JSON</a></b></p>
+  ${r.tipo==='processos' ? `<p style="margin-top: 30px;">Para o histórico completo dos relatórios acesse a <b><a style="color:#2F4F4F;text-decoration:none;" href="${LISTA_SEC}" target="_blank">Lista SEC - NEs Trabalhistas</a></b></p>
+  <p style="margin-top: 30px;">ou na <b><a style="color:#2F4F4F;text-decoration:none;" href="${LISTA_REGISTROS}" target="_blank">Lista Registros NEs Trabalhistas</a></b></p>
+  <p style="margin-top: 30px;">Processos com NE: ${r.positivos.length ? r.positivos.join('; ') : `NENHUMA Nota para a Lista de Monitorados no Dia ${brData(r.data)}.`}</p>`:''}
+  <p style="margin-top: 30px;">Atenciosamente,</p></div>`;
+}
+function tabelaTexto(){
+  const L = linhasResumo();
+  const w1 = Math.max(...L.map(([k])=>k.length), 4);
+  const w2 = Math.max(...L.map(([,v])=>v.length), 5);
+  const sep = `+${'-'.repeat(w1+2)}+${'-'.repeat(w2+2)}+`;
+  const linha = (a,b)=>`| ${a.padEnd(w1)} | ${b.padEnd(w2)} |`;
+  return [sep, linha('ITEM','VALOR'), sep, ...L.map(([k,v])=>linha(k,v)), sep].join('\n');
+}
+function corpoTexto(){
+  const r = ESTADO.resumo;
+  if(!r || !r.data) return 'Execute uma busca antes.';
+  const intro = r.tipo==='processos'
+    ? `Segue o resumo da execução do Fluxo API DJEN para TODOS os Processos Monitorados (${r.pesquisados} processos):`
+    : `Segue o resultado das buscas por Nome da Parte no Texto da Nota.${r.dedup?' Notas idênticas foram consolidadas em um único registro.':''} Resumo da execução:`;
+  let t = `Origem: Site DJEN\n\nPrezados,\n\n${intro}\n\n${tabelaTexto()}\n`;
+  if(r.tipo==='processos')
+    t += `\nProcessos com NE: ${r.positivos.length ? r.positivos.join('; ') : `nenhuma nota no dia ${brData(r.data)}`}\n`;
+  t += `\nLeitor JSON: ${URL_VERJSON}`;
+  if(r.tipo==='processos') t += `\nLista SEC - NEs Trabalhistas: ${LISTA_SEC}\nLista Registros NEs Trabalhistas: ${LISTA_REGISTROS}`;
+  t += `\n\nAnexos sugeridos: ${nomeAnexoJSON()} e ${nomeAnexoLog()}\n\nAtenciosamente,`;
+  return t;
+}
+function atualizarPrevia(){
+  $('previa').innerHTML = corpoHTML('Site DJEN');
+  if(ESTADO.resumo && ESTADO.resumo.data && !$('e-assunto').value.trim()) $('e-assunto').value = assuntoPadrao();
+  atualizarAnexos();
+}
+
+/* ================== E-MAIL: AÇÕES ================== */
+function abrirOutlookWeb(){
+  if(!ESTADO.resumo || !ESTADO.resumo.data){ alert('Execute uma busca antes.'); return; }
+  const url = `https://outlook.office.com/mail/deeplink/compose?to=${encodeURIComponent($('e-para').value.trim())}&subject=${encodeURIComponent($('e-assunto').value.trim()||assuntoPadrao())}&body=${encodeURIComponent(corpoTexto())}`;
+  if(url.length > 8000) alert('O corpo é longo e pode ser cortado pelo navegador. Se faltar conteúdo, use o .eml.');
+  window.open(url,'_blank'); logar('Rascunho aberto no Outlook Web.');
+}
+function abrirMailto(){
+  if(!ESTADO.resumo || !ESTADO.resumo.data){ alert('Execute uma busca antes.'); return; }
+  let corpo = corpoTexto();
+  if(corpo.length > 1800) corpo = corpo.slice(0,1800) + '\n\n[...] Corpo truncado pelo limite do mailto — use o .eml.';
+  window.location.href = `mailto:${encodeURIComponent($('e-para').value.trim())}?subject=${encodeURIComponent($('e-assunto').value.trim()||assuntoPadrao())}&body=${encodeURIComponent(corpo)}`;
+  logar('Rascunho aberto no cliente padrão (mailto).');
+}
+function copiarResumoHTML(){
+  if(!ESTADO.resumo || !ESTADO.resumo.data){ alert('Execute uma busca antes.'); return; }
+  navigator.clipboard.writeText(corpoHTML('Site DJEN')).then(
+    ()=>alert('Corpo HTML copiado — cole no e-mail em modo HTML.'),()=>alert('Não foi possível copiar.'));
+}
+function copiarResumoTexto(){
+  navigator.clipboard.writeText(corpoTexto()).then(()=>alert('Corpo em texto copiado.'),()=>alert('Não foi possível copiar.'));
+}
+function b64(txt){ return btoa(unescape(encodeURIComponent(txt))).replace(/(.{76})/g,'$1\r\n'); }
+function baixarEML(){
+  if(!ESTADO.bruto.length){ alert('Execute uma busca antes.'); return; }
+  const para = $('e-para').value.trim().replace(/;/g,', ');
+  const assunto = $('e-assunto').value.trim() || assuntoPadrao();
+  const lim = '----=_DJEN_' + Date.now();
+  const anexos = [
+    {nome:nomeAnexoJSON(), tipo:'application/json', dados:gerarConteudoPAD()},
+    {nome:nomeAnexoLog(),  tipo:'text/plain',       dados:ESTADO.log.join('\r\n')}
+  ];
+  const partes = [
+    `To: ${para}`,
+    `Subject: =?UTF-8?B?${btoa(unescape(encodeURIComponent(assunto)))}?=`,
+    'X-Unsent: 1','MIME-Version: 1.0',
+    `Content-Type: multipart/mixed; boundary="${lim}"`,'',
+    `--${lim}`,'Content-Type: text/html; charset=UTF-8','Content-Transfer-Encoding: base64','',
+    b64(corpoHTML('Site DJEN')),''
+  ];
+  anexos.forEach(a=>{
+    partes.push(`--${lim}`, `Content-Type: ${a.tipo}; name="${a.nome}"`,
+      'Content-Transfer-Encoding: base64', `Content-Disposition: attachment; filename="${a.nome}"`, '', b64(a.dados), '');
+  });
+  partes.push(`--${lim}--`,'');
+  baixar(`Email_DJEN_${arqData(ESTADO.resumo.data)}.eml`, partes.join('\r\n'), 'message/rfc822');
+  logar(`Arquivo .eml gerado com 2 anexos: ${anexos[0].nome} e ${anexos[1].nome}.`);
+  setTimeout(()=>alert('.eml baixado. Abra-o com duplo clique — o Outlook exibe o rascunho preenchido, com os dois anexos.'),500);
+}
+
+/* ================== VISUALIZADOR ================== */
+let VJ = {itens:[], agrupado:new Map(), arquivo:'', contagem:0, modo:'accordion', marcadosProc:new Set(), marcadosFlat:new Set()};
+function carregarNoVisualizador(){
+  const itens = []; let contagem = 0;
+  if(ESTADO.modo==='processos'){
+    ESTADO.bruto.forEach(([p,o])=>{ contagem += o.count||0; (o.items||[]).forEach(i=>itens.push(Object.assign({},i,{numero_processo_principal:p}))); });
+  }else{
+    ESTADO.unicos.forEach(i=>itens.push(i));
+    contagem = ESTADO.unicos.length;
+  }
+  VJ.arquivo = ESTADO.bruto.length ? nomeAnexoJSON() : '';
   VJ.itens = itens; VJ.contagem = contagem;
-  VJ.marcadosProc.clear(); VJ.marcadosFlat.clear();
-  $('vj-filtro').value = '';
-  agruparVJ(); montarSeletorColunas(); renderVJ(); 
+  VJ.marcadosProc.clear(); VJ.marcadosFlat.clear(); $('vj-filtro').value='';
+  agruparVJ(); montarSeletorColunas(); renderVJ();
 }
 function abrirVisualizador(){
   if(!VJ.itens.length && !ESTADO.bruto.length){ alert('Execute uma busca antes.'); return; }
@@ -548,202 +816,180 @@ function abrirVisualizador(){
 }
 function agruparVJ(){
   VJ.agrupado = new Map();
-  VJ.itens.forEach(item => {
-    const k = item.numeroprocessocommascara || item.numero_processo_principal || 'Sem Número';
-    if(!VJ.agrupado.has(k)) VJ.agrupado.set(k, []);
-    VJ.agrupado.get(k).push(item);
+  VJ.itens.forEach(i=>{
+    const k = i.numeroprocessocommascara || i.numero_processo_principal || 'Sem Número';
+    if(!VJ.agrupado.has(k)) VJ.agrupado.set(k,[]);
+    VJ.agrupado.get(k).push(i);
   });
 }
 function montarSeletorColunas(){
-  const cont = $('vj-col-cont'); cont.innerHTML = '';
+  const c = $('vj-col-cont'); c.innerHTML='';
   if(!VJ.itens.length) return;
-  const chaves = new Set();
-  VJ.itens.forEach(i => Object.keys(i).forEach(k => chaves.add(k)));
+  const chaves = new Set(); VJ.itens.forEach(i=>Object.keys(i).forEach(k=>chaves.add(k)));
   const padrao = ["siglaTribunal","nomeOrgao","texto","nomeClasse","numeroprocessocommascara"];
-  Array.from(chaves).forEach(k => {
-    const lb = document.createElement('label');
-    const cb = document.createElement('input');
-    cb.type='checkbox'; cb.value=k; cb.checked = padrao.includes(k);
-    cb.style.width='auto'; cb.style.transform='scale(1.2)'; cb.style.marginRight='8px';
+  if(ESTADO.modo==='partes') padrao.push('filtros_origem');
+  Array.from(chaves).forEach(k=>{
+    const lb=document.createElement('label'), cb=document.createElement('input');
+    cb.type='checkbox'; cb.value=k; cb.checked=padrao.indexOf(k)>-1;
     cb.addEventListener('change', renderVJ);
-    lb.appendChild(cb); lb.appendChild(document.createTextNode(' '+k));
-    cont.appendChild(lb);
+    lb.appendChild(cb); lb.appendChild(document.createTextNode(k)); c.appendChild(lb);
   });
 }
 function escapeRegExp(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
-function realcar(txt, termos){
-  if(!termos.length || !txt) return txt;
-  return txt.replace(new RegExp(`(${termos.map(escapeRegExp).join('|')})`,'gi'), '<mark>$1</mark>');
-}
-function passaFiltro(item, q){
+function realcar(t,ts){ return (!ts.length||!t)?t:t.replace(new RegExp(`(${ts.map(escapeRegExp).join('|')})`,'gi'),'<mark>$1</mark>'); }
+function passaFiltro(item,q){
   if(!q) return true;
-  const t = (item.texto||'').toLowerCase();
-  return q.split('|').map(s=>s.trim()).some(grupo => {
-    const e = grupo.split('&').map(s=>s.trim()).filter(Boolean);
-    if(!e.length) return t.includes(grupo);
-    return e.every(x => t.includes(x));
+  const t=(item.texto||'').toLowerCase();
+  return q.split('|').map(s=>s.trim()).some(g=>{
+    const e=g.split('&').map(s=>s.trim()).filter(Boolean);
+    return e.length ? e.every(x=>t.includes(x)) : t.includes(g);
   });
 }
 function renderVJ(){
-  const tabela = $('vj-tabela');
-  tabela.innerHTML = '<thead></thead>';
-  const thead = tabela.querySelector('thead');
+  const tb = $('vj-tabela'); tb.innerHTML='<thead></thead>';
+  const thead = tb.querySelector('thead');
   const cols = Array.from(document.querySelectorAll('#vj-col-cont input:checked')).map(c=>c.value);
   const tr = thead.insertRow();
-  if(VJ.modo==='flat'){ ['Nº','Riscar'].forEach(t=>{const th=document.createElement('th');th.textContent=t;tr.appendChild(th);}); }
-  cols.forEach(t=>{ const th=document.createElement('th'); th.textContent=t; tr.appendChild(th); });
-
+  if(VJ.modo==='flat') ['Nº','Riscar'].forEach(t=>{const th=document.createElement('th');th.textContent=t;tr.appendChild(th);});
+  cols.forEach(t=>{const th=document.createElement('th');th.textContent=t;tr.appendChild(th);});
   const q = $('vj-filtro').value.trim().toLowerCase();
-  const termos = q ? [...new Set(q.split(/[&|]/).map(s=>s.trim()).filter(Boolean))] : [];
+  const termos = q ? Array.from(new Set(q.split(/[&|]/).map(s=>s.trim()).filter(Boolean))) : [];
   if(!VJ.itens.length){
-    const tb = tabela.createTBody();
-    tb.innerHTML = `<tr><td colspan="${Math.max(cols.length,1)}" style="text-align:center;color:#888;padding:30px">Nenhum registro carregado.</td></tr>`;
-    $('vj-status').textContent = 'Aguardando resultados...';
-    return;
+    tb.createTBody().innerHTML = `<tr><td colspan="${Math.max(cols.length,1)}" style="text-align:center;color:var(--ink-2);padding:32px">Nenhum registro carregado.</td></tr>`;
+    $('vj-status').textContent='Aguardando resultados…'; return;
   }
-  if(VJ.modo==='accordion') vjSanfona(tabela, cols, q, termos);
-  else if(VJ.modo==='concat') vjCompacto(tabela, cols, q, termos);
-  else vjClassico(tabela, cols, q, termos);
+  if(VJ.modo==='accordion') vjSanfona(tb,cols,q,termos);
+  else if(VJ.modo==='concat') vjCompacto(tb,cols,q,termos);
+  else vjClassico(tb,cols,q,termos);
 }
-function vjSanfona(tabela, cols, q, termos){
+function sufixoDedup(){
+  const r = ESTADO.resumo;
+  return (ESTADO.modo==='partes' && r && r.dedup && r.duplicadas>0)
+    ? ` · <b>Repetidas ocultadas:</b> ${r.duplicadas}` : '';
+}
+function vjSanfona(tabela,cols,q,termos){
   let notas=0, procs=0;
-  VJ.agrupado.forEach((lista, numero) => {
-    const filtradas = lista.filter(i => passaFiltro(i,q));
-    if(!filtradas.length) return;
-    procs++; notas += filtradas.length;
-    const tbody = document.createElement('tbody'); tabela.appendChild(tbody);
-    const trH = document.createElement('tr'); trH.className='process-group-header';
+  VJ.agrupado.forEach((lista,numero)=>{
+    const f = lista.filter(i=>passaFiltro(i,q));
+    if(!f.length) return;
+    procs++; notas+=f.length;
+    const tbody=document.createElement('tbody'); tabela.appendChild(tbody);
+    const trH=document.createElement('tr'); trH.className='process-group-header';
     if(q) trH.classList.add('open');
-    const td = document.createElement('td'); td.colSpan = Math.max(cols.length,1);
-    const cont = document.createElement('div'); cont.className='process-header-content';
-    const area = document.createElement('div'); area.className='process-title-area';
-    area.innerHTML = `<span class="toggle-icon">▶</span><span>Processo ${numero}</span><span class="note-badge">${filtradas.length} nota${filtradas.length>1?'s':''}</span>`;
-    const cb = document.createElement('input'); cb.type='checkbox'; cb.title='Marcar como resolvido/riscar';
-    cb.addEventListener('click', e=>e.stopPropagation());
-    cb.addEventListener('change', e=>{
-      const on = e.target.checked;
-      on ? VJ.marcadosProc.add(numero) : VJ.marcadosProc.delete(numero);
-      trH.classList.toggle('row-strikethrough', on);
-      tbody.querySelectorAll('.process-note-row').forEach(r=>r.classList.toggle('row-strikethrough', on));
+    const td=document.createElement('td'); td.colSpan=Math.max(cols.length,1);
+    const cont=document.createElement('div'); cont.className='process-header-content';
+    const area=document.createElement('div'); area.className='process-title-area';
+    area.innerHTML=`<span class="toggle-icon">▶</span><span>${numero}</span><span class="note-badge">${f.length} nota${f.length>1?'s':''}</span>`;
+    const cb=document.createElement('input'); cb.type='checkbox'; cb.title='Marcar como resolvido';
+    cb.addEventListener('click',e=>e.stopPropagation());
+    cb.addEventListener('change',e=>{
+      const on=e.target.checked;
+      if(on) VJ.marcadosProc.add(numero); else VJ.marcadosProc.delete(numero);
+      trH.classList.toggle('row-strikethrough',on);
+      tbody.querySelectorAll('.process-note-row').forEach(r=>r.classList.toggle('row-strikethrough',on));
     });
     cont.appendChild(area); cont.appendChild(cb); td.appendChild(cont); trH.appendChild(td); tbody.appendChild(trH);
-    trH.addEventListener('click', ()=> trH.classList.toggle('open'));
-    const marcado = VJ.marcadosProc.has(numero);
-    if(marcado){ cb.checked = true; trH.classList.add('row-strikethrough'); }
-    filtradas.forEach(item => {
-      const row = document.createElement('tr'); row.className='process-note-row';
-      if(marcado) row.classList.add('row-strikethrough');
-      cols.forEach(c => { const t=document.createElement('td'); t.appendChild(celula(item,c,termos)); row.appendChild(t); });
+    trH.addEventListener('click',()=>trH.classList.toggle('open'));
+    const marc = VJ.marcadosProc.has(numero);
+    if(marc){ cb.checked=true; trH.classList.add('row-strikethrough'); }
+    f.forEach(item=>{
+      const row=document.createElement('tr'); row.className='process-note-row';
+      if(marc) row.classList.add('row-strikethrough');
+      cols.forEach(c=>{const t=document.createElement('td'); t.appendChild(celula(item,c,termos)); row.appendChild(t);});
       tbody.appendChild(row);
     });
   });
-  status(`<b>Origem:</b> ${VJ.arquivo||'busca atual'} | <b>Processos:</b> ${procs} | <b>Notas Exibidas:</b> ${notas} | <b>Contagem Oficial:</b> ${VJ.contagem}`);
+  vjStatus(`<b>Origem:</b> ${VJ.arquivo||'busca atual'} · <b>Processos:</b> ${procs} · <b>Notas:</b> ${notas}${sufixoDedup()}`);
 }
-function vjCompacto(tabela, cols, q, termos){
-  const tbody = document.createElement('tbody'); tabela.appendChild(tbody);
-  const mapa = new Map();
-  VJ.itens.forEach(item => {
-    const k = item.numeroprocessocommascara || item.numero_processo_principal || 'Sem Número';
+function vjCompacto(tabela,cols,q,termos){
+  const tbody=document.createElement('tbody'); tabela.appendChild(tbody);
+  const mapa=new Map();
+  VJ.itens.forEach(item=>{
+    const k=item.numeroprocessocommascara||item.numero_processo_principal||'Sem Número';
     if(!mapa.has(k)) mapa.set(k, JSON.parse(JSON.stringify(item)));
     else{
-      const ex = mapa.get(k);
-      if(item.texto) ex.texto = (ex.texto||'') + '<br><hr style="border-top:2px dashed #bbb;"><br>' + item.texto;
-      if(Array.isArray(item.destinatarios)) ex.destinatarios = (ex.destinatarios||[]).concat(item.destinatarios);
-      if(Array.isArray(item.destinatarioadvogados)) ex.destinatarioadvogados = (ex.destinatarioadvogados||[]).concat(item.destinatarioadvogados);
+      const ex=mapa.get(k);
+      if(item.texto) ex.texto=(ex.texto||'')+'<br><hr><br>'+item.texto;
+      if(Array.isArray(item.destinatarios)) ex.destinatarios=(ex.destinatarios||[]).concat(item.destinatarios);
+      if(Array.isArray(item.destinatarioadvogados)) ex.destinatarioadvogados=(ex.destinatarioadvogados||[]).concat(item.destinatarioadvogados);
     }
   });
-  let visiveis = 0;
-  Array.from(mapa.values()).forEach(item => {
+  let vis=0;
+  Array.from(mapa.values()).forEach(item=>{
     if(!passaFiltro(item,q)) return;
-    visiveis++;
-    const numero = item.numeroprocessocommascara || item.numero_processo_principal || 'Sem Número';
-    const row = document.createElement('tr'); row.className='standard-row';
-    const cb = document.createElement('input'); cb.type='checkbox'; cb.style.cssFloat='right';
-    cb.addEventListener('change', e=>{
-      row.classList.toggle('row-strikethrough', e.target.checked);
-      e.target.checked ? VJ.marcadosProc.add(numero) : VJ.marcadosProc.delete(numero);
+    vis++;
+    const numero=item.numeroprocessocommascara||item.numero_processo_principal||'Sem Número';
+    const row=document.createElement('tr'); row.className='standard-row';
+    const cb=document.createElement('input'); cb.type='checkbox'; cb.style.cssFloat='right';
+    cb.addEventListener('change',e=>{
+      row.classList.toggle('row-strikethrough',e.target.checked);
+      if(e.target.checked) VJ.marcadosProc.add(numero); else VJ.marcadosProc.delete(numero);
     });
     if(VJ.marcadosProc.has(numero)){ cb.checked=true; row.classList.add('row-strikethrough'); }
-    cols.forEach((c,idx)=>{
-      const td=document.createElement('td'); td.appendChild(celula(item,c,termos));
-      if(idx===0) td.insertBefore(cb, td.firstChild);
-      row.appendChild(td);
-    });
+    cols.forEach((c,i)=>{const td=document.createElement('td'); td.appendChild(celula(item,c,termos)); if(i===0) td.insertBefore(cb,td.firstChild); row.appendChild(td);});
     tbody.appendChild(row);
   });
-  status(`<b>Origem:</b> ${VJ.arquivo||'busca atual'} | <b>Processos Exibidos:</b> ${visiveis} | <b>Contagem Oficial:</b> ${VJ.contagem}`);
+  vjStatus(`<b>Origem:</b> ${VJ.arquivo||'busca atual'} · <b>Processos exibidos:</b> ${vis}${sufixoDedup()}`);
 }
-function vjClassico(tabela, cols, q, termos){
-  const tbody = document.createElement('tbody'); tabela.appendChild(tbody);
-  let visiveis = 0;
-  VJ.itens.forEach((item, idx) => {
+function vjClassico(tabela,cols,q,termos){
+  const tbody=document.createElement('tbody'); tabela.appendChild(tbody);
+  let vis=0;
+  VJ.itens.forEach((item,idx)=>{
     if(!passaFiltro(item,q)) return;
-    visiveis++;
-    const row = document.createElement('tr'); row.className='standard-row';
-    row.insertCell().textContent = idx+1;
-    const tdc = row.insertCell();
-    const cb = document.createElement('input'); cb.type='checkbox';
-    cb.addEventListener('change', e=>{
-      row.classList.toggle('row-strikethrough', e.target.checked);
-      e.target.checked ? VJ.marcadosFlat.add(idx) : VJ.marcadosFlat.delete(idx);
+    vis++;
+    const row=document.createElement('tr'); row.className='standard-row';
+    row.insertCell().textContent=idx+1;
+    const tdc=row.insertCell(); const cb=document.createElement('input'); cb.type='checkbox';
+    cb.addEventListener('change',e=>{
+      row.classList.toggle('row-strikethrough',e.target.checked);
+      if(e.target.checked) VJ.marcadosFlat.add(idx); else VJ.marcadosFlat.delete(idx);
     });
     tdc.appendChild(cb);
     if(VJ.marcadosFlat.has(idx)){ cb.checked=true; row.classList.add('row-strikethrough'); }
-    cols.forEach(c=>{ const td=document.createElement('td'); td.appendChild(celula(item,c,termos)); row.appendChild(td); });
+    cols.forEach(c=>{const td=document.createElement('td'); td.appendChild(celula(item,c,termos)); row.appendChild(td);});
     tbody.appendChild(row);
   });
-  status(`<b>Origem:</b> ${VJ.arquivo||'busca atual'} | <b>Notas Exibidas:</b> ${visiveis} (Total: ${VJ.itens.length}) | <b>Contagem Oficial:</b> ${VJ.contagem}`);
+  vjStatus(`<b>Origem:</b> ${VJ.arquivo||'busca atual'} · <b>Notas exibidas:</b> ${vis} (total ${VJ.itens.length})${sufixoDedup()}`);
 }
-function celula(item, col, termos){
-  const div = document.createElement('div');
-  let c = item[col]; if(c==null) c='';
+function celula(item,col,termos){
+  const div=document.createElement('div');
+  let c=item[col]; if(c==null) c='';
+  if(col==='filtros_origem' && Array.isArray(c)){
+    div.innerHTML = c.map(f=>`<span class="tag ${c.length>1?'dup':'zero'}">${escapar(f)}</span>`).join(' ');
+    return div;
+  }
   if(Array.isArray(c)){
-    if(col==='destinatarios' && c.length)
-      div.innerHTML = Array.from(new Set(c.map(d=>`${d.nome||'N/A'} (Polo: ${d.polo||'N/A'})`))).join('<br>');
-    else if(col==='destinatarioadvogados' && c.length)
-      div.innerHTML = Array.from(new Set(c.map(a=> a.advogado ? `${a.advogado.nome||'N/A'} (OAB: ${a.advogado.numero_oab||'N/A'}/${a.advogado.uf_oab||'N/A'})` : 'Advogado inválido'))).join('<br>');
-    else div.innerHTML = `<pre>${escapar(JSON.stringify(c,null,2))}</pre>`;
-  }else if(typeof c === 'object'){
-    div.innerHTML = `<pre>${escapar(JSON.stringify(c,null,2))}</pre>`;
-  }else{
-    c = String(c);
-    if(col==='texto' && termos.length) div.innerHTML = realcar(c, termos);
-    else if(col==='siglaTribunal' && !c.includes('TRT')) div.innerHTML = `<span class="tribunal-alert-red">${c}</span>`;
-    else if(col==='siglaTribunal' && !c.includes('TRT4')) div.innerHTML = `<span class="tribunal-alert-orange">${c}</span>`;
-    else if(col==='numeroprocessocommascara' && c.includes('0000164-13.2017.5.09.0965'))
-      div.innerHTML = `<span class="tribunal-alert-orange">${c} (PF - Movimentar CPJ 50299993120128210001)</span>`;
-    else div.innerHTML = c;
+    if(col==='destinatarios'&&c.length) div.innerHTML=Array.from(new Set(c.map(d=>`${d.nome||'N/A'} (Polo: ${d.polo||'N/A'})`))).join('<br>');
+    else if(col==='destinatarioadvogados'&&c.length) div.innerHTML=Array.from(new Set(c.map(a=>a.advogado?`${a.advogado.nome||'N/A'} (OAB: ${a.advogado.numero_oab||'N/A'}/${a.advogado.uf_oab||'N/A'})`:'Advogado inválido'))).join('<br>');
+    else div.innerHTML=`<pre>${escapar(JSON.stringify(c,null,2))}</pre>`;
+  }else if(typeof c==='object'){ div.innerHTML=`<pre>${escapar(JSON.stringify(c,null,2))}</pre>`; }
+  else{
+    c=String(c);
+    if(col==='texto'&&termos.length) div.innerHTML=realcar(c,termos);
+    else if(col==='siglaTribunal'&&!c.includes('TRT')) div.innerHTML=`<span class="tribunal-alert-red">${c}</span>`;
+    else if(col==='siglaTribunal'&&!c.includes('TRT4')) div.innerHTML=`<span class="tribunal-alert-orange">${c}</span>`;
+    else if(col==='numeroprocessocommascara'&&c.includes('0000164-13.2017.5.09.0965')) div.innerHTML=`<span class="tribunal-alert-orange">${c} (PF - Movimentar CPJ 50299993120128210001)</span>`;
+    else div.innerHTML=c;
   }
   return div;
 }
-function status(html){ $('vj-status').innerHTML = html; }
-
-/* Abrir JSON já salvo (mesmo parser do VerJSON: formato antigo e formato por blocos) */
+function vjStatus(html){ $('vj-status').innerHTML=html; }
 function carregarJSONExterno(ev){ carregarJSONArquivo(ev.target.files[0]); ev.target.value=''; }
 function carregarJSONArquivo(file){
   if(!file) return;
-  const fr = new FileReader();
-  fr.onload = e => {
-    const conteudo = e.target.result;
-    let itens = [], contagem = 0, formatoAntigo = false;
-    try{
-      const j = JSON.parse(conteudo);
-      if(j && typeof j.items !== 'undefined'){ formatoAntigo = true; itens = j.items||[]; contagem = j.count||0; }
-    }catch(err){}
-    if(!formatoAntigo){
-      const blocos = conteudo.split(/^\s*(?=[\d.-]{10,})/m).filter(s=>s.trim()!=='');
-      blocos.forEach(bloco => {
-        const linhas = bloco.trim().split('\n');
-        const numero = linhas.shift().trim();
-        try{
-          const j = JSON.parse(linhas.join('\n'));
-          contagem += j.count||0;
-          if(j.count>0 && Array.isArray(j.items))
-            itens.push(...j.items.map(i=>({...i, numero_processo_principal:numero})));
-        }catch(err){ console.warn('Bloco inválido em '+numero, err); }
+  const fr=new FileReader();
+  fr.onload=e=>{
+    const cont=e.target.result; let itens=[], contagem=0, antigo=false;
+    try{ const j=JSON.parse(cont); if(j&&typeof j.items!=='undefined'){antigo=true; itens=j.items||[]; contagem=j.count||0;} }catch(err){}
+    if(!antigo){
+      cont.split(/^\s*(?=[\d.-]{10,})/m).filter(s=>s.trim()!=='').forEach(b=>{
+        const l=b.trim().split('\n'); const n=l.shift().trim();
+        try{ const j=JSON.parse(l.join('\n')); contagem+=j.count||0;
+          if(j.count>0&&Array.isArray(j.items)) itens.push.apply(itens, j.items.map(i=>Object.assign({},i,{numero_processo_principal:n})));
+        }catch(err){ console.warn('Bloco inválido em '+n, err); }
       });
     }
-    VJ.itens = itens; VJ.contagem = contagem; VJ.arquivo = file.name;
+    VJ.itens=itens; VJ.contagem=contagem; VJ.arquivo=file.name;
     VJ.marcadosProc.clear(); VJ.marcadosFlat.clear(); $('vj-filtro').value='';
     agruparVJ(); montarSeletorColunas(); renderVJ(); mudarAba('visualizar');
     logar(`JSON carregado no visualizador: ${file.name} (${itens.length} itens).`);
@@ -752,111 +998,74 @@ function carregarJSONArquivo(file){
 }
 
 /* ================== TRIBUNAIS ================== */
-const TRT_ALVO = {RS:['TRT4'],SP:['TRT2','TRT15'],MG:['TRT3'],BA:['TRT5'],PE:['TRT6'],PR:['TRT9'],
-  DF:['TRT10'],TO:['TRT10'],AM:['TRT11'],RR:['TRT11'],SC:['TRT12'],GO:['TRT18'],PI:['TRT22'],MT:['TRT23']};
-const COM_WEBJUR = ['TRT9','TRT10','TRT12'];
+const TRT_ALVO={RS:['TRT4'],SP:['TRT2','TRT15'],MG:['TRT3'],BA:['TRT5'],PE:['TRT6'],PR:['TRT9'],DF:['TRT10'],TO:['TRT10'],AM:['TRT11'],RR:['TRT11'],SC:['TRT12'],GO:['TRT18'],PI:['TRT22'],MT:['TRT23']};
+const COM_WEBJUR=['TRT4','TRT9','TRT10','TRT12'];
+const numTRT = s => parseInt(String(s).replace(/\D/g,''),10) || 0;
 async function buscarTribunais(){
   logar('Consultando datas de último envio dos tribunais...');
   try{
-    const base = $('c-base').value.trim()+'/tribunal';
-    const proxy = $('c-proxy').value;
-    const r = await fetch(proxy?proxy+encodeURIComponent(base):base, {headers:{'Accept':'application/json'}});
+    const base=$('c-base').value.trim()+'/tribunal', proxy=$('c-proxy').value;
+    const r=await fetch(proxy?proxy+encodeURIComponent(base):base,{headers:{'Accept':'application/json'}});
     if(!r.ok) throw new Error('HTTP '+r.status);
-    const dados = await r.json(); const linhas=[];
+    const dados=await r.json(), linhas=[];
     dados.forEach(uf=>{
-      const alvos = TRT_ALVO[uf.uf]; if(!alvos) return;
+      const alvos=TRT_ALVO[uf.uf]; if(!alvos) return;
       (uf.instituicoes||[]).forEach(i=>{
-        if(alvos.includes(i.sigla)) linhas.push({uf:uf.uf, sigla:i.sigla,
-          webjur: COM_WEBJUR.includes(i.sigla)?'Com WebJur':'Sem WebJur', data:i.dataUltimoEnvio||'—'});
+        if(alvos.indexOf(i.sigla)>-1)
+          linhas.push({uf:uf.uf, sigla:i.sigla, webjur:COM_WEBJUR.indexOf(i.sigla)>-1, data:i.dataUltimoEnvio||'—'});
       });
     });
-    linhas.sort((a,b)=> a.webjur.localeCompare(b.webjur) || a.sigla.localeCompare(b.sigla,'pt',{numeric:true}));
-    $('t-saida').innerHTML = `<table><thead><tr style="background:var(--verde);color:#fff"><th>Tribunal</th><th>UF</th><th>WebJur</th><th>Último envio</th></tr></thead><tbody>${
-      linhas.map(l=>`<tr><td><b>${l.sigla}</b></td><td>${l.uf}</td><td>${l.webjur}</td><td>${l.data}</td></tr>`).join('')}</tbody></table>`;
+    linhas.sort((a,b)=>{
+      if(a.sigla==='TRT4') return -1;
+      if(b.sigla==='TRT4') return 1;
+      if(a.webjur !== b.webjur) return a.webjur ? -1 : 1;
+      return numTRT(a.sigla)-numTRT(b.sigla) || a.uf.localeCompare(b.uf);
+    });
+    $('t-saida').innerHTML=`<table><thead><tr><th>Tribunal</th><th>UF</th><th>WebJur</th><th>Último envio</th></tr></thead><tbody>${
+      linhas.map(l=>`<tr class="${l.sigla==='TRT4'?'destaque':''}"><td><b>${l.sigla}</b></td><td>${l.uf}</td><td>${l.webjur?'Com WebJur':'Sem WebJur'}</td><td>${l.data}</td></tr>`).join('')}</tbody></table>`;
     logar(`Tribunais consultados: ${linhas.length} registro(s).`);
   }catch(e){
-    $('t-saida').innerHTML = `<p style="color:var(--erro)">Erro ao consultar: ${escapar(e.message)}</p>`;
+    $('t-saida').innerHTML=`<p style="color:var(--err)">Erro ao consultar: ${escapar(e.message)}</p>`;
     logar('Erro tribunais: '+e.message);
   }
 }
 
 /* ================== EXPORTAÇÕES ================== */
-function baixar(nome, conteudo, tipo){
-  const b = new Blob([conteudo],{type:tipo+';charset=utf-8'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(b); a.download = nome; a.click();
-  setTimeout(()=>URL.revokeObjectURL(a.href), 4000);
+function baixar(nome,conteudo,tipo){
+  const b=new Blob([conteudo],{type:tipo+';charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(b); a.download=nome; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),4000);
 }
 function baixarJSON(){
   if(!ESTADO.bruto.length){ alert('Nada para exportar.'); return; }
-  if(ESTADO.modo === 'processos'){
-    baixar(nomeArquivoPAD(), gerarConteudoPAD(), 'application/json');
-  }else{
-    /* o PAD gera um arquivo por filtro */
-    ESTADO.bruto.forEach((b,i)=> setTimeout(()=> baixar(nomeArquivoPAD(i), JSON.stringify(b.objeto), 'application/json'), i*400));
-  }
-  logar('Arquivo(s) JSON gerado(s) no formato do PAD.');
+  baixar(nomeAnexoJSON(), gerarConteudoPAD(), 'application/json');
+  logar('JSON gerado no formato do PAD.');
 }
 function abrirVerJSON(){
   if(!ESTADO.bruto.length){ alert('Execute uma busca antes.'); return; }
   baixarJSON();
-  setTimeout(()=>{
-    window.open(URL_VERJSON, '_blank');
-    alert('O JSON foi baixado e o VerJSON abriu em nova guia.\nArraste o arquivo da pasta Downloads para a página — ela aceita soltar em qualquer lugar.');
-  }, 600);
+  setTimeout(()=>{ window.open(URL_VERJSON,'_blank');
+    alert('O JSON foi baixado e o VerJSON abriu em nova guia.\nArraste o arquivo da pasta Downloads para a página.'); },600);
 }
-function baixarCSV(){
-  const linhas = VJ.itens;
-  if(!linhas.length){ alert('Nada para exportar.'); return; }
-  const cols = ['numero_processo_principal','filtro_origem','numeroprocessocommascara','siglaTribunal','nomeOrgao','nomeClasse','tipoComunicacao','data_disponibilizacao','texto'];
-  const csv = ['\uFEFF'+cols.join(';')].concat(linhas.map(l=>cols.map(c=>{
-    let v = l[c]; if(v==null) v='';
-    if(typeof v==='object') v = JSON.stringify(v);
-    return `"${String(v).replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').replace(/"/g,'""')}"`;
-  }).join(';'))).join('\n');
-  baixar(`DJEN_${ESTADO.resumo.tipo||'busca'}_${arqData(ESTADO.resumo.data||hoje())}.csv`, csv, 'text/csv');
-}
-function baixarLog(){ baixar(`Log_DJEN_${arqData(ESTADO.resumo.data||hoje())}.txt`, ESTADO.log.join('\n'), 'text/plain'); }
-function copiarResumoHTML(){
-  const r = ESTADO.resumo; if(!r || !r.data){ alert('Execute uma busca antes.'); return; }
-  const td = "padding: 12px 15px; border-bottom: 1px solid #dddddd; background-color: #ffffff;";
-  let linhas = `<tr><td style="${td}"><b>Data</b></td><td style="${td}">${brData(r.data)}</td></tr>`;
-  if(r.tipo==='processos'){
-    linhas += `<tr><td style="${td}">Número de Registros <b>Totais</b></td><td style="${td}">${r.totalRegistros}</td></tr>
-    <tr><td style="${td}">Número de <b>Processos</b> com Registros</td><td style="${td}">${r.processosComRegistro}</td></tr>
-    <tr><td style="${td}">Tempo de Execução</td><td style="${td}">${r.tempo}</td></tr>`;
-  }else{
-    r.filtros.forEach(f => linhas += `<tr><td style="${td}"><b>${escapar(f.nome)}</b></td><td style="${td}">${f.registros}</td></tr>`);
-  }
-  const html = `<div style="font-family: Georgia, serif; font-size: 16px; color: #333333;">
-  <p>Origem: Site DJEN</p><p>Prezados,</p>
-  <p>Abaixo o resumo da execução da consulta à <b>API DJEN</b>:</p>
-  <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse; font-family: 'Palatino Linotype', Palatino, Georgia, serif; font-size: 14px; margin-top: 20px; border-radius: 8px; overflow: hidden; border: 1px solid #dddddd;">
-    <thead><tr style="background-color: #2F4F4F; color: #ffffff;">
-      <th style="padding: 12px 15px; text-align: left; font-weight: normal;">Item</th>
-      <th style="padding: 12px 15px; text-align: left; font-weight: normal;">Valor</th>
-    </tr></thead><tbody>${linhas}</tbody></table>
-  ${r.tipo==='processos' && r.positivos.length ? `<p style="margin-top:30px;">Processos com NE: ${r.positivos.join('; ')}</p>`:''}
-  <p style="margin-top: 30px;">Para visualizar mais fácil o conteúdo do JSON, acesse <b><a href="${URL_VERJSON}" target="_blank" style="color:#2F4F4F;text-decoration:none;">Leitor JSON</a></b></p>
-  <p style="margin-top: 30px;">Atenciosamente,</p></div>`;
-  navigator.clipboard.writeText(html).then(
-    ()=>alert('Resumo HTML copiado — cole no corpo do e-mail (modo HTML).'),
-    ()=>alert('Não foi possível copiar automaticamente.'));
+function baixarLog(){
+  if(!ESTADO.log.length){ alert('Nada no log.'); return; }
+  baixar(nomeAnexoLog(), ESTADO.log.join('\n'), 'text/plain');
 }
 
 /* ================== INIT ================== */
-$('p-data').value = hoje();
-$('m-data').value = hoje();
-$('c-url-lista').value = URL_LISTA_DOWNLOAD;
+(function(){
+  let t = 'escuro';
+  try{ t = localStorage.getItem('djen_tema') || 'escuro'; }catch(e){}
+  aplicarTema(t);
+})();
+$('p-data').value=hoje(); $('m-data').value=hoje(); $('c-url-lista').value=URL_LISTA_DOWNLOAD;
 $('vj-filtro').addEventListener('input', renderVJ);
-$('vj-modo').addEventListener('change', e=>{
-  VJ.modo = e.target.value; VJ.marcadosProc.clear(); VJ.marcadosFlat.clear(); renderVJ();
-});
-$('vj-col-btn').addEventListener('click', ()=> $('vj-col-cont').classList.toggle('show'));
-window.addEventListener('click', e=>{ if(!e.target.matches('.dropdown-button')) $('vj-col-cont').classList.remove('show'); });
-$('vj-col-cont').addEventListener('click', e=> e.stopPropagation());
-renderVJ();
-if($('c-autoload').value === '1') carregarListaMonitorados(false);
+$('vj-modo').addEventListener('change', e=>{ VJ.modo=e.target.value; VJ.marcadosProc.clear(); VJ.marcadosFlat.clear(); renderVJ(); });
+$('vj-col-btn').addEventListener('click', e=>{ e.stopPropagation(); $('vj-col-cont').classList.toggle('show'); });
+window.addEventListener('click', ()=> $('vj-col-cont').classList.remove('show'));
+$('vj-col-cont').addEventListener('click', e=>e.stopPropagation());
+renderVJ(); restaurarCache();
 </script>
 </body>
 </html>
