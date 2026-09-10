@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-tema="escuro" data-guia="tribunais">
+<html lang="pt-BR" data-tema="claro" data-guia="tribunais">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,7 +41,6 @@ html[data-tema="escuro"][data-guia="config"]{     --accent:#94A3B8; }
 html[data-tema="escuro"] .nav button.ativo,
 html[data-tema="escuro"] .btn.primary,
 html[data-tema="escuro"] .note-badge{ color:#0C0D10 }
-
 /* ============================================================
    BASE
    ============================================================ */
@@ -50,24 +49,33 @@ html,body{margin:0;padding:0}
 body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-weight:400;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
 h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:-.02em;margin:0;text-transform:uppercase}
 code{font-family:var(--font-mono);font-size:.9em;background:var(--bg);border:var(--bw) solid var(--line);padding:1px 4px}
-
 .masthead{background:var(--surface);border-bottom:var(--bw-thick) solid var(--line);padding:var(--s-6) var(--s-7);display:flex;justify-content:space-between;align-items:flex-start;gap:var(--s-5);flex-wrap:wrap}
 .masthead .kicker{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-2);font-weight:600;margin:0 0 var(--s-2)}
 .masthead h1{font-size:clamp(28px,4vw,44px);line-height:1}
 .masthead .sub{color:var(--ink-2);font-size:14px;max-width:70ch;margin:var(--s-2) 0 0}
+.masthead .direita{display:flex;flex-direction:column;align-items:flex-end;gap:var(--s-3)}
+/* navegação entre as duas ferramentas */
+.appnav{display:flex;border:var(--bw) solid var(--line)}
+.appnav a{padding:9px var(--s-5);font-family:var(--font-body);font-size:12px;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);text-decoration:none;
+  border-right:var(--bw) solid var(--line);display:flex;align-items:center;gap:7px;white-space:nowrap}
+.appnav a:last-child{border-right:0}
+.appnav a:hover{background:var(--ink);color:var(--surface)}
+.appnav a.atual{background:var(--accent);color:#fff}
+.appnav a.atual:hover{background:var(--accent);color:#fff}
+html[data-tema="escuro"] .appnav a.atual{color:#0C0D10}
+.appnav .pt{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.55}
+.appnav a.atual .pt{opacity:1}
 #tema-btn{background:var(--surface);color:var(--ink);border:var(--bw) solid var(--line);padding:10px var(--s-4);cursor:pointer;font-family:var(--font-body);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap}
 #tema-btn:hover{background:var(--ink);color:var(--surface)}
-
 main{max-width:1360px;margin:0 auto;padding:var(--s-7) var(--s-6) var(--s-8)}
 .rule{border:0;border-top:var(--bw-thick) solid var(--line);margin:var(--s-7) 0}
 .band-label{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-2);font-weight:600;margin:0 0 var(--s-3)}
-
 .nav{display:flex;flex-wrap:wrap;gap:0;border:var(--bw) solid var(--line);margin-bottom:var(--s-6)}
 .nav button{flex:1 1 auto;background:var(--surface);color:var(--ink);border:0;border-right:var(--bw) solid var(--line);padding:var(--s-3) var(--s-5);cursor:pointer;font-family:var(--font-body);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap}
 .nav button:last-child{border-right:0}
 .nav button:hover{background:var(--ink);color:var(--surface)}
 .nav button.ativo{background:var(--accent);color:#fff}
-
 .card{background:var(--surface);border:var(--bw) solid var(--line);border-radius:var(--radius);padding:var(--s-6);margin-bottom:var(--s-5)}
 .card.raised{box-shadow:var(--shadow)}
 .card > h2{font-size:20px;padding-bottom:var(--s-3);margin-bottom:var(--s-5);border-bottom:var(--bw-thick) solid var(--line)}
@@ -76,8 +84,7 @@ main{max-width:1360px;margin:0 auto;padding:var(--s-7) var(--s-6) var(--s-8)}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s-5)}
 .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s-5)}
 .full{grid-column:1/-1}
-@media (max-width:820px){.grid,.grid-4{grid-template-columns:1fr}main{padding:var(--s-5) var(--s-4)}.masthead{padding:var(--s-5) var(--s-4)}}
-
+@media (max-width:820px){.grid,.grid-4{grid-template-columns:1fr}main{padding:var(--s-5) var(--s-4)}.masthead{padding:var(--s-5) var(--s-4)}.masthead .direita{align-items:flex-start}}
 label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-2);margin-bottom:var(--s-2)}
 input,select,textarea{width:100%;padding:10px var(--s-3);border:var(--bw) solid var(--line);border-radius:var(--radius);background:var(--surface);color:var(--ink);font-family:var(--font-body);font-size:14px}
 input:focus,select:focus,textarea:focus{outline:var(--bw-thick) solid var(--accent);outline-offset:-3px}
@@ -87,7 +94,6 @@ select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,va
 .check-linha{display:flex;align-items:center;gap:var(--s-2);margin-top:var(--s-4)}
 .check-linha input{width:auto;accent-color:var(--accent);transform:scale(1.2)}
 .check-linha label{margin:0;text-transform:none;letter-spacing:0;font-size:13px;font-weight:400;color:var(--ink);cursor:pointer}
-
 .acoes{display:flex;flex-wrap:wrap;gap:var(--s-2);margin-top:var(--s-5)}
 .btn{background:var(--surface);color:var(--ink);border:var(--bw) solid var(--line);border-radius:var(--radius);padding:10px var(--s-4);cursor:pointer;font-family:var(--font-body);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
 .btn:hover{background:var(--ink);color:var(--surface)}
@@ -109,7 +115,6 @@ select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,va
 html[data-tema="escuro"] .btn.brand{color:#0C0D10}
 .btn:disabled{opacity:.4;cursor:not-allowed}
 .btn:disabled:hover{background:var(--surface);color:var(--ink)}
-
 .note{border:var(--bw) solid var(--line);border-left:var(--bw-thick) solid var(--accent);padding:var(--s-3) var(--s-4);font-size:13px;margin-bottom:var(--s-5);background:var(--surface)}
 .note.warn{border-left-color:var(--accent-2)}
 .tag{display:inline-block;padding:2px var(--s-2);border:var(--bw) solid var(--line);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
@@ -117,28 +122,23 @@ html[data-tema="escuro"] .btn.brand{color:#0C0D10}
 html[data-tema="escuro"] .tag.ok{color:#0C0D10}
 .tag.zero{background:transparent;color:var(--ink-2)}
 .tag.dup{background:var(--accent-2);color:#101114;border-color:var(--accent-2)}
-
 .progress{height:12px;border:var(--bw) solid var(--line);margin-top:var(--s-5)}
 .progress i{display:block;height:100%;background:var(--accent);width:0;transition:width .2s linear}
 .progress-txt{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-2);margin-top:var(--s-2);font-weight:600}
-
 #log{background:var(--ink);color:var(--bg);border:var(--bw) solid var(--line);font-family:var(--font-mono);font-size:12px;line-height:1.5;padding:var(--s-4);max-height:260px;overflow:auto;white-space:pre-wrap}
 html[data-tema="escuro"] #log{background:#000;color:#D6DAE2}
-
 .dropzone{border:var(--bw-thick) dashed var(--line);padding:var(--s-4);background:var(--surface)}
 .dropzone.hover{border-color:var(--accent);background:var(--bg)}
 .dropzone .dica{font-size:12px;color:var(--ink-2);margin:0 0 var(--s-3);text-transform:uppercase;letter-spacing:.08em;font-weight:600}
 .dropzone.hover .dica{color:var(--accent)}
 #drop-overlay{position:fixed;inset:0;background:var(--accent);z-index:1000;display:none;justify-content:center;align-items:center;color:#fff;font-family:var(--font-display);font-size:clamp(24px,5vw,56px);text-transform:uppercase;letter-spacing:-.02em;text-align:center;border:var(--s-2) solid var(--ink)}
 #drop-overlay.show{display:flex}
-
 table{width:100%;border-collapse:collapse;font-size:13px}
 th,td{padding:var(--s-3) var(--s-4);text-align:left;vertical-align:top;border:var(--bw) solid var(--line)}
 thead th{background:var(--ink);color:var(--surface);font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:700;position:sticky;top:0;z-index:10}
 html[data-tema="escuro"] thead th{background:#000;color:var(--ink)}
 tr.destaque td{background:var(--accent);color:#fff;font-weight:700}
 html[data-tema="escuro"] tr.destaque td{color:#0C0D10}
-
 .vj-bar{display:grid;grid-template-columns:1fr auto auto auto;gap:var(--s-3);align-items:end;margin-bottom:var(--s-5)}
 @media (max-width:820px){.vj-bar{grid-template-columns:1fr}}
 .dropdown{position:relative}
@@ -167,7 +167,6 @@ mark{background:var(--accent-2);color:#101114;padding:0 2px;font-weight:600}
 #vj-tabela td pre{margin:0;font-family:var(--font-mono);font-size:12px;white-space:pre-wrap}
 #vj-status{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-2);font-weight:600;padding-bottom:var(--s-3);border-bottom:var(--bw) solid var(--line);margin:0 0 var(--s-5)}
 #vj-status b{color:var(--ink)}
-
 #previa{border:var(--bw) solid var(--line);padding:var(--s-5);background:#fff;color:#333;max-height:360px;overflow:auto}
 .anexos-lista{border:var(--bw) solid var(--line);padding:var(--s-3) var(--s-4);font-family:var(--font-mono);font-size:12px;color:var(--ink-2);margin-top:var(--s-4)}
 .anexos-lista b{color:var(--ink);font-family:var(--font-body)}
@@ -176,16 +175,20 @@ mark{background:var(--accent-2);color:#101114;padding:0 2px;font-weight:600}
 </head>
 <body>
 <div id="drop-overlay"><div>Solte o arquivo</div></div>
-
 <header class="masthead">
   <div>
     <p class="kicker">Procuradoria-Geral do Estado · RS</p>
     <h1>DJEN — NEs Trabalhistas</h1>
     <p class="sub">Réplica web dos fluxos PAD: datas dos tribunais, busca por Parte no texto da nota e Lista de Processos Monitorados. API Comunica PJe.</p>
   </div>
-  <button id="tema-btn" onclick="alternarTema()">☀ Tema claro</button>
+  <div class="direita">
+    <nav class="appnav">
+      <a href="https://rfopaulo.github.io/NotasTrab/" class="atual"><span class="pt"></span>DJEN</a>
+      <a href="https://rfopaulo.github.io/NotasTrab/bdxsupp.html"><span class="pt"></span>BDxSUPP</a>
+    </nav>
+    <button id="tema-btn" onclick="alternarTema()">☾ Tema escuro</button>
+  </div>
 </header>
-
 <main>
   <nav class="nav">
     <button id="tab-tribunais" class="ativo" onclick="mudarAba('tribunais')">Tribunais</button>
@@ -195,9 +198,7 @@ mark{background:var(--accent-2);color:#101114;padding:0 2px;font-weight:600}
     <button id="tab-envio" onclick="mudarAba('envio')">Enviar e-mail</button>
     <button id="tab-config" onclick="mudarAba('config')">Configurações</button>
   </nav>
-
   <div class="note warn"><b>CORS.</b> Se a chamada à API for bloqueada pelo navegador, selecione um proxy nas Configurações. Todo o processamento é local.</div>
-
   <!-- ============ TRIBUNAIS ============ -->
   <section id="aba-tribunais">
     <div class="card raised">
@@ -207,7 +208,6 @@ mark{background:var(--accent-2);color:#101114;padding:0 2px;font-weight:600}
       <div id="t-saida" style="margin-top:var(--s-5)"></div>
     </div>
   </section>
-
   <!-- ============ PARTES ============ -->
   <section id="aba-partes" class="oculto">
     <div class="card raised">
@@ -239,7 +239,6 @@ CEEE-PAR</textarea>
       </div>
     </div>
   </section>
-
   <!-- ============ MONITORADOS ============ -->
   <section id="aba-processos" class="oculto">
     <div class="card raised">
@@ -250,7 +249,6 @@ CEEE-PAR</textarea>
         <div><label for="m-pausa">Pausa entre processos (ms)</label><input type="number" id="m-pausa" value="1200" min="0" step="100"></div>
         <div><label for="m-429">Espera após HTTP 429 (s)</label><input type="number" id="m-429" value="30" min="5"></div>
       </div>
-
       <h3 style="display:flex;justify-content:space-between;align-items:center;gap:var(--s-4);flex-wrap:wrap">
         <span>Lista de monitorados</span>
         <span id="m-qtd" class="tag zero">0 processos</span>
@@ -260,14 +258,12 @@ CEEE-PAR</textarea>
         <p class="dica">Arraste e solte o listaMonitoradosPTRAB.txt aqui</p>
         <textarea id="m-processos" placeholder="1. Clique em BAIXAR LISTA  ·  2. Arraste o arquivo para cá (ou cole os números)"></textarea>
       </div>
-
       <div class="acoes">
         <button class="btn brand onedrive" onclick="baixarListaOneDrive()">⬇ Baixar lista</button>
         <button class="btn brand powerapps" onclick="window.open(LINK_POWERAPPS,'_blank')">Atualizar lista (Power Apps)</button>
         <button class="btn" onclick="document.getElementById('m-file').click()">Carregar .txt</button>
         <input type="file" id="m-file" accept=".txt,.csv" class="oculto" onchange="carregarTxt(event)">
       </div>
-
       <button class="btn primary block" id="m-btn" onclick="buscarProcessos()" style="margin-top:var(--s-5)">Executar busca</button>
       <div class="acoes">
         <button class="btn" onclick="pararExecucao()">Parar</button>
@@ -281,7 +277,6 @@ CEEE-PAR</textarea>
       <p class="progress-txt" id="m-progresso">Aguardando execução</p>
     </div>
   </section>
-
   <!-- ============ VISUALIZADOR ============ -->
   <section id="aba-visualizar" class="oculto">
     <div class="card raised">
@@ -314,7 +309,6 @@ CEEE-PAR</textarea>
       <div id="vj-wrap"><table id="vj-tabela"><thead></thead></table></div>
     </div>
   </section>
-
   <!-- ============ ENVIO ============ -->
   <section id="aba-envio" class="oculto">
     <div class="card raised">
@@ -336,13 +330,11 @@ CEEE-PAR</textarea>
         Nenhum navegador envia e-mail sozinho nem anexa arquivos via <code>mailto:</code>. O <b>.eml</b> é a opção completa: abre o rascunho no Outlook com corpo em HTML e os dois anexos.
       </div>
     </div>
-
     <div class="card">
       <h2><span class="num">06</span>Prévia do corpo</h2>
       <div id="previa"><p style="color:#666">Execute uma busca para gerar a prévia.</p></div>
     </div>
   </section>
-
   <!-- ============ CONFIG ============ -->
   <section id="aba-config" class="oculto">
     <div class="card raised">
@@ -358,19 +350,17 @@ CEEE-PAR</textarea>
         <div><label for="c-timeout">Timeout por requisição (s)</label><input type="number" id="c-timeout" value="30" min="5"></div>
         <div><label for="c-tema">Tema</label>
           <select id="c-tema" onchange="aplicarTema(this.value)">
-            <option value="escuro">Escuro</option>
             <option value="claro" selected>Claro</option>
+            <option value="escuro">Escuro</option>
           </select></div>
         <div class="full"><label for="c-url-lista">URL de download do listaMonitoradosPTRAB.txt</label><input id="c-url-lista"></div>
       </div>
     </div>
   </section>
-
   <hr class="rule">
   <p class="band-label">Log de execução</p>
   <div id="log">Aguardando execução…</div>
 </main>
-
 <script>
 /* ================== LINKS ================== */
 const URL_LISTA_DOWNLOAD = "https://rsgovbr-my.sharepoint.com/personal/paulo-oliveira_pge_rs_gov_br/_layouts/15/download.aspx?SourceUrl=%2Fpersonal%2Fpaulo%2Doliveira%5Fpge%5Frs%5Fgov%5Fbr%2FDocuments%2FlistaMonitoradosPTRAB%2Etxt";
@@ -378,11 +368,9 @@ const LINK_POWERAPPS  = "https://apps.powerapps.com/play/e/default-15dcd909-8dc0
 const URL_VERJSON     = "https://rfopaulo.github.io/VerJSON/";
 const LISTA_SEC       = "https://rsgovbr-my.sharepoint.com/personal/paulo-oliveira_pge_rs_gov_br/Lists/SEC%20%20NEs%20Trabalhistas/AllItems.aspx?env=WebViewList";
 const LISTA_REGISTROS = "https://rsgovbr-my.sharepoint.com/personal/paulo-oliveira_pge_rs_gov_br/Lists/Registros%20NEs%20Trabalhistas/AllItems.aspx?env=WebViewList";
-
 let ESTADO = {modo:'partes', bruto:[], unicos:[], resumo:{}, log:[], parar:false, inicio:null};
 const $ = id => document.getElementById(id);
 const espera = ms => new Promise(r => setTimeout(r, ms));
-
 function logar(txt){
   const linha = `[${new Date().toLocaleTimeString('pt-BR')}] ${txt}`;
   ESTADO.log.push(linha);
@@ -394,7 +382,6 @@ function hoje(){ return new Date().toISOString().slice(0,10); }
 function brData(iso){ const [a,m,d]=iso.split('-'); return `${d}/${m}/${a}`; }
 function arqData(iso){ const [a,m,d]=iso.split('-'); return `${d}-${m}-${a}`; }
 function escapar(s){ return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
-
 /* ================== TEMA ================== */
 function aplicarTema(t){
   document.documentElement.setAttribute('data-tema', t);
@@ -405,7 +392,6 @@ function aplicarTema(t){
 function alternarTema(){
   aplicarTema(document.documentElement.getAttribute('data-tema')==='escuro' ? 'claro' : 'escuro');
 }
-
 /* ================== NAVEGAÇÃO ================== */
 function mudarAba(nome){
   ['tribunais','partes','processos','visualizar','envio','config'].forEach(n=>{
@@ -421,7 +407,6 @@ function montarURL(params){
   const proxy = $('c-proxy').value;
   return proxy ? proxy + encodeURIComponent(alvo) : alvo;
 }
-
 /* ================== LISTA DE MONITORADOS ================== */
 function normalizarLista(txt){
   return txt.replace(/^\uFEFF/,'').split(/[\r\n,;]+/).map(s=>s.trim())
@@ -459,7 +444,6 @@ function restaurarCache(){
       aplicarLista(c.procs, `cache local (${c.nome||'arquivo'}) — ${new Date(c.quando).toLocaleString('pt-BR')}`);
   }catch(e){}
 }
-
 (function(){
   ['dragenter','dragover','dragleave','drop'].forEach(ev =>
     document.body.addEventListener(ev, e=>{e.preventDefault();e.stopPropagation();}));
@@ -477,7 +461,6 @@ function restaurarCache(){
     z.addEventListener('dragleave', ()=>z.classList.remove('hover'));
   });
 })();
-
 /* ================== REQUISIÇÃO ================== */
 async function requisitar(url, maxTent, esp429){
   let t = 0;
@@ -496,7 +479,6 @@ async function requisitar(url, maxTent, esp429){
   }
   throw new Error(`Número máximo de tentativas (${maxTent}) atingido`);
 }
-
 /* ================== DEDUPLICAÇÃO ================== */
 /* Nota idêntica = mesmo id da API; sem id, mesmo processo + data + teor normalizado */
 function normalizarTexto(t){
@@ -553,7 +535,6 @@ function reprocessarPartes(){
     : `Deduplicação desativada — exibindo as ${ESTADO.resumo.totalBruto} nota(s) retornadas.`);
   carregarNoVisualizador(); atualizarPrevia();
 }
-
 /* ================== FLUXO 1: PARTES ================== */
 async function buscarPartes(){
   const data = $('p-data').value || hoje();
@@ -584,7 +565,6 @@ async function buscarPartes(){
       if(pausa) await espera(pausa);
     }
   }catch(e){ logar(`ERRO FATAL: ${e.message}`); alert('Busca interrompida: '+e.message); }
-
   ESTADO.resumo = {data, tipo:'partes',
     filtros: ESTADO.bruto.map(b=>({nome:b.filtro, registros:b.objeto.count||0})),
     tempo: tempoExec()};
@@ -594,7 +574,6 @@ async function buscarPartes(){
   logar(`Fim — ${r.totalBruto} nota(s) retornada(s); ${r.duplicadas} repetida(s); ${r.totalRegistros} única(s) em ${r.processosDistintos} processo(s) — ${r.tempo}`);
   carregarNoVisualizador(); atualizarPrevia();
 }
-
 /* ================== FLUXO 2: MONITORADOS ================== */
 async function buscarProcessos(){
   const data = $('m-data').value || hoje();
@@ -632,7 +611,6 @@ async function buscarProcessos(){
 }
 function pararExecucao(){ ESTADO.parar = true; logar('Solicitada parada...'); }
 function tempoExec(){ const s = Math.round((Date.now()-ESTADO.inicio)/1000); return `${Math.floor(s/60)} min e ${s%60} seg`; }
-
 /* ================== ARQUIVOS ================== */
 function gerarConteudoPAD(){
   if(ESTADO.modo==='processos')
@@ -670,7 +648,6 @@ function atualizarAnexos(){
   if(!ESTADO.bruto.length){ el.textContent = 'Nenhuma busca executada — os anexos aparecerão aqui.'; return; }
   el.innerHTML = `<b>Anexos do .eml:</b><br>1. ${escapar(nomeAnexoJSON())}<br>2. ${escapar(nomeAnexoLog())}`;
 }
-
 /* ================== E-MAIL: CORPO ================== */
 function assuntoPadrao(){
   return ESTADO.resumo.tipo==='processos'
@@ -744,7 +721,6 @@ function atualizarPrevia(){
   if(ESTADO.resumo && ESTADO.resumo.data && !$('e-assunto').value.trim()) $('e-assunto').value = assuntoPadrao();
   atualizarAnexos();
 }
-
 /* ================== E-MAIL: AÇÕES ================== */
 function abrirOutlookWeb(){
   if(!ESTADO.resumo || !ESTADO.resumo.data){ alert('Execute uma busca antes.'); return; }
@@ -794,7 +770,6 @@ function baixarEML(){
   logar(`Arquivo .eml gerado com 2 anexos: ${anexos[0].nome} e ${anexos[1].nome}.`);
   setTimeout(()=>alert('.eml baixado. Abra-o com duplo clique — o Outlook exibe o rascunho preenchido, com os dois anexos.'),500);
 }
-
 /* ================== VISUALIZADOR ================== */
 let VJ = {itens:[], agrupado:new Map(), arquivo:'', contagem:0, modo:'accordion', marcadosProc:new Set(), marcadosFlat:new Set()};
 function carregarNoVisualizador(){
@@ -996,7 +971,6 @@ function carregarJSONArquivo(file){
   };
   fr.readAsText(file);
 }
-
 /* ================== TRIBUNAIS ================== */
 const TRT_ALVO={RS:['TRT4'],SP:['TRT2','TRT15'],MG:['TRT3'],BA:['TRT5'],PE:['TRT6'],PR:['TRT9'],DF:['TRT10'],TO:['TRT10'],AM:['TRT11'],RR:['TRT11'],SC:['TRT12'],GO:['TRT18'],PI:['TRT22'],MT:['TRT23']};
 const COM_WEBJUR=['TRT4','TRT9','TRT10','TRT12'];
@@ -1029,7 +1003,6 @@ async function buscarTribunais(){
     logar('Erro tribunais: '+e.message);
   }
 }
-
 /* ================== EXPORTAÇÕES ================== */
 function baixar(nome,conteudo,tipo){
   const b=new Blob([conteudo],{type:tipo+';charset=utf-8'});
@@ -1052,11 +1025,10 @@ function baixarLog(){
   if(!ESTADO.log.length){ alert('Nada no log.'); return; }
   baixar(nomeAnexoLog(), ESTADO.log.join('\n'), 'text/plain');
 }
-
 /* ================== INIT ================== */
 (function(){
-  let t = 'escuro';
-  try{ t = localStorage.getItem('djen_tema') || 'escuro'; }catch(e){}
+  let t = 'claro';
+  try{ t = localStorage.getItem('djen_tema') || 'claro'; }catch(e){}
   aplicarTema(t);
 })();
 $('p-data').value=hoje(); $('m-data').value=hoje(); $('c-url-lista').value=URL_LISTA_DOWNLOAD;

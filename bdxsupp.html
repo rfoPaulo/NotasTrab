@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-tema="escuro">
+<html lang="pt-BR" data-tema="claro">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NEs Trabalhistas</title>
+<title>BDxSUPP — NEs Trabalhistas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -13,8 +13,20 @@ html[data-tema="claro"]{--bg:#F4F5F7;--surf:#FFF;--surf2:#F4F5F7;--bd:#D5D8DE;--
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--tx);font:400 15px/1.6 Inter,system-ui,sans-serif}
 h1,h2{font-family:Oswald,sans-serif;font-weight:700;letter-spacing:-.02em;text-transform:uppercase;margin:0}
-header{border-bottom:1px solid var(--bd);padding:16px 24px;display:flex;gap:14px;align-items:center}
-header h1{font-size:22px}
+header{border-bottom:1px solid var(--bd);padding:14px 24px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+header h1{font-size:20px}
+
+/* navegação entre as duas ferramentas */
+.nav{display:flex;border:1px solid var(--bd)}
+.nav a{padding:9px 20px;font:600 12.5px Inter,sans-serif;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--tx2);text-decoration:none;border-right:1px solid var(--bd);display:flex;align-items:center;gap:7px}
+.nav a:last-child{border-right:0}
+.nav a:hover{background:var(--surf2);color:var(--tx)}
+.nav a.atual{background:var(--ac);color:#fff}
+.nav a.atual:hover{background:var(--ac);color:#fff}
+.nav .pt{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.55}
+.nav a.atual .pt{opacity:1}
+
 main{max-width:1240px;margin:0 auto;padding:24px}
 
 .passos{display:flex;border:1px solid var(--bd);margin-bottom:24px;background:var(--surf)}
@@ -96,7 +108,6 @@ summary{cursor:pointer;color:var(--tx2);font-size:13px}
 #log{background:#000;color:#8FE388;font:400 11px/1.5 ui-monospace,Consolas,monospace;
      padding:12px;max-height:170px;overflow:auto;margin-top:12px;white-space:pre-wrap}
 
-/* modal do texto da nota */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:99;display:grid;place-items:center;padding:24px}
 .modal .cx{background:var(--surf);border:1px solid var(--bd);max-width:940px;width:100%;max-height:88vh;display:flex;flex-direction:column}
 .modal .top{padding:16px 20px;border-bottom:1px solid var(--bd);display:flex;gap:14px;align-items:flex-start}
@@ -104,13 +115,17 @@ summary{cursor:pointer;color:var(--tx2);font-size:13px}
 .modal .top .meta{font-size:12px;color:var(--tx2);margin-top:3px}
 .modal .corpo{padding:20px;overflow:auto;font-size:13.5px;line-height:1.75;white-space:pre-wrap;word-break:break-word}
 .modal .corpo mark{background:var(--am);color:#000;padding:0 3px}
-.modal .rod{padding:13px 20px;border-top:1px solid var(--bd);display:flex;gap:10px;justify-content:flex-end}
+.modal .rod{padding:13px 20px;border-top:1px solid var(--bd);display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
 .modal .fechar{background:none;border:0;color:var(--tx2);font-size:24px;cursor:pointer;line-height:1;margin-left:auto}
 </style>
 </head>
 <body>
 <header>
   <h1>NEs Trabalhistas</h1>
+  <nav class="nav">
+    <a href="https://rfopaulo.github.io/NotasTrab/"><span class="pt"></span>DJEN</a>
+    <a href="https://rfopaulo.github.io/NotasTrab/bdxsupp.html" class="atual"><span class="pt"></span>BDxSUPP</a>
+  </nav>
   <div style="flex:1"></div>
   <button class="b" id="btnTema">◐</button>
 </header>
@@ -491,7 +506,6 @@ function processo(row){
 }
 function links(row){const o=[],re=/href='([^']+)'/g;let m;while((m=re.exec(String(row[IDX.PROC]||"")))!==null)o.push(m[1]);return o;}
 
-/* texto da nota preservando os destaques <mark> do BD-1 */
 function textoNota(row){
   return String(row[IDX.TEXTO]||"")
     .replace(/<(?!\/?mark\b)[^>]*>/gi," ")
@@ -507,7 +521,6 @@ function dataNota(row){
   const p = s.split(" DE ").map(x=>x.trim()); if(p.length<3) return "";
   const mes = MESES[p[1]]; return mes ? `${p[0]}/${mes}/${p[2]}` : "";
 }
-/* TRT4 → 5.04 no número do processo (J=5 trabalhista, TR=04) */
 const ehTRT4 = p => /\.5\.04\./.test(p);
 const linksPje = p => ehTRT4(p)
   ? [["PJe 1g.", `https://pje.trt4.jus.br/consultaprocessual/detalhe-processo/${p}/1`],
@@ -646,7 +659,6 @@ $("#btnColarSupp").onclick = async () => {
 };
 
 /* ---------------- cruzamento ---------------- */
-/* tarefa mais recente = maior id; sem id, a última da lista */
 function maisRecente(tarefas){
   if(!tarefas || !tarefas.length) return null;
   const comId = tarefas.filter(t => Number.isFinite(t.id));
@@ -676,7 +688,6 @@ function avalia(reg, tipos, modo){
   }
   if(!consultado) return {tratada:false, ok:false, motivo:"não consultado no SUPP", ultima:null};
 
-  /* não bateu: anexa a tarefa mais recente do processo, sem eliminar a nota */
   const ult = maisRecente(todas);
   const motivo = !reg.dataNota ? "nota sem data — conferir"
                : todas.length  ? "tarefa não corresponde"
@@ -856,7 +867,7 @@ $("#btnTema").onclick = () => {
   const t = document.documentElement.dataset.tema==="claro" ? "escuro" : "claro";
   document.documentElement.dataset.tema = t; localStorage.setItem("nes_tema",t);
 };
-document.documentElement.dataset.tema = localStorage.getItem("nes_tema") || "escuro";
+document.documentElement.dataset.tema = localStorage.getItem("nes_tema") || "claro";
 log("pronto");
 </script>
 </body>
