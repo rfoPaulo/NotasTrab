@@ -390,7 +390,7 @@ function aplicarTema(t){
   try{ localStorage.setItem('djen_tema', t); }catch(e){}
 }
 function alternarTema(){
-  aplicarTema(document.documentElement.getAttribute('data-tema')==='escuro' ? 'claro' : 'escuro');
+  aplicarTema(document.documentElement.getAttribute('data-tema')==='claro' ? 'escuro' : 'claro');
 }
 /* ================== NAVEGAÇÃO ================== */
 function mudarAba(nome){
