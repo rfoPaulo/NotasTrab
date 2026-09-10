@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-tema="escuro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NEs Trabalhistas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0C0D10;--surf:#16181D;--surf2:#1D2027;--bd:#2A2D35;--tx:#F4F5F7;--tx2:#9AA1AC;
+      --ac:#2563EB;--am:#F59E0B;--ok:#22C55E;--er:#EF4444}
+html[data-tema="claro"]{--bg:#F4F5F7;--surf:#FFF;--surf2:#F4F5F7;--bd:#D5D8DE;--tx:#101114;--tx2:#6B7280;--am:#B45309;--ok:#15803D;--er:#B91C1C}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:400 15px/1.6 Inter,system-ui,sans-serif}
+h1,h2{font-family:Oswald,sans-serif;font-weight:700;letter-spacing:-.02em;text-transform:uppercase;margin:0}
+header{border-bottom:1px solid var(--bd);padding:16px 24px;display:flex;gap:14px;align-items:center}
+header h1{font-size:22px}
+main{max-width:1240px;margin:0 auto;padding:24px}
+
+.passos{display:flex;border:1px solid var(--bd);margin-bottom:24px;background:var(--surf)}
+.passos button{flex:1;border:0;border-right:1px solid var(--bd);background:transparent;color:var(--tx2);
+  padding:16px 12px;cursor:pointer;font:500 13px Inter,sans-serif;text-align:left;display:flex;gap:11px;align-items:center}
+.passos button:last-child{border-right:0}
+.passos button:hover:not(:disabled){background:var(--surf2)}
+.passos button.on{background:var(--ac);color:#fff}
+.passos button:disabled{opacity:.35;cursor:not-allowed}
+.passos .num{width:26px;height:26px;flex:none;border:1px solid currentColor;border-radius:50%;
+  display:grid;place-items:center;font:600 12px Inter}
+.passos button.on .num{background:#fff;color:var(--ac);border-color:#fff}
+.passos button.feito .num{background:var(--ok);color:#fff;border-color:var(--ok)}
+
+.card{background:var(--surf);border:1px solid var(--bd);padding:26px;margin-bottom:20px}
+.card h2{font-size:16px;margin-bottom:6px}
+.card .desc{color:var(--tx2);font-size:14px;margin-bottom:20px}
+
+.etapa{border:1px solid var(--bd);padding:20px;margin-bottom:14px;background:var(--surf2)}
+.etapa.pronta{border-color:var(--ok)}
+.etapa h3{margin:0 0 4px;font:600 14px Inter;display:flex;gap:10px;align-items:center}
+.etapa h3 .b{width:24px;height:24px;flex:none;background:var(--ac);color:#fff;border-radius:50%;
+  display:grid;place-items:center;font:600 12px Inter}
+.etapa.pronta h3 .b{background:var(--ok)}
+.etapa p{margin:0 0 14px 34px;color:var(--tx2);font-size:13.5px}
+.etapa .acao{margin-left:34px}
+.etapa .acao.dupla{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.ok-inline{color:var(--ok);font-size:13px;font-weight:600}
+
+button.b{font:600 13px Inter,sans-serif;background:transparent;color:var(--tx);border:1px solid var(--bd);
+  padding:11px 18px;cursor:pointer;border-radius:0}
+button.b:hover{background:var(--tx);color:var(--bg)}
+button.b:disabled{opacity:.4;cursor:not-allowed}
+button.b:disabled:hover{background:transparent;color:var(--tx)}
+button.b.sec{border-style:dashed;color:var(--tx2)}
+button.b.sec:hover{background:var(--surf2);color:var(--tx);border-style:solid}
+button.pri{background:var(--ac);border-color:var(--ac);color:#fff;padding:15px 22px;font-size:14px;width:100%}
+button.pri:hover{filter:brightness(1.15);background:var(--ac);color:#fff}
+button.pri:disabled{background:var(--bd);border-color:var(--bd)}
+button.gr{background:var(--ok);border-color:var(--ok);color:#fff}
+button.gr:hover{filter:brightness(1.1);background:var(--ok);color:#fff}
+
+input[type=text],select,textarea{width:100%;background:var(--bg);border:1px solid var(--bd);color:var(--tx);
+  padding:10px 12px;font:400 14px Inter,sans-serif;border-radius:0}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--ac);outline-offset:-2px}
+label{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx2);margin-bottom:6px}
+.grid{display:grid;gap:16px}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:780px){.g2,.g3{grid-template-columns:1fr}.passos{flex-direction:column}}
+
+.drop{border:2px dashed var(--bd);padding:32px;text-align:center;color:var(--tx2);font-size:14px;cursor:pointer;background:var(--bg)}
+.drop:hover,.drop.over{border-color:var(--ac);color:var(--ac)}
+
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:var(--tx);color:var(--bg);text-align:left;padding:9px 10px;font:600 11px Inter;
+   text-transform:uppercase;letter-spacing:.07em;position:sticky;top:0}
+td{padding:9px 10px;border-bottom:1px solid var(--bd);vertical-align:top}
+tr:hover td{background:var(--surf2)}
+.tw{max-height:560px;overflow:auto;border:1px solid var(--bd)}
+.mono{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;white-space:nowrap}
+.pje{display:flex;gap:7px;margin-top:4px}
+.pje a{font-size:11px;color:var(--tx2);border:1px solid var(--bd);padding:1px 6px;text-decoration:none}
+.pje a:hover{border-color:var(--ac);color:var(--ac)}
+.tag{display:inline-block;border:1px solid var(--bd);padding:1px 7px;font-size:11px}
+.tag.s{border-color:var(--ok);color:var(--ok)}.tag.e{border-color:var(--er);color:var(--er)}
+.tag.a{border-color:var(--am);color:var(--am)}
+.ult{font-size:11.5px;color:var(--tx2);margin-top:4px;line-height:1.45}
+.ult b{color:var(--tx);font-weight:600}
+button.ver{border:1px solid var(--bd);background:transparent;color:var(--tx2);font-size:11px;
+  padding:3px 9px;cursor:pointer}
+button.ver:hover{border-color:var(--ac);color:var(--ac)}
+.met{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--bd);margin-bottom:18px}
+.met div{padding:16px;border-right:1px solid var(--bd)}.met div:last-child{border-right:0}
+.met b{display:block;font:700 27px Oswald,sans-serif}
+.met span{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx2)}
+@media(max-width:780px){.met{grid-template-columns:1fr 1fr}}
+.hide{display:none!important}
+details{margin-top:18px;border-top:1px solid var(--bd);padding-top:14px}
+summary{cursor:pointer;color:var(--tx2);font-size:13px}
+#log{background:#000;color:#8FE388;font:400 11px/1.5 ui-monospace,Consolas,monospace;
+     padding:12px;max-height:170px;overflow:auto;margin-top:12px;white-space:pre-wrap}
+
+/* modal do texto da nota */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:99;display:grid;place-items:center;padding:24px}
+.modal .cx{background:var(--surf);border:1px solid var(--bd);max-width:940px;width:100%;max-height:88vh;display:flex;flex-direction:column}
+.modal .top{padding:16px 20px;border-bottom:1px solid var(--bd);display:flex;gap:14px;align-items:flex-start}
+.modal .top h3{margin:0;font:700 15px Oswald,sans-serif;letter-spacing:-.01em}
+.modal .top .meta{font-size:12px;color:var(--tx2);margin-top:3px}
+.modal .corpo{padding:20px;overflow:auto;font-size:13.5px;line-height:1.75;white-space:pre-wrap;word-break:break-word}
+.modal .corpo mark{background:var(--am);color:#000;padding:0 3px}
+.modal .rod{padding:13px 20px;border-top:1px solid var(--bd);display:flex;gap:10px;justify-content:flex-end}
+.modal .fechar{background:none;border:0;color:var(--tx2);font-size:24px;cursor:pointer;line-height:1;margin-left:auto}
+</style>
+</head>
+<body>
+<header>
+  <h1>NEs Trabalhistas</h1>
+  <div style="flex:1"></div>
+  <button class="b" id="btnTema">◐</button>
+</header>
+
+<main>
+  <div class="passos" id="passos">
+    <button data-p="dados"><span class="num">1</span> Buscar as notas</button>
+    <button data-p="supp" disabled><span class="num">2</span> Consultar o SUPP</button>
+    <button data-p="fim" disabled><span class="num">3</span> Resultado</button>
+  </div>
+
+  <!-- ============ PASSO 1 ============ -->
+  <section id="p-dados">
+    <div class="card">
+      <h2>Passo 1 — trazer as notas do BD-1</h2>
+      <div class="desc">O BD-1 só responde de dentro da rede, então o arquivo é gerado lá e trazido para cá.</div>
+
+      <div class="etapa" id="e1a">
+        <h3><span class="b">A</span> Copie o comando</h3>
+        <p>Ele pergunta a data e baixa a lista de notas do dia.</p>
+        <div class="acao dupla">
+          <button class="b" id="btnCopiaBd">📋 Copiar comando</button>
+          <button class="b sec" id="btnAbrirBd">↗ Abrir o BD-1</button>
+          <span id="okBd" class="hide ok-inline">✓ copiado</span>
+        </div>
+      </div>
+
+      <div class="etapa" id="e1b">
+        <h3><span class="b">B</span> Rode no BD-1</h3>
+        <p>No BD-1, tecle <b>F12</b> → aba <b>Console</b> → cole com <b>Ctrl+V</b> → <b>Enter</b>.
+           Informe a data e o arquivo será baixado.</p>
+      </div>
+
+      <div class="etapa" id="e1c">
+        <h3><span class="b">C</span> Traga o arquivo para cá</h3>
+        <p>Arraste o arquivo baixado para a área abaixo.</p>
+        <div class="acao">
+          <div class="drop" id="drop">Arraste o arquivo aqui<br><span style="font-size:12px">ou clique para procurar</span>
+            <input type="file" id="file" accept=".json,.txt" class="hide"></div>
+          <div style="margin-top:10px"><button class="b" id="btnColar">📋 Colar em vez de arrastar</button></div>
+          <div id="okDados" class="hide" style="color:var(--ok);margin-top:12px;font-weight:600">✓ <span id="qtdDados"></span></div>
+        </div>
+      </div>
+
+      <div style="margin-top:22px"><button class="pri" id="btnProcessar" disabled>Continuar</button></div>
+
+      <details>
+        <summary>Opções de filtro (já vêm configuradas)</summary>
+        <div style="margin-top:16px">
+          <label>Filtros — um por linha</label>
+          <textarea id="filtros" style="min-height:110px;font-family:ui-monospace,monospace;font-size:13px"></textarea>
+          <div class="grid g2" style="margin-top:14px">
+            <div><label>Data da consulta</label><input type="text" id="d1" placeholder="dd/mm/aaaa"></div>
+            <div><label>Remover repetidos</label><select id="dedup">
+              <option value="1">Sim (recomendado)</option><option value="0">Não</option></select></div>
+          </div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============ PASSO 2 ============ -->
+  <section id="p-supp" class="hide">
+    <div class="card">
+      <h2>Passo 2 — verificar as tarefas no SUPP</h2>
+      <div class="desc">Vamos conferir quais notas já têm tarefa cadastrada no SUPP.</div>
+
+      <div class="etapa" id="e2a">
+        <h3><span class="b">A</span> Copie o programa</h3>
+        <p id="txtIds">A lista de processos já vai dentro dele — não precisa copiar mais nada.</p>
+        <div class="acao dupla">
+          <button class="b" id="btnCopiaColetor">📋 Copiar programa</button>
+          <button class="b sec" id="btnAbrirSupp">↗ Abrir o SUPP</button>
+          <span id="okColetor" class="hide ok-inline">✓ copiado</span>
+        </div>
+      </div>
+
+      <div class="etapa" id="e2b">
+        <h3><span class="b">B</span> Rode no SUPP</h3>
+        <p>No SUPP, tecle <b>F12</b> → aba <b>Console</b> → cole com <b>Ctrl+V</b> → <b>Enter</b>.
+           A coleta começa sozinha; aguarde a barra terminar.</p>
+      </div>
+
+      <div class="etapa" id="e2c">
+        <h3><span class="b">C</span> Traga o resultado</h3>
+        <p>Clique em <b>Copiar resultado</b> no painel do SUPP e depois no botão abaixo.</p>
+        <div class="acao">
+          <button class="b gr" id="btnColarSupp">📋 Colar resultado do SUPP</button>
+          <div class="drop" id="dropSupp" style="margin-top:12px;padding:22px">ou arraste o arquivo baixado
+            <input type="file" id="fileSupp" accept=".json" class="hide"></div>
+          <div id="okSupp" class="hide" style="color:var(--ok);margin-top:12px;font-weight:600"></div>
+        </div>
+      </div>
+
+      <div style="margin-top:22px"><button class="pri" id="btnCruzar" disabled>Ver resultado</button></div>
+    </div>
+  </section>
+
+  <!-- ============ PASSO 3 ============ -->
+  <section id="p-fim" class="hide">
+    <div class="card">
+      <h2>Passo 3 — notas sem tarefa no SUPP</h2>
+      <div class="desc">Notas que ainda precisam de providência. Nenhuma nota é descartada por falta de data.</div>
+      <div class="met" id="met"></div>
+      <div class="grid g3" style="margin-bottom:16px">
+        <div><label>Filtro</label><select id="selFiltro"></select></div>
+        <div><label>Exibir</label><select id="selVista">
+          <option value="pendentes">Sem tarefa (pendentes)</option>
+          <option value="tratadas">Já tratadas</option>
+          <option value="erro">Não consultados</option>
+          <option value="todos">Todos</option></select></div>
+        <div><label>Buscar</label><input type="text" id="busca" placeholder="processo, parte, órgão…"></div>
+      </div>
+      <div class="tw"><table id="tab"><thead></thead><tbody></tbody></table></div>
+      <div class="grid g3" style="margin-top:18px">
+        <button class="b" id="btnCsv">⬇ Planilha deste filtro</button>
+        <button class="b" id="btnCsvAll">⬇ Planilha de todos</button>
+        <button class="b gr" id="btnEml">✉ Preparar e-mail</button>
+      </div>
+      <details>
+        <summary>Detalhes técnicos</summary>
+        <div class="grid g2" style="margin-top:16px">
+          <div><label>Espécies que contam como tratada</label>
+            <textarea id="tipos" style="min-height:76px;font-size:13px"></textarea></div>
+          <div><label>Comparação da data</label>
+            <select id="modoData">
+              <option value="nota">Data da nota (recomendado)</option>
+              <option value="qualquer">Ignorar a data — só a espécie</option>
+            </select>
+            <div style="margin-top:14px"><label>Destinatário do e-mail</label>
+              <input type="text" id="para" value="paulo-oliveira@pge.rs.gov.br"></div>
+          </div>
+        </div>
+        <div style="margin-top:12px"><button class="b" id="btnRecruzar">Recalcular</button></div>
+        <div id="log"></div>
+      </details>
+    </div>
+  </section>
+</main>
+
+<script type="text/plain" id="srcColetor">
+/* ============================================================
+   COLETOR DE TAREFAS — SUPP
+   Cole no console (F12) de https://supp.pge.rs.gov.br
+   A lista de processos vem embutida pelo site.
+   ============================================================ */
+(() => {
+"use strict";
+if (window.__coletorSupp) { window.__coletorSupp.abrir(); return; }
+
+const IDS_EMBUTIDOS = [];
+const TIPOS_TAREFA = ["Analisar Intimação", "Analisar Notificação", "Analisar Citação"];
+const LS = "supp_coletor_cfg";
+const cfg = Object.assign({ timeout: 6000, pausa: 400 },
+  JSON.parse(localStorage.getItem(LS) || "{}"));
+const salvar = () => localStorage.setItem(LS, JSON.stringify(cfg));
+
+let parar = false, RESULTADO = null;
+
+const esperar = ms => new Promise(r => setTimeout(r, ms));
+const norm = s => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+const soData = s => { const m = String(s ?? "").match(/\d{2}\/\d{2}\/\d{4}/); return m ? m[0] : ""; };
+
+/* id da tarefa: procura em links (/tarefa/123, ?id=123), atributos e células numéricas */
+function idDaTarefa(tr) {
+  const a = tr.querySelector("a[href]");
+  if (a) {
+    const m = a.getAttribute("href").match(/(?:tarefa|task)s?\/(\d+)|[?&]id=(\d+)|\/(\d{3,})(?:\/|$)/i);
+    if (m) return +(m[1] || m[2] || m[3]);
+  }
+  for (const at of ["data-id", "data-rowid", "id", "ng-reflect-id"]) {
+    const v = tr.getAttribute && tr.getAttribute(at);
+    if (v && /^\d+$/.test(v)) return +v;
+  }
+  const td = [...tr.querySelectorAll("td")].map(x => x.innerText.trim());
+  for (const v of td) if (/^\d{3,}$/.test(v)) return +v;
+  return null;
+}
+
+/* ---------------- coleta de um processo ---------------- */
+function coleta(id) {
+  return new Promise(resolve => {
+    const f = document.createElement("iframe");
+    f.style.cssText = "position:fixed;left:-9999px;top:0;width:1400px;height:900px;border:0";
+    f.src = `${location.origin}/apps/processo/${id}/editar/tarefas/listar`;
+
+    let pronto = false;
+    const fim = r => { if (pronto) return; pronto = true; clearInterval(iv); clearTimeout(to); f.remove(); resolve(r); };
+    const to = setTimeout(() => fim({ erro: "timeout" }), cfg.timeout);
+
+    const iv = setInterval(() => {
+      try {
+        const d = f.contentDocument;
+        if (!d) return;
+        const linhas = d.querySelectorAll("p-table table tbody tr, cdk-table-prime table tbody tr, table tbody tr");
+        if (!linhas.length) return;
+        if (linhas[0].querySelectorAll("td").length < 3) return;
+
+        const tarefas = [...linhas].map((tr, i) => {
+          const td = [...tr.querySelectorAll("td")].map(x => x.innerText.trim());
+          if (td.length < 3) return null;
+          const tipo = td.find(v => TIPOS_TAREFA.some(t => norm(v).includes(norm(t)))) || td[2] || "";
+          const datas = td.map(soData).filter(Boolean);
+          return { id: idDaTarefa(tr), ordem: i, tipo, data: datas[datas.length - 1] || "" };
+        }).filter(Boolean);
+
+        if (tarefas.length) fim({ tarefas });
+      } catch (e) { fim({ erro: "sem acesso: " + e.message }); }
+    }, 400);
+
+    document.body.appendChild(f);
+  });
+}
+
+/* ---------------- laço principal ---------------- */
+async function coletar(ids) {
+  parar = false;
+  const saida = [];
+  for (let i = 0; i < ids.length; i++) {
+    if (parar) { log("interrompido", "warn"); break; }
+    const id = ids[i];
+    prog(i, ids.length, id);
+    const r = await coleta(id);
+    if (r.erro) log(`${id} → ${r.erro}`, "err");
+    else log(`${id} → ${r.tarefas.length} tarefa(s)`);
+    saida.push({ id, tarefas: r.tarefas || [], erro: r.erro || null });
+    if (i < ids.length - 1) await esperar(cfg.pausa);
+  }
+  prog(ids.length, ids.length, "");
+  RESULTADO = { gerado: new Date().toISOString(), tiposTarefa: TIPOS_TAREFA, itens: saida };
+  const ok = saida.filter(s => !s.erro).length;
+  log(`Concluído: ${ok}/${saida.length} sem erro.`, "ok");
+  $("baixar").disabled = false;
+  $("copiar").disabled = false;
+  $("copiar").style.background = "#22C55E";
+  $("copiar").style.color = "#000";
+  $("copiar").style.border = "0";
+  $("aviso").innerHTML = "✓ Coleta concluída. Clique em <b>Copiar resultado</b> e volte ao site.";
+  $("aviso").style.borderLeftColor = "#22C55E";
+}
+
+/* ---------------- interface ---------------- */
+const $ = id => document.getElementById("sc_" + id);
+function log(m, t = "info") {
+  const c = { info: "#8FE388", ok: "#4ADE80", err: "#F87171", warn: "#FBBF24" }[t];
+  const el = $("log"); if (!el) return;
+  el.innerHTML += `<div style="color:${c}">${m}</div>`;
+  el.scrollTop = el.scrollHeight;
+}
+function prog(i, n, id) {
+  $("prog").textContent = `${i}/${n}` + (id ? ` · ${id}` : "");
+  $("barra").style.width = (n ? (i / n) * 100 : 0) + "%";
+}
+
+const painel = document.createElement("div");
+painel.id = "sc_painel";
+painel.style.cssText = `position:fixed;right:16px;bottom:16px;width:400px;z-index:2147483647;
+  background:#16181D;color:#F4F5F7;border:1px solid #2A2D35;font:13px system-ui,sans-serif;
+  box-shadow:0 10px 40px rgba(0,0,0,.6)`;
+painel.innerHTML = `
+<div style="background:#101114;padding:11px 14px;display:flex;align-items:center;gap:10px;cursor:move" id="sc_cab">
+  <b style="font-size:13px;letter-spacing:.06em;text-transform:uppercase">Coletor SUPP</b>
+  <span style="flex:1"></span>
+  <span id="sc_prog" style="font:11px monospace;color:#9AA1AC"></span>
+  <button id="sc_fechar" style="background:none;border:0;color:#9AA1AC;cursor:pointer;font-size:19px;line-height:1">×</button>
+</div>
+<div style="height:3px;background:#2A2D35"><div id="sc_barra" style="height:3px;background:#2563EB;width:0;transition:width .2s"></div></div>
+<div style="padding:14px">
+  <div id="sc_aviso" style="font-size:13px;color:#F4F5F7;background:#1D2027;border-left:3px solid #2563EB;
+    padding:10px 12px;margin-bottom:12px"></div>
+
+  <div id="sc_boxIds" style="margin-bottom:12px">
+    <div style="font-size:12px;color:#9AA1AC;margin-bottom:6px">Cole os IDs dos processos</div>
+    <textarea id="sc_ids" placeholder="cole aqui (Ctrl+V)" style="width:100%;height:70px;background:#0C0D10;color:#F4F5F7;
+      border:1px solid #2A2D35;font:12px monospace;padding:8px;box-sizing:border-box"></textarea>
+  </div>
+
+  <div style="display:flex;gap:8px">
+    <button id="sc_rodar" style="flex:3;background:#2563EB;border:0;color:#fff;padding:12px;cursor:pointer;font:600 13px system-ui">▶ Coletar tarefas</button>
+    <button id="sc_parar" style="flex:1;background:none;border:1px solid #EF4444;color:#EF4444;padding:12px;cursor:pointer;font-size:12px">■ Parar</button>
+  </div>
+
+  <div style="font-size:12px;color:#9AA1AC;margin:14px 0 6px">Ao terminar, leve o resultado de volta ao site</div>
+  <div style="display:flex;gap:8px">
+    <button id="sc_copiar" disabled style="flex:2;background:none;border:1px solid #2A2D35;color:#F4F5F7;padding:11px;cursor:pointer;font:600 12px system-ui">📋 Copiar resultado</button>
+    <button id="sc_baixar" disabled style="flex:1;background:none;border:1px solid #2A2D35;color:#F4F5F7;padding:11px;cursor:pointer;font-size:12px">⬇ Baixar</button>
+  </div>
+
+  <div id="sc_log" style="margin-top:12px;background:#000;padding:8px;height:110px;overflow:auto;font:11px/1.5 monospace"></div>
+  <div style="margin-top:8px;font-size:11px;color:#6B7280;display:flex;align-items:center;gap:6px">
+    tempo limite por processo
+    <input id="sc_timeout" type="number" step="1000" style="width:66px;background:#0C0D10;color:#9AA1AC;
+      border:1px solid #2A2D35;padding:4px 6px;font-size:11px"> ms
+  </div>
+</div>`;
+document.body.appendChild(painel);
+
+/* arrastar */
+(() => {
+  let dx = 0, dy = 0, on = false;
+  $("cab").onmousedown = e => { if (e.target.id === "sc_fechar") return;
+    on = true; dx = e.clientX - painel.offsetLeft; dy = e.clientY - painel.offsetTop; };
+  document.addEventListener("mousemove", e => { if (!on) return;
+    painel.style.left = (e.clientX - dx) + "px"; painel.style.top = (e.clientY - dy) + "px";
+    painel.style.right = "auto"; painel.style.bottom = "auto"; });
+  document.addEventListener("mouseup", () => (on = false));
+})();
+
+$("timeout").value = cfg.timeout;
+$("timeout").oninput = e => { cfg.timeout = Math.max(2000, +e.target.value || 6000); salvar(); };
+$("fechar").onclick = () => painel.remove();
+$("parar").onclick = () => { parar = true; };
+$("rodar").onclick = () => {
+  const ids = [...new Set($("ids").value.split(/[\s,;]+/).map(s => s.trim()).filter(s => /^\d+$/.test(s)))];
+  if (!ids.length) return alert("Cole primeiro os IDs dos processos.");
+  $("log").innerHTML = "";
+  log(`coletando ${ids.length} processo(s)…`, "ok");
+  coletar(ids);
+};
+$("baixar").onclick = () => {
+  const b = new Blob([JSON.stringify(RESULTADO)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(b);
+  a.download = "supp_tarefas.json";
+  a.click();
+};
+$("copiar").onclick = () => navigator.clipboard.writeText(JSON.stringify(RESULTADO))
+  .then(() => log("✓ copiado — volte ao site e clique em Colar resultado", "ok"))
+  .catch(() => log("use o botão Baixar", "warn"));
+
+window.__coletorSupp = { abrir: () => (painel.style.display = "block") };
+
+if (IDS_EMBUTIDOS.length) {
+  $("ids").value = IDS_EMBUTIDOS.join("\n");
+  $("boxIds").style.display = "none";
+  $("aviso").innerHTML = `<b>${IDS_EMBUTIDOS.length}</b> processos recebidos do site. Iniciando…`;
+  log(`${IDS_EMBUTIDOS.length} processos recebidos do site`, "ok");
+  setTimeout(() => {
+    $("aviso").innerHTML = `<b>${IDS_EMBUTIDOS.length}</b> processos · aguarde a coleta terminar`;
+    coletar(IDS_EMBUTIDOS);
+  }, 900);
+} else {
+  $("aviso").innerHTML = "Cole abaixo os IDs dos processos e clique em <b>Coletar tarefas</b>.";
+  log("Pronto.", "ok");
+}
+})();
+
+</script>
+
+<script>
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+
+const IDX = {PRAZO:5,PUB:6,DISP:7,PROC:8,SUPP:9,FONTE:10,ORGAO:11,TEXTO:12,TERMOS:13,UF:17,COMARCA:18,TIPO:20,PARTE:23};
+const FILTROS_PADRAO = ["[s] [audiencia]","[s] [pauta]","int[CEEE","[ELETRICA PARTICIPACOES]"];
+const EXCLUIR = {"[s] [pauta]":"audiencia","[ELETRICA PARTICIPACOES]":"int[ceee"};
+const TIPOS_PADRAO = ["Analisar Intimação","Analisar Notificação","Analisar Citação"];
+const MESES = {JANEIRO:"01",FEVEREIRO:"02",MARCO:"03","MARÇO":"03",ABRIL:"04",MAIO:"05",JUNHO:"06",
+               JULHO:"07",AGOSTO:"08",SETEMBRO:"09",OUTUBRO:"10",NOVEMBRO:"11",DEZEMBRO:"12"};
+
+let DADOS=null, RESULT=null, SUPP=null, FINAL=null, LOG=[];
+
+const strip = s => String(s ?? "").replace(/<.*?>/g,"");
+const txt   = s => strip(s).replace(/\s+/g," ").trim();
+const dig   = s => String(s ?? "").replace(/\D/g,"");
+const norm  = s => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim();
+const esc   = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const hoje  = () => {const d=new Date();return String(d.getDate()).padStart(2,"0")+"/"+String(d.getMonth()+1).padStart(2,"0")+"/"+d.getFullYear();};
+const arqNome = d => (d||hoje()).replace(/\//g,"-");
+function log(m){LOG.push(m); const e=$("#log"); if(e){e.textContent=LOG.join("\n"); e.scrollTop=e.scrollHeight;}}
+
+const RE_PROC = /\d{7}-\d{2}\.\d{4}\.\d\.\d{2}\.\d{4}/;
+function processo(row){
+  const b = txt(row[IDX.PROC]); let m = b.match(RE_PROC); if(m) return m[0];
+  m = String(row[IDX.TEXTO]||"").match(RE_PROC); if(m) return m[0];
+  const d = dig(b);
+  return d.length===20 ? `${d.slice(0,7)}-${d.slice(7,9)}.${d.slice(9,13)}.${d.slice(13,14)}.${d.slice(14,16)}.${d.slice(16,20)}` : (b||"—");
+}
+function links(row){const o=[],re=/href='([^']+)'/g;let m;while((m=re.exec(String(row[IDX.PROC]||"")))!==null)o.push(m[1]);return o;}
+
+/* texto da nota preservando os destaques <mark> do BD-1 */
+function textoNota(row){
+  return String(row[IDX.TEXTO]||"")
+    .replace(/<(?!\/?mark\b)[^>]*>/gi," ")
+    .replace(/[ \t]+/g," ")
+    .replace(/\s*\|\|\s*/g,"\n\n")
+    .trim();
+}
+function dataNota(row){
+  const t = strip(row[IDX.TEXTO]||""), rev=[...t].reverse().join("");
+  const i = rev.indexOf(",SR/"); if(i<0) return "";
+  let s = [...rev.slice(0,i)].reverse().join(""); const j=s.indexOf("."); if(j<0) return "";
+  s = s.slice(0,j).toUpperCase(); if(!s.includes(" DE ")) return "";
+  const p = s.split(" DE ").map(x=>x.trim()); if(p.length<3) return "";
+  const mes = MESES[p[1]]; return mes ? `${p[0]}/${mes}/${p[2]}` : "";
+}
+/* TRT4 → 5.04 no número do processo (J=5 trabalhista, TR=04) */
+const ehTRT4 = p => /\.5\.04\./.test(p);
+const linksPje = p => ehTRT4(p)
+  ? [["PJe 1g.", `https://pje.trt4.jus.br/consultaprocessual/detalhe-processo/${p}/1`],
+     ["PJe 2g.", `https://pje.trt4.jus.br/consultaprocessual/detalhe-processo/${p}/2`]]
+  : [];
+
+function normaliza(row){
+  return {processo:processo(row), dataNota:dataNota(row), prazo:txt(row[IDX.PRAZO]),
+    disponibilizacao:txt(row[IDX.DISP]), supp:txt(row[IDX.SUPP]), fonte:txt(row[IDX.FONTE]),
+    orgao:txt(row[IDX.ORGAO]), uf:txt(row[IDX.UF]), comarca:txt(row[IDX.COMARCA]),
+    tipo:txt(row[IDX.TIPO]), parte:txt(row[IDX.PARTE]), termos:txt(row[IDX.TERMOS]),
+    texto:textoNota(row), links:links(row),
+    _b: row.map(strip).join(" ").toLowerCase(), _raw:row};
+}
+const casa = (t,q) => String(q||"").toLowerCase().split(/\s+/).filter(Boolean).every(x=>t.includes(x));
+const chave = r => [dig(r.processo),r.dataNota,r.prazo,r.disponibilizacao,r.supp,r.orgao,r.tipo,r.links.join(",")].join("|").toLowerCase();
+function dedup(regs){
+  const m=new Map(); let rem=0;
+  for(const r of regs){const k=chave(r); if(m.has(k)){m.get(k).ocorrencias++;rem++;} else m.set(k,{...r,ocorrencias:1});}
+  return {unicos:[...m.values()], removidos:rem};
+}
+
+/* ---------------- navegação ---------------- */
+function irPara(p){
+  $$("#passos button").forEach(b=>b.classList.toggle("on", b.dataset.p===p));
+  ["dados","supp","fim"].forEach(x=>$("#p-"+x).classList.toggle("hide", x!==p));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+const libera = p => { $(`#passos button[data-p="${p}"]`).disabled = false; };
+const feito  = p => { $(`#passos button[data-p="${p}"]`).classList.add("feito"); };
+$$("#passos button").forEach(b=>b.onclick=()=>{ if(!b.disabled) irPara(b.dataset.p); });
+irPara("dados");
+
+/* ---------------- passo 1 ---------------- */
+const snippetBd = () =>
+`(async()=>{const d=prompt('Data (dd/mm/aaaa):','${hoje()}');if(!d)return;`+
+`const u=location.origin+'/app/nes_trab?json=&todas=&d1='+encodeURIComponent(d)+'&origem=cache&_='+Date.now();`+
+`const r=await fetch(u,{credentials:'include',headers:{'X-Requested-With':'XMLHttpRequest'}});`+
+`const t=await r.text();const b=new Blob([t],{type:'application/json'});const a=document.createElement('a');`+
+`a.href=URL.createObjectURL(b);a.download='notas_'+d.replace(/\\//g,'-')+'.json';a.click();alert('Arquivo baixado.');})();`;
+
+function copia(texto, okId, btn){
+  navigator.clipboard.writeText(texto).then(()=>{
+    $(okId).classList.remove("hide");
+    btn.closest(".etapa").classList.add("pronta");
+    setTimeout(()=>$(okId).classList.add("hide"), 3000);
+  }).catch(()=>alert("Não foi possível copiar. Verifique as permissões do navegador."));
+}
+$("#btnCopiaBd").onclick = e => copia(snippetBd(), "#okBd", e.target);
+$("#btnAbrirBd").onclick = () => window.open("http://parla.pge.reders/app/nes_trab", "_blank");
+
+function recebeDados(j, origem){
+  const arr = Array.isArray(j) ? j : (j.data || j.aaData || []);
+  if(!Array.isArray(arr) || !arr.length) throw new Error("arquivo sem registros");
+  DADOS = arr;
+  $("#qtdDados").textContent = `${arr.length} notas carregadas (${origem})`;
+  $("#okDados").classList.remove("hide");
+  $("#e1c").classList.add("pronta");
+  $("#btnProcessar").disabled = false;
+  $("#btnProcessar").textContent = "Continuar →";
+  log(`${arr.length} notas carregadas`);
+}
+function leArquivo(f, fn){
+  const r = new FileReader();
+  r.onload = () => { try{ fn(JSON.parse(r.result), f.name); }
+                     catch(e){ alert("Arquivo inválido: "+e.message); } };
+  r.readAsText(f,"utf-8");
+}
+function ligaDrop(idDrop, idFile, fn){
+  const d=$(idDrop), f=$(idFile);
+  d.onclick=()=>f.click();
+  f.onchange=e=>e.target.files[0] && leArquivo(e.target.files[0], fn);
+  ["dragenter","dragover"].forEach(ev=>d.addEventListener(ev,e=>{e.preventDefault();d.classList.add("over");}));
+  ["dragleave","drop"].forEach(ev=>d.addEventListener(ev,e=>{e.preventDefault();d.classList.remove("over");}));
+  d.addEventListener("drop",e=>e.dataTransfer.files[0] && leArquivo(e.dataTransfer.files[0], fn));
+}
+ligaDrop("#drop","#file",recebeDados);
+$("#btnColar").onclick = async () => {
+  try{ recebeDados(JSON.parse(await navigator.clipboard.readText()),"colado"); }
+  catch(e){ alert("Não foi possível ler o conteúdo copiado."); }
+};
+
+$("#btnProcessar").onclick = () => {
+  const filtros = $("#filtros").value.split("\n").map(s=>s.trim()).filter(Boolean);
+  const usaDedup = $("#dedup").value === "1";
+  const base = DADOS.map(normaliza);
+  RESULT = {};
+  for(const f of filtros){
+    let sel = base.filter(r => casa(r._b, f));
+    const ex = EXCLUIR[f]; if(ex) sel = sel.filter(r => !r._b.includes(ex));
+    const d = usaDedup ? dedup(sel) : {unicos:sel.map(r=>({...r,ocorrencias:1})),removidos:0};
+    RESULT[f] = {unicos:d.unicos, brutos:sel.length, removidos:d.removidos};
+    log(`«${f}» ${sel.length} → ${d.unicos.length} (removidos ${d.removidos})`);
+  }
+  const ids = idsSupp();
+  $("#txtIds").innerHTML = `Os <b>${ids.length}</b> processos já vão dentro dele — não precisa copiar mais nada.`;
+  feito("dados"); libera("supp"); irPara("supp");
+};
+
+/* ---------------- passo 2 ---------------- */
+const idSupp = u => {const m=String(u||"").match(/\/processo\/(\d+)\//); return m?m[1]:null;};
+function idsSupp(){
+  const s = new Set();
+  for(const v of Object.values(RESULT||{}))
+    for(const r of v.unicos) for(const l of r.links){const i=idSupp(l); if(i) s.add(i);}
+  return [...s];
+}
+function scriptColetor(){
+  const base = document.getElementById("srcColetor").textContent.trim();
+  return base.replace("const IDS_EMBUTIDOS = [];",
+                      "const IDS_EMBUTIDOS = " + JSON.stringify(idsSupp()) + ";");
+}
+$("#btnCopiaColetor").onclick = e => copia(scriptColetor(), "#okColetor", e.target);
+$("#btnAbrirSupp").onclick = () => window.open("https://supp.pge.rs.gov.br", "_blank");
+
+function recebeSupp(j){
+  const itens = j.itens || j;
+  if(!Array.isArray(itens)) throw new Error("formato não reconhecido");
+  SUPP = {};
+  let erros = 0;
+  for(const it of itens){
+    SUPP[String(it.id)] = {tarefas: it.tarefas||[], erro: it.erro||null};
+    if(it.erro) erros++;
+  }
+  const n = Object.keys(SUPP).length;
+  $("#okSupp").innerHTML = `✓ ${n} processos recebidos` + (erros?` · <span style="color:var(--am)">${erros} não consultados</span>`:"");
+  $("#okSupp").classList.remove("hide");
+  $("#e2c").classList.add("pronta");
+  $("#btnCruzar").disabled = false;
+  log(`SUPP: ${n} processos, ${erros} com erro`);
+}
+ligaDrop("#dropSupp","#fileSupp",recebeSupp);
+$("#btnColarSupp").onclick = async () => {
+  try{ recebeSupp(JSON.parse(await navigator.clipboard.readText())); }
+  catch(e){ alert("Não foi possível ler o resultado copiado.\nUse o botão Baixar no painel do SUPP e arraste o arquivo."); }
+};
+
+/* ---------------- cruzamento ---------------- */
+/* tarefa mais recente = maior id; sem id, a última da lista */
+function maisRecente(tarefas){
+  if(!tarefas || !tarefas.length) return null;
+  const comId = tarefas.filter(t => Number.isFinite(t.id));
+  if(comId.length) return comId.reduce((a,b) => (b.id > a.id ? b : a));
+  return tarefas[tarefas.length-1];
+}
+function avalia(reg, tipos, modo){
+  const alvos = reg.links.map(idSupp).filter(Boolean);
+  if(!alvos.length) return {tratada:false, ok:true, motivo:"não cadastrado no SUPP", ultima:null};
+
+  let consultado = false;
+  const todas = [];
+  const bate = (a,b) => !!(a && b && (a.includes(b) || b.includes(a)));
+
+  for(const id of alvos){
+    const e = SUPP[id];
+    if(!e || e.erro) continue;
+    consultado = true;
+    for(const t of e.tarefas){
+      todas.push(t);
+      const casaTipo = tipos.some(x => norm(t.tipo).includes(norm(x)) || norm(x).includes(norm(t.tipo)));
+      if(!casaTipo) continue;
+      if(modo === "qualquer") return {tratada:true, ok:true, motivo:"tem tarefa", tarefa:t, ultima:t};
+      if(reg.dataNota && bate(t.data, reg.dataNota))
+        return {tratada:true, ok:true, motivo:"tem tarefa", tarefa:t, ultima:t};
+    }
+  }
+  if(!consultado) return {tratada:false, ok:false, motivo:"não consultado no SUPP", ultima:null};
+
+  /* não bateu: anexa a tarefa mais recente do processo, sem eliminar a nota */
+  const ult = maisRecente(todas);
+  const motivo = !reg.dataNota ? "nota sem data — conferir"
+               : todas.length  ? "tarefa não corresponde"
+               : "sem tarefa";
+  return {tratada:false, ok:true, motivo, ultima:ult};
+}
+function cruzar(){
+  const tipos = $("#tipos").value.split("\n").map(s=>s.trim()).filter(Boolean);
+  const modo = $("#modoData").value;
+  FINAL = {};
+  for(const [k,v] of Object.entries(RESULT)){
+    const pend=[], trat=[], erro=[];
+    for(const r of v.unicos){
+      const a = avalia(r, tipos, modo);
+      const reg = {...r, tratada:a.tratada, motivo:a.motivo, tarefaSupp:a.tarefa||null,
+                   ultimaTarefa:a.ultima||null, ok:a.ok};
+      if(a.tratada) trat.push(reg); else if(!a.ok) erro.push(reg); else pend.push(reg);
+    }
+    FINAL[k] = {pendentes:pend, tratadas:trat, erro};
+    log(`«${k}» pendentes=${pend.length} tratadas=${trat.length} não consultados=${erro.length}`);
+  }
+  $("#selFiltro").innerHTML = Object.keys(FINAL).map(k=>`<option>${k}</option>`).join("");
+  pinta();
+}
+$("#btnCruzar").onclick = () => { cruzar(); feito("supp"); libera("fim"); irPara("fim"); };
+$("#btnRecruzar").onclick = () => cruzar();
+
+/* ---------------- passo 3 ---------------- */
+let VISTA = [];
+function pinta(){
+  const t = Object.values(FINAL);
+  const p = t.reduce((a,x)=>a+x.pendentes.length,0);
+  const tr= t.reduce((a,x)=>a+x.tratadas.length,0);
+  const er= t.reduce((a,x)=>a+x.erro.length,0);
+  $("#met").innerHTML = `
+    <div><b style="color:var(--er)">${p}</b><span>Sem tarefa</span></div>
+    <div><b style="color:var(--ok)">${tr}</b><span>Já tratadas</span></div>
+    <div><b style="color:${er?'var(--am)':'inherit'}">${er}</b><span>Não consultados</span></div>
+    <div><b>${p+tr+er}</b><span>Total analisado</span></div>`;
+
+  const f = FINAL[$("#selFiltro").value]; if(!f) return;
+  const v = $("#selVista").value;
+  let regs = v==="pendentes"?f.pendentes : v==="tratadas"?f.tratadas : v==="erro"?f.erro
+           : f.pendentes.concat(f.tratadas,f.erro);
+  const q = $("#busca").value.trim().toLowerCase();
+  if(q) regs = regs.filter(r=>r._b.includes(q));
+  VISTA = regs;
+
+  $("#tab thead").innerHTML = `<tr><th style="width:23%">Processo</th><th>Data da nota</th>
+    <th>Órgão / Parte</th><th>Situação no SUPP</th><th style="width:70px">Nota</th></tr>`;
+
+  $("#tab tbody").innerHTML = regs.map((r,i)=>{
+    const l = r.links[0];
+    const pje = linksPje(r.processo)
+      .map(([rot,u])=>`<a href="${u}" target="_blank" rel="noopener noreferrer">${rot}</a>`).join("");
+    const proc = `${l?`<a class="mono" href="${l}" target="_blank" style="color:var(--ac)">${r.processo}</a>`
+                    :`<span class="mono">${r.processo}</span>`}${pje?`<div class="pje">${pje}</div>`:""}`;
+
+    const dt = r.dataNota
+      ? r.dataNota
+      : `<span class="tag a" title="a data não pôde ser lida no texto — a nota foi mantida">sem data</span>`;
+
+    let sit = r.tratada
+      ? `<span class="tag s">✓ tem tarefa</span>`
+      : `<span class="tag ${r.ok?"e":"a"}">${r.motivo}</span>`;
+    if(!r.tratada && r.ultimaTarefa){
+      const u = r.ultimaTarefa;
+      sit += `<div class="ult">última tarefa: <b>${esc(u.tipo||"—")}</b>`
+           + (u.data?` · <b>${u.data}</b>`:"") + (Number.isFinite(u.id)?` · id ${u.id}`:"") + `</div>`;
+    }
+
+    return `<tr>
+      <td>${proc}</td>
+      <td class="mono">${dt}<div class="ult">disp. ${r.disponibilizacao||"—"}</div></td>
+      <td>${esc(r.orgao)}<div class="ult">${esc(r.parte)}</div></td>
+      <td>${sit}</td>
+      <td><button class="ver" data-i="${i}">ver</button></td></tr>`;
+  }).join("") || `<tr><td colspan="5" style="padding:26px;text-align:center;color:var(--tx2)">Nenhum registro</td></tr>`;
+
+  $$("#tab .ver").forEach(b => b.onclick = () => abreNota(VISTA[+b.dataset.i]));
+}
+["#selFiltro","#selVista"].forEach(s=>$(s).onchange=pinta);
+$("#busca").oninput = pinta;
+
+/* ---------------- modal do texto da nota ---------------- */
+function abreNota(r){
+  const pje = linksPje(r.processo)
+    .map(([rot,u])=>`<a class="b sec" style="padding:7px 12px;text-decoration:none;font-size:12px" href="${u}" target="_blank" rel="noopener noreferrer">${rot}</a>`).join("");
+  const d = document.createElement("div");
+  d.className = "modal";
+  d.innerHTML = `<div class="cx">
+    <div class="top">
+      <div>
+        <h3>${esc(r.processo)}</h3>
+        <div class="meta">${esc(r.orgao||"—")} · ${esc(r.tipo||"—")} ·
+          nota de ${r.dataNota||"data não identificada"} · disponibilizada em ${r.disponibilizacao||"—"}</div>
+        ${r.termos?`<div class="meta">termos: ${esc(r.termos)}</div>`:""}
+      </div>
+      <button class="fechar" title="fechar">×</button>
+    </div>
+    <div class="corpo">${r.texto || "<i>texto não disponível</i>"}</div>
+    <div class="rod">
+      ${r.links[0]?`<a class="b sec" style="padding:7px 12px;text-decoration:none;font-size:12px" href="${r.links[0]}" target="_blank">Abrir no SUPP</a>`:""}
+      ${pje}
+      <button class="b" id="mCopiar">📋 Copiar texto</button>
+      <button class="b" id="mFechar">Fechar</button>
+    </div></div>`;
+  document.body.appendChild(d);
+  const sair = () => d.remove();
+  d.querySelector(".fechar").onclick = sair;
+  d.querySelector("#mFechar").onclick = sair;
+  d.onclick = e => { if(e.target === d) sair(); };
+  d.querySelector("#mCopiar").onclick = () =>
+    navigator.clipboard.writeText(strip(r.texto)).then(()=>{ d.querySelector("#mCopiar").textContent="✓ copiado"; });
+  document.addEventListener("keydown", function esc2(ev){
+    if(ev.key === "Escape"){ sair(); document.removeEventListener("keydown", esc2); }
+  });
+}
+
+/* ---------------- saídas ---------------- */
+function baixa(nome, texto, tipo="text/plain;charset=utf-8"){
+  const b=new Blob(["\ufeff"+texto],{type:tipo}), a=document.createElement("a");
+  a.href=URL.createObjectURL(b); a.download=nome; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+}
+function csv(regs){
+  const cab=["Processo","Data_NOTA","Disponibilizacao","Prazo","Orgao","Parte","Tipo","Comarca","UF",
+             "Situacao","Ultima_Tarefa","Data_Ultima_Tarefa","Id_Ultima_Tarefa","URL_SUPP","PJe_1g","PJe_2g","Texto_Nota"];
+  const e=v=>`"${String(v??"").replace(/"/g,'""')}"`;
+  return [cab.join(";")].concat(regs.map(r=>{
+    const u = r.ultimaTarefa || {}, pje = linksPje(r.processo);
+    return [r.processo, r.dataNota||"SEM DATA", r.disponibilizacao, r.prazo, r.orgao, r.parte, r.tipo,
+      r.comarca, r.uf, r.tratada?"Já tratada":r.motivo, u.tipo||"", u.data||"", Number.isFinite(u.id)?u.id:"",
+      r.links[0]||"", pje[0]?pje[0][1]:"", pje[1]?pje[1][1]:"", strip(r.texto)].map(e).join(";");
+  })).join("\r\n");
+}
+const nomeCsv = f => `NEs_${f.replace(/[\\/:*?"<>|]/g,"_")}_SemTarefa_${arqNome($("#d1").value)}.csv`;
+$("#btnCsv").onclick = () => {const k=$("#selFiltro").value; baixa(nomeCsv(k), csv(FINAL[k].pendentes),"text/csv;charset=utf-8");};
+$("#btnCsvAll").onclick = () => Object.entries(FINAL).forEach(([k,v],i)=>
+  setTimeout(()=>baixa(nomeCsv(k), csv(v.pendentes),"text/csv;charset=utf-8"), i*350));
+
+function htmlResumo(){
+  const linhas = Object.entries(FINAL).map(([k,v])=>`
+    <tr><td style="padding:10px 14px;border-bottom:1px solid #ddd"><b>${k}</b></td>
+        <td style="padding:10px 14px;border-bottom:1px solid #ddd">${v.pendentes.length} sem tarefa · ${v.tratadas.length} tratadas</td></tr>`).join("");
+  return `<div style="font-family:Georgia,serif;font-size:15px;color:#333"><p>Prezados,</p>
+<p>Segue o resultado das NEs Trabalhistas.</p>
+<table style="width:100%;border-collapse:collapse;font-size:14px;border:1px solid #ddd">
+<thead><tr style="background:#2F4F4F;color:#fff"><th style="padding:11px 14px;text-align:left;font-weight:normal">Filtro</th>
+<th style="padding:11px 14px;text-align:left;font-weight:normal">Resultado</th></tr></thead>
+<tbody><tr><td style="padding:10px 14px;border-bottom:1px solid #ddd"><b>Data</b></td>
+<td style="padding:10px 14px;border-bottom:1px solid #ddd">${$("#d1").value||hoje()}</td></tr>
+${linhas}</tbody></table></div>`;
+}
+$("#btnEml").onclick = () => {
+  const b64 = s => btoa(unescape(encodeURIComponent(s)));
+  const bd = "==NES"+Date.now();
+  let m = `To: ${$("#para").value}\r\nSubject: NEs Trabalhistas — ${$("#d1").value||hoje()}\r\n`
+        + `MIME-Version: 1.0\r\nContent-Type: multipart/mixed; boundary="${bd}"\r\n\r\n--${bd}\r\n`
+        + `Content-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n\r\n`
+        + b64(htmlResumo()).replace(/(.{76})/g,"$1\r\n")+"\r\n";
+  for(const [k,v] of Object.entries(FINAL)){
+    if(!v.pendentes.length) continue;
+    m += `--${bd}\r\nContent-Type: text/csv; charset=UTF-8; name="${nomeCsv(k)}"\r\n`
+       + `Content-Transfer-Encoding: base64\r\nContent-Disposition: attachment; filename="${nomeCsv(k)}"\r\n\r\n`
+       + b64("\ufeff"+csv(v.pendentes)).replace(/(.{76})/g,"$1\r\n")+"\r\n";
+  }
+  m += `--${bd}--`;
+  baixa(`NEs_Trabalhistas_${arqNome($("#d1").value)}.eml`, m, "message/rfc822");
+};
+
+/* ---------------- inicialização ---------------- */
+$("#filtros").value = FILTROS_PADRAO.join("\n");
+$("#tipos").value = TIPOS_PADRAO.join("\n");
+$("#d1").value = hoje();
+$("#btnTema").onclick = () => {
+  const t = document.documentElement.dataset.tema==="claro" ? "escuro" : "claro";
+  document.documentElement.dataset.tema = t; localStorage.setItem("nes_tema",t);
+};
+document.documentElement.dataset.tema = localStorage.getItem("nes_tema") || "escuro";
+log("pronto");
+</script>
+</body>
+</html>
