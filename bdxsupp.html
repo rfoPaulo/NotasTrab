@@ -1,186 +1,249 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-tema="claro">
+<html lang="pt-BR" data-tema="claro" data-guia="dados">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BDxSUPP — NEs Trabalhistas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0C0D10;--surf:#16181D;--surf2:#1D2027;--bd:#2A2D35;--tx:#F4F5F7;--tx2:#9AA1AC;
-      --ac:#2563EB;--am:#F59E0B;--ok:#22C55E;--er:#EF4444}
-html[data-tema="claro"]{--bg:#F4F5F7;--surf:#FFF;--surf2:#F4F5F7;--bd:#D5D8DE;--tx:#101114;--tx2:#6B7280;--am:#B45309;--ok:#15803D;--er:#B91C1C}
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root{
+  --bg:#F4F5F7; --surface:#FFFFFF; --ink:#101114; --ink-2:#6B7280; --line:#101114;
+  --accent:#2563EB; --accent-2:#F59E0B; --ok:#166534; --err:#B3261E;
+  --font-display:"Oswald","Archivo Black","Archivo",Impact,sans-serif;
+  --font-body:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --font-mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:20px; --s-6:24px; --s-7:32px; --s-8:48px;
+  --bw:1px; --bw-thick:3px; --radius:0px; --shadow:4px 4px 0 var(--line);
+  --brand-supp:#0F6CBD; --brand-bd:#742774; --brand-pje:#5B21B6;
+}
+html[data-tema="escuro"]{
+  --bg:#0C0D10; --surface:#16181D; --ink:#F4F5F7; --ink-2:#8B929F; --line:#2A2D35;
+  --ok:#4ADE80; --err:#F87171;
+  --brand-supp:#4FA3E3; --brand-bd:#B76FB7; --brand-pje:#A78BFA;
+}
+html[data-guia="dados"]{ --accent:#2563EB; }
+html[data-guia="supp"]{  --accent:#0E7490; }
+html[data-guia="fim"]{   --accent:#B45309; }
+html[data-tema="escuro"][data-guia="dados"]{ --accent:#60A5FA; }
+html[data-tema="escuro"][data-guia="supp"]{  --accent:#22D3EE; }
+html[data-tema="escuro"][data-guia="fim"]{   --accent:#FBBF24; }
+html[data-tema="escuro"] .nav button.ativo,
+html[data-tema="escuro"] .btn.primary,
+html[data-tema="escuro"] .note-badge{ color:#0C0D10 }
+/* ============================================================
+   BASE
+   ============================================================ */
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--tx);font:400 15px/1.6 Inter,system-ui,sans-serif}
-h1,h2{font-family:Oswald,sans-serif;font-weight:700;letter-spacing:-.02em;text-transform:uppercase;margin:0}
-header{border-bottom:1px solid var(--bd);padding:14px 24px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
-header h1{font-size:20px}
-
-/* navegação entre as duas ferramentas */
-.nav{display:flex;border:1px solid var(--bd)}
-.nav a{padding:9px 20px;font:600 12.5px Inter,sans-serif;letter-spacing:.04em;text-transform:uppercase;
-  color:var(--tx2);text-decoration:none;border-right:1px solid var(--bd);display:flex;align-items:center;gap:7px}
-.nav a:last-child{border-right:0}
-.nav a:hover{background:var(--surf2);color:var(--tx)}
-.nav a.atual{background:var(--ac);color:#fff}
-.nav a.atual:hover{background:var(--ac);color:#fff}
-.nav .pt{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.55}
-.nav a.atual .pt{opacity:1}
-
-main{max-width:1240px;margin:0 auto;padding:24px}
-
-.passos{display:flex;border:1px solid var(--bd);margin-bottom:24px;background:var(--surf)}
-.passos button{flex:1;border:0;border-right:1px solid var(--bd);background:transparent;color:var(--tx2);
-  padding:16px 12px;cursor:pointer;font:500 13px Inter,sans-serif;text-align:left;display:flex;gap:11px;align-items:center}
-.passos button:last-child{border-right:0}
-.passos button:hover:not(:disabled){background:var(--surf2)}
-.passos button.on{background:var(--ac);color:#fff}
-.passos button:disabled{opacity:.35;cursor:not-allowed}
-.passos .num{width:26px;height:26px;flex:none;border:1px solid currentColor;border-radius:50%;
-  display:grid;place-items:center;font:600 12px Inter}
-.passos button.on .num{background:#fff;color:var(--ac);border-color:#fff}
-.passos button.feito .num{background:var(--ok);color:#fff;border-color:var(--ok)}
-
-.card{background:var(--surf);border:1px solid var(--bd);padding:26px;margin-bottom:20px}
-.card h2{font-size:16px;margin-bottom:6px}
-.card .desc{color:var(--tx2);font-size:14px;margin-bottom:20px}
-
-.etapa{border:1px solid var(--bd);padding:20px;margin-bottom:14px;background:var(--surf2)}
-.etapa.pronta{border-color:var(--ok)}
-.etapa h3{margin:0 0 4px;font:600 14px Inter;display:flex;gap:10px;align-items:center}
-.etapa h3 .b{width:24px;height:24px;flex:none;background:var(--ac);color:#fff;border-radius:50%;
-  display:grid;place-items:center;font:600 12px Inter}
-.etapa.pronta h3 .b{background:var(--ok)}
-.etapa p{margin:0 0 14px 34px;color:var(--tx2);font-size:13.5px}
-.etapa .acao{margin-left:34px}
-.etapa .acao.dupla{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.ok-inline{color:var(--ok);font-size:13px;font-weight:600}
-
-button.b{font:600 13px Inter,sans-serif;background:transparent;color:var(--tx);border:1px solid var(--bd);
-  padding:11px 18px;cursor:pointer;border-radius:0}
-button.b:hover{background:var(--tx);color:var(--bg)}
-button.b:disabled{opacity:.4;cursor:not-allowed}
-button.b:disabled:hover{background:transparent;color:var(--tx)}
-button.b.sec{border-style:dashed;color:var(--tx2)}
-button.b.sec:hover{background:var(--surf2);color:var(--tx);border-style:solid}
-button.pri{background:var(--ac);border-color:var(--ac);color:#fff;padding:15px 22px;font-size:14px;width:100%}
-button.pri:hover{filter:brightness(1.15);background:var(--ac);color:#fff}
-button.pri:disabled{background:var(--bd);border-color:var(--bd)}
-button.gr{background:var(--ok);border-color:var(--ok);color:#fff}
-button.gr:hover{filter:brightness(1.1);background:var(--ok);color:#fff}
-
-input[type=text],select,textarea{width:100%;background:var(--bg);border:1px solid var(--bd);color:var(--tx);
-  padding:10px 12px;font:400 14px Inter,sans-serif;border-radius:0}
-input:focus,select:focus,textarea:focus{outline:2px solid var(--ac);outline-offset:-2px}
-label{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx2);margin-bottom:6px}
-.grid{display:grid;gap:16px}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
-@media(max-width:780px){.g2,.g3{grid-template-columns:1fr}.passos{flex-direction:column}}
-
-.drop{border:2px dashed var(--bd);padding:32px;text-align:center;color:var(--tx2);font-size:14px;cursor:pointer;background:var(--bg)}
-.drop:hover,.drop.over{border-color:var(--ac);color:var(--ac)}
-
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-weight:400;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:-.02em;margin:0;text-transform:uppercase}
+code{font-family:var(--font-mono);font-size:.9em;background:var(--bg);border:var(--bw) solid var(--line);padding:1px 4px}
+.masthead{background:var(--surface);border-bottom:var(--bw-thick) solid var(--line);padding:var(--s-6) var(--s-7);display:flex;justify-content:space-between;align-items:flex-start;gap:var(--s-5);flex-wrap:wrap}
+.masthead .kicker{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-2);font-weight:600;margin:0 0 var(--s-2)}
+.masthead h1{font-size:clamp(28px,4vw,44px);line-height:1}
+.masthead .sub{color:var(--ink-2);font-size:14px;max-width:70ch;margin:var(--s-2) 0 0}
+.masthead .direita{display:flex;flex-direction:column;align-items:flex-end;gap:var(--s-3)}
+.appnav{display:flex;border:var(--bw) solid var(--line)}
+.appnav a{padding:9px var(--s-5);font-family:var(--font-body);font-size:12px;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);text-decoration:none;
+  border-right:var(--bw) solid var(--line);display:flex;align-items:center;gap:7px;white-space:nowrap}
+.appnav a:last-child{border-right:0}
+.appnav a:hover{background:var(--ink);color:var(--surface)}
+.appnav a.atual{background:var(--accent);color:#fff}
+.appnav a.atual:hover{background:var(--accent);color:#fff}
+html[data-tema="escuro"] .appnav a.atual{color:#0C0D10}
+.appnav .pt{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.55}
+.appnav a.atual .pt{opacity:1}
+#tema-btn{background:var(--surface);color:var(--ink);border:var(--bw) solid var(--line);padding:10px var(--s-4);cursor:pointer;font-family:var(--font-body);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap}
+#tema-btn:hover{background:var(--ink);color:var(--surface)}
+main{max-width:1360px;margin:0 auto;padding:var(--s-7) var(--s-6) var(--s-8)}
+.rule{border:0;border-top:var(--bw-thick) solid var(--line);margin:var(--s-7) 0}
+.band-label{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-2);font-weight:600;margin:0 0 var(--s-3)}
+.nav{display:flex;flex-wrap:wrap;gap:0;border:var(--bw) solid var(--line);margin-bottom:var(--s-6)}
+.nav button{flex:1 1 auto;background:var(--surface);color:var(--ink);border:0;border-right:var(--bw) solid var(--line);padding:var(--s-3) var(--s-5);cursor:pointer;font-family:var(--font-body);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:var(--s-3)}
+.nav button:last-child{border-right:0}
+.nav button:hover:not(:disabled){background:var(--ink);color:var(--surface)}
+.nav button.ativo{background:var(--accent);color:#fff}
+.nav button:disabled{opacity:.4;cursor:not-allowed}
+.nav .num{width:22px;height:22px;flex:none;border:var(--bw) solid currentColor;border-radius:50%;display:grid;place-items:center;font-size:11px}
+.nav button.ativo .num{background:#fff;color:var(--accent);border-color:#fff}
+html[data-tema="escuro"] .nav button.ativo .num{background:#0C0D10;color:var(--accent);border-color:#0C0D10}
+.nav button.feito .num{background:var(--ok);color:var(--surface);border-color:var(--ok)}
+.card{background:var(--surface);border:var(--bw) solid var(--line);border-radius:var(--radius);padding:var(--s-6);margin-bottom:var(--s-5)}
+.card.raised{box-shadow:var(--shadow)}
+.card > h2{font-size:20px;padding-bottom:var(--s-3);margin-bottom:var(--s-5);border-bottom:var(--bw-thick) solid var(--line)}
+.card > h2 .num{color:var(--accent);margin-right:var(--s-2)}
+.card h3{font-size:14px;margin:var(--s-6) 0 var(--s-3)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s-5)}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-5)}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s-5)}
+.full{grid-column:1/-1}
+@media (max-width:820px){.grid,.grid-3,.grid-4{grid-template-columns:1fr}main{padding:var(--s-5) var(--s-4)}.masthead{padding:var(--s-5) var(--s-4)}.masthead .direita{align-items:flex-start}.nav{flex-direction:column}.nav button{justify-content:flex-start}}
+label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-2);margin-bottom:var(--s-2)}
+input,select,textarea{width:100%;padding:10px var(--s-3);border:var(--bw) solid var(--line);border-radius:var(--radius);background:var(--surface);color:var(--ink);font-family:var(--font-body);font-size:14px}
+input:focus,select:focus,textarea:focus{outline:var(--bw-thick) solid var(--accent);outline-offset:-3px}
+textarea{min-height:110px;font-family:var(--font-mono);font-size:13px;resize:vertical;line-height:1.5}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--ink) 50%),linear-gradient(135deg,var(--ink) 50%,transparent 50%);background-position:calc(100% - 16px) 50%,calc(100% - 11px) 50%;background-size:5px 5px;background-repeat:no-repeat;padding-right:var(--s-7)}
+.hint{font-size:12px;color:var(--ink-2);margin:var(--s-2) 0 0}
+.acoes{display:flex;flex-wrap:wrap;gap:var(--s-2);margin-top:var(--s-5)}
+.btn{background:var(--surface);color:var(--ink);border:var(--bw) solid var(--line);border-radius:var(--radius);padding:10px var(--s-4);cursor:pointer;font-family:var(--font-body);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.btn:hover{background:var(--ink);color:var(--surface)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn.primary:hover{background:var(--surface);color:var(--accent)}
+.btn.block{display:block;width:100%;padding:var(--s-4);font-size:14px;letter-spacing:.1em}
+.btn.amber{background:var(--accent-2);border-color:var(--accent-2);color:#101114}
+.btn.amber:hover{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.btn.brand{color:#fff}
+.btn.brand:hover{background:var(--surface)}
+.btn.supp{background:var(--brand-supp);border-color:var(--brand-supp)}
+.btn.supp:hover{color:var(--brand-supp)}
+.btn.bd{background:var(--brand-bd);border-color:var(--brand-bd)}
+.btn.bd:hover{color:var(--brand-bd)}
+.btn.ghost{border-style:dashed;color:var(--ink-2)}
+.btn.ghost:hover{background:var(--ink);color:var(--surface);border-style:solid}
+html[data-tema="escuro"] .btn.brand{color:#0C0D10}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn:disabled:hover{background:var(--surface);color:var(--ink)}
+.note{border:var(--bw) solid var(--line);border-left:var(--bw-thick) solid var(--accent);padding:var(--s-3) var(--s-4);font-size:13px;margin-bottom:var(--s-5);background:var(--surface)}
+.note.warn{border-left-color:var(--accent-2)}
+.note.ok{border-left-color:var(--ok)}
+.tag{display:inline-block;padding:2px var(--s-2);border:var(--bw) solid var(--line);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.tag.ok{background:var(--accent);color:#fff;border-color:var(--accent)}
+html[data-tema="escuro"] .tag.ok{color:#0C0D10}
+.tag.zero{background:transparent;color:var(--ink-2)}
+.tag.dup{background:var(--accent-2);color:#101114;border-color:var(--accent-2)}
+.tag.verde{background:transparent;color:var(--ok);border-color:var(--ok)}
+.tag.vermelho{background:transparent;color:var(--err);border-color:var(--err)}
+.tag.ambar{background:transparent;color:var(--accent-2);border-color:var(--accent-2)}
+/* ---- etapas numeradas ---- */
+.etapa{border:var(--bw) solid var(--line);padding:var(--s-5);margin-bottom:var(--s-4);background:var(--bg)}
+.etapa.pronta{border-color:var(--ok);border-left:var(--bw-thick) solid var(--ok)}
+.etapa h3{font-size:14px;margin:0 0 var(--s-2);display:flex;gap:var(--s-3);align-items:center}
+.etapa h3 .b{width:24px;height:24px;flex:none;background:var(--accent);color:#fff;display:grid;place-items:center;font-family:var(--font-body);font-size:12px;font-weight:700}
+html[data-tema="escuro"] .etapa h3 .b{color:#0C0D10}
+.etapa.pronta h3 .b{background:var(--ok);color:#fff}
+.etapa p{margin:0 0 var(--s-4) 36px;color:var(--ink-2);font-size:13.5px}
+.etapa .acao{margin:0 0 0 36px;display:flex;flex-wrap:wrap;gap:var(--s-2);align-items:center}
+.ok-inline{color:var(--ok);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.dropzone{border:var(--bw-thick) dashed var(--line);padding:var(--s-6);background:var(--surface);text-align:center;cursor:pointer;color:var(--ink-2);font-size:13px}
+.dropzone:hover,.dropzone.hover{border-color:var(--accent);background:var(--bg);color:var(--accent)}
+.dropzone .dica{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin:0}
+.progress{height:12px;border:var(--bw) solid var(--line);margin-top:var(--s-5)}
+.progress i{display:block;height:100%;background:var(--accent);width:0;transition:width .2s linear}
+#log{background:var(--ink);color:var(--bg);border:var(--bw) solid var(--line);font-family:var(--font-mono);font-size:12px;line-height:1.5;padding:var(--s-4);max-height:260px;overflow:auto;white-space:pre-wrap}
+html[data-tema="escuro"] #log{background:#000;color:#D6DAE2}
 table{width:100%;border-collapse:collapse;font-size:13px}
-th{background:var(--tx);color:var(--bg);text-align:left;padding:9px 10px;font:600 11px Inter;
-   text-transform:uppercase;letter-spacing:.07em;position:sticky;top:0}
-td{padding:9px 10px;border-bottom:1px solid var(--bd);vertical-align:top}
-tr:hover td{background:var(--surf2)}
-.tw{max-height:560px;overflow:auto;border:1px solid var(--bd)}
-.mono{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;white-space:nowrap}
-.pje{display:flex;gap:7px;margin-top:4px}
-.pje a{font-size:11px;color:var(--tx2);border:1px solid var(--bd);padding:1px 6px;text-decoration:none}
-.pje a:hover{border-color:var(--ac);color:var(--ac)}
-.tag{display:inline-block;border:1px solid var(--bd);padding:1px 7px;font-size:11px}
-.tag.s{border-color:var(--ok);color:var(--ok)}.tag.e{border-color:var(--er);color:var(--er)}
-.tag.a{border-color:var(--am);color:var(--am)}
-.ult{font-size:11.5px;color:var(--tx2);margin-top:4px;line-height:1.45}
-.ult b{color:var(--tx);font-weight:600}
-button.ver{border:1px solid var(--bd);background:transparent;color:var(--tx2);font-size:11px;
-  padding:3px 9px;cursor:pointer}
-button.ver:hover{border-color:var(--ac);color:var(--ac)}
-.met{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--bd);margin-bottom:18px}
-.met div{padding:16px;border-right:1px solid var(--bd)}.met div:last-child{border-right:0}
-.met b{display:block;font:700 27px Oswald,sans-serif}
-.met span{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx2)}
-@media(max-width:780px){.met{grid-template-columns:1fr 1fr}}
-.hide{display:none!important}
-details{margin-top:18px;border-top:1px solid var(--bd);padding-top:14px}
-summary{cursor:pointer;color:var(--tx2);font-size:13px}
-#log{background:#000;color:#8FE388;font:400 11px/1.5 ui-monospace,Consolas,monospace;
-     padding:12px;max-height:170px;overflow:auto;margin-top:12px;white-space:pre-wrap}
-
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:99;display:grid;place-items:center;padding:24px}
-.modal .cx{background:var(--surf);border:1px solid var(--bd);max-width:940px;width:100%;max-height:88vh;display:flex;flex-direction:column}
-.modal .top{padding:16px 20px;border-bottom:1px solid var(--bd);display:flex;gap:14px;align-items:flex-start}
-.modal .top h3{margin:0;font:700 15px Oswald,sans-serif;letter-spacing:-.01em}
-.modal .top .meta{font-size:12px;color:var(--tx2);margin-top:3px}
-.modal .corpo{padding:20px;overflow:auto;font-size:13.5px;line-height:1.75;white-space:pre-wrap;word-break:break-word}
-.modal .corpo mark{background:var(--am);color:#000;padding:0 3px}
-.modal .rod{padding:13px 20px;border-top:1px solid var(--bd);display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
-.modal .fechar{background:none;border:0;color:var(--tx2);font-size:24px;cursor:pointer;line-height:1;margin-left:auto}
+th,td{padding:var(--s-3) var(--s-4);text-align:left;vertical-align:top;border:var(--bw) solid var(--line)}
+thead th{background:var(--ink);color:var(--surface);font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:700;position:sticky;top:0;z-index:10}
+html[data-tema="escuro"] thead th{background:#000;color:var(--ink)}
+tbody tr:hover td{background:var(--bg)}
+#tab-wrap{border:var(--bw) solid var(--line);max-height:64vh;overflow:auto;background:var(--surface)}
+.mono{font-family:var(--font-mono);font-size:12.5px;white-space:nowrap}
+.pje{display:flex;gap:var(--s-2);margin-top:var(--s-2)}
+.pje a{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--brand-pje);
+  border:var(--bw) solid var(--brand-pje);padding:1px var(--s-2);text-decoration:none}
+.pje a:hover{background:var(--brand-pje);color:#fff}
+html[data-tema="escuro"] .pje a:hover{color:#0C0D10}
+.sub-info{font-size:11.5px;color:var(--ink-2);margin-top:var(--s-1);line-height:1.45}
+.sub-info b{color:var(--ink);font-weight:600}
+.metricas{display:grid;grid-template-columns:repeat(4,1fr);border:var(--bw) solid var(--line);margin-bottom:var(--s-5);background:var(--surface)}
+.metricas div{padding:var(--s-5);border-right:var(--bw) solid var(--line)}
+.metricas div:last-child{border-right:0}
+.metricas b{display:block;font-family:var(--font-display);font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.metricas span{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+@media (max-width:820px){.metricas{grid-template-columns:1fr 1fr}}
+#drop-overlay{position:fixed;inset:0;background:var(--accent);z-index:1000;display:none;justify-content:center;align-items:center;color:#fff;font-family:var(--font-display);font-size:clamp(24px,5vw,56px);text-transform:uppercase;letter-spacing:-.02em;text-align:center;border:var(--s-2) solid var(--ink)}
+#drop-overlay.show{display:flex}
+.oculto{display:none!important}
+details{margin-top:var(--s-6);border-top:var(--bw) solid var(--line);padding-top:var(--s-4)}
+summary{cursor:pointer;color:var(--ink-2);font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:600}
+/* ---- modal ---- */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:900;display:grid;place-items:center;padding:var(--s-6)}
+.modal .cx{background:var(--surface);border:var(--bw-thick) solid var(--line);box-shadow:var(--shadow);max-width:960px;width:100%;max-height:88vh;display:flex;flex-direction:column}
+.modal .top{padding:var(--s-5) var(--s-6);border-bottom:var(--bw-thick) solid var(--line);display:flex;gap:var(--s-4);align-items:flex-start}
+.modal .top h3{font-size:18px}
+.modal .top .meta{font-size:12px;color:var(--ink-2);margin-top:var(--s-1)}
+.modal .corpo{padding:var(--s-6);overflow:auto;font-size:13.5px;line-height:1.75;white-space:pre-wrap;word-break:break-word}
+.modal .corpo mark{background:var(--accent-2);color:#101114;padding:0 2px;font-weight:600}
+.modal .rod{padding:var(--s-4) var(--s-6);border-top:var(--bw) solid var(--line);display:flex;gap:var(--s-2);justify-content:flex-end;flex-wrap:wrap}
+.modal .fechar{background:none;border:0;color:var(--ink-2);font-size:26px;cursor:pointer;line-height:1;margin-left:auto;padding:0}
+.modal .fechar:hover{color:var(--ink)}
 </style>
 </head>
 <body>
-<header>
-  <h1>NEs Trabalhistas</h1>
-  <nav class="nav">
-    <a href="https://rfopaulo.github.io/NotasTrab/"><span class="pt"></span>DJEN</a>
-    <a href="https://rfopaulo.github.io/NotasTrab/bdxsupp.html" class="atual"><span class="pt"></span>BDxSUPP</a>
-  </nav>
-  <div style="flex:1"></div>
-  <button class="b" id="btnTema">◐</button>
-</header>
-
-<main>
-  <div class="passos" id="passos">
-    <button data-p="dados"><span class="num">1</span> Buscar as notas</button>
-    <button data-p="supp" disabled><span class="num">2</span> Consultar o SUPP</button>
-    <button data-p="fim" disabled><span class="num">3</span> Resultado</button>
+<div id="drop-overlay"><div>Solte o arquivo</div></div>
+<header class="masthead">
+  <div>
+    <p class="kicker">Procuradoria-Geral do Estado · RS</p>
+    <h1>BDxSUPP — NEs Trabalhistas</h1>
+    <p class="sub">Cruzamento entre as NEs do BD-1 e as tarefas cadastradas no SUPP: filtros do fluxo PAD, remoção de repetidos e identificação das notas ainda sem providência.</p>
   </div>
+  <div class="direita">
+    <nav class="appnav">
+      <a href="https://rfopaulo.github.io/NotasTrab/"><span class="pt"></span>DJEN</a>
+      <a href="https://rfopaulo.github.io/NotasTrab/bdxsupp.html" class="atual"><span class="pt"></span>BDxSUPP</a>
+    </nav>
+    <button id="tema-btn" onclick="alternarTema()">☾ Tema escuro</button>
+  </div>
+</header>
+<main>
+  <nav class="nav">
+    <button id="tab-dados" class="ativo" onclick="mudarAba('dados')"><span class="num">1</span>Buscar as notas</button>
+    <button id="tab-supp" disabled onclick="mudarAba('supp')"><span class="num">2</span>Consultar o SUPP</button>
+    <button id="tab-fim" disabled onclick="mudarAba('fim')"><span class="num">3</span>Resultado</button>
+  </nav>
 
   <!-- ============ PASSO 1 ============ -->
-  <section id="p-dados">
-    <div class="card">
-      <h2>Passo 1 — trazer as notas do BD-1</h2>
-      <div class="desc">O BD-1 só responde de dentro da rede, então o arquivo é gerado lá e trazido para cá.</div>
+  <section id="aba-dados">
+    <div class="card raised">
+      <h2><span class="num">01</span>Trazer as notas do BD-1</h2>
+      <div class="note"><b>Rede interna.</b> O BD-1 só responde de dentro da rede da PGE, então o arquivo é gerado lá e trazido para cá. Todo o processamento é local.</div>
 
       <div class="etapa" id="e1a">
-        <h3><span class="b">A</span> Copie o comando</h3>
+        <h3><span class="b">A</span>Copie o comando</h3>
         <p>Ele pergunta a data e baixa a lista de notas do dia.</p>
-        <div class="acao dupla">
-          <button class="b" id="btnCopiaBd">📋 Copiar comando</button>
-          <button class="b sec" id="btnAbrirBd">↗ Abrir o BD-1</button>
-          <span id="okBd" class="hide ok-inline">✓ copiado</span>
+        <div class="acao">
+          <button class="btn primary" id="btnCopiaBd">Copiar comando</button>
+          <button class="btn ghost" id="btnAbrirBd">↗ Abrir o BD-1</button>
+          <span id="okBd" class="oculto ok-inline">✓ copiado</span>
         </div>
       </div>
 
       <div class="etapa" id="e1b">
-        <h3><span class="b">B</span> Rode no BD-1</h3>
-        <p>No BD-1, tecle <b>F12</b> → aba <b>Console</b> → cole com <b>Ctrl+V</b> → <b>Enter</b>.
-           Informe a data e o arquivo será baixado.</p>
+        <h3><span class="b">B</span>Rode no BD-1</h3>
+        <p>Na página do BD-1, tecle <code>F12</code> → aba <b>Console</b> → cole com <code>Ctrl+V</code> → <code>Enter</code>. Informe a data e o arquivo será baixado.</p>
       </div>
 
       <div class="etapa" id="e1c">
-        <h3><span class="b">C</span> Traga o arquivo para cá</h3>
+        <h3><span class="b">C</span>Traga o arquivo para cá</h3>
         <p>Arraste o arquivo baixado para a área abaixo.</p>
-        <div class="acao">
-          <div class="drop" id="drop">Arraste o arquivo aqui<br><span style="font-size:12px">ou clique para procurar</span>
-            <input type="file" id="file" accept=".json,.txt" class="hide"></div>
-          <div style="margin-top:10px"><button class="b" id="btnColar">📋 Colar em vez de arrastar</button></div>
-          <div id="okDados" class="hide" style="color:var(--ok);margin-top:12px;font-weight:600">✓ <span id="qtdDados"></span></div>
+        <div class="acao" style="display:block">
+          <div class="dropzone" id="drop">
+            <p class="dica">Arraste o arquivo aqui</p>
+            <p style="margin:var(--s-2) 0 0;font-size:12px">ou clique para procurar na pasta Downloads</p>
+            <input type="file" id="file" accept=".json,.txt" class="oculto">
+          </div>
+          <div class="acoes"><button class="btn" id="btnColar">Colar em vez de arrastar</button></div>
+          <div id="okDados" class="oculto note ok" style="margin:var(--s-4) 0 0"></div>
         </div>
       </div>
 
-      <div style="margin-top:22px"><button class="pri" id="btnProcessar" disabled>Continuar</button></div>
+      <button class="btn primary block" id="btnProcessar" disabled style="margin-top:var(--s-5)">Continuar</button>
 
       <details>
-        <summary>Opções de filtro (já vêm configuradas)</summary>
-        <div style="margin-top:16px">
-          <label>Filtros — um por linha</label>
-          <textarea id="filtros" style="min-height:110px;font-family:ui-monospace,monospace;font-size:13px"></textarea>
-          <div class="grid g2" style="margin-top:14px">
-            <div><label>Data da consulta</label><input type="text" id="d1" placeholder="dd/mm/aaaa"></div>
-            <div><label>Remover repetidos</label><select id="dedup">
-              <option value="1">Sim (recomendado)</option><option value="0">Não</option></select></div>
+        <summary>Opções de filtro — já configuradas</summary>
+        <div style="margin-top:var(--s-5)">
+          <label for="filtros">Filtros — um por linha</label>
+          <textarea id="filtros"></textarea>
+          <div class="grid" style="margin-top:var(--s-4)">
+            <div><label for="d1">Data da consulta</label><input type="text" id="d1" placeholder="dd/mm/aaaa"></div>
+            <div><label for="dedup">Remover repetidos</label>
+              <select id="dedup"><option value="1">Sim (recomendado)</option><option value="0">Não</option></select></div>
           </div>
         </div>
       </details>
@@ -188,82 +251,88 @@ summary{cursor:pointer;color:var(--tx2);font-size:13px}
   </section>
 
   <!-- ============ PASSO 2 ============ -->
-  <section id="p-supp" class="hide">
-    <div class="card">
-      <h2>Passo 2 — verificar as tarefas no SUPP</h2>
-      <div class="desc">Vamos conferir quais notas já têm tarefa cadastrada no SUPP.</div>
+  <section id="aba-supp" class="oculto">
+    <div class="card raised">
+      <h2><span class="num">02</span>Verificar as tarefas no SUPP</h2>
+      <div class="note">O SUPP fica em outro domínio, então o programa roda dentro dele, aproveitando a sua sessão já aberta.</div>
 
       <div class="etapa" id="e2a">
-        <h3><span class="b">A</span> Copie o programa</h3>
+        <h3><span class="b">A</span>Copie o programa</h3>
         <p id="txtIds">A lista de processos já vai dentro dele — não precisa copiar mais nada.</p>
-        <div class="acao dupla">
-          <button class="b" id="btnCopiaColetor">📋 Copiar programa</button>
-          <button class="b sec" id="btnAbrirSupp">↗ Abrir o SUPP</button>
-          <span id="okColetor" class="hide ok-inline">✓ copiado</span>
+        <div class="acao">
+          <button class="btn primary" id="btnCopiaColetor">Copiar programa</button>
+          <button class="btn brand supp" id="btnAbrirSupp">↗ Abrir o SUPP</button>
+          <span id="okColetor" class="oculto ok-inline">✓ copiado</span>
         </div>
       </div>
 
       <div class="etapa" id="e2b">
-        <h3><span class="b">B</span> Rode no SUPP</h3>
-        <p>No SUPP, tecle <b>F12</b> → aba <b>Console</b> → cole com <b>Ctrl+V</b> → <b>Enter</b>.
-           A coleta começa sozinha; aguarde a barra terminar.</p>
+        <h3><span class="b">B</span>Rode no SUPP</h3>
+        <p>No SUPP, tecle <code>F12</code> → aba <b>Console</b> → cole com <code>Ctrl+V</code> → <code>Enter</code>. A coleta começa sozinha; aguarde a barra terminar.</p>
       </div>
 
       <div class="etapa" id="e2c">
-        <h3><span class="b">C</span> Traga o resultado</h3>
+        <h3><span class="b">C</span>Traga o resultado</h3>
         <p>Clique em <b>Copiar resultado</b> no painel do SUPP e depois no botão abaixo.</p>
-        <div class="acao">
-          <button class="b gr" id="btnColarSupp">📋 Colar resultado do SUPP</button>
-          <div class="drop" id="dropSupp" style="margin-top:12px;padding:22px">ou arraste o arquivo baixado
-            <input type="file" id="fileSupp" accept=".json" class="hide"></div>
-          <div id="okSupp" class="hide" style="color:var(--ok);margin-top:12px;font-weight:600"></div>
+        <div class="acao" style="display:block">
+          <button class="btn primary" id="btnColarSupp">Colar resultado do SUPP</button>
+          <div class="dropzone" id="dropSupp" style="margin-top:var(--s-4);padding:var(--s-5)">
+            <p class="dica">ou arraste o arquivo baixado</p>
+            <input type="file" id="fileSupp" accept=".json" class="oculto">
+          </div>
+          <div id="okSupp" class="oculto note ok" style="margin:var(--s-4) 0 0"></div>
         </div>
       </div>
 
-      <div style="margin-top:22px"><button class="pri" id="btnCruzar" disabled>Ver resultado</button></div>
+      <button class="btn primary block" id="btnCruzar" disabled style="margin-top:var(--s-5)">Ver resultado</button>
     </div>
   </section>
 
   <!-- ============ PASSO 3 ============ -->
-  <section id="p-fim" class="hide">
-    <div class="card">
-      <h2>Passo 3 — notas sem tarefa no SUPP</h2>
-      <div class="desc">Notas que ainda precisam de providência. Nenhuma nota é descartada por falta de data.</div>
-      <div class="met" id="met"></div>
-      <div class="grid g3" style="margin-bottom:16px">
-        <div><label>Filtro</label><select id="selFiltro"></select></div>
-        <div><label>Exibir</label><select id="selVista">
-          <option value="pendentes">Sem tarefa (pendentes)</option>
-          <option value="tratadas">Já tratadas</option>
-          <option value="erro">Não consultados</option>
-          <option value="todos">Todos</option></select></div>
-        <div><label>Buscar</label><input type="text" id="busca" placeholder="processo, parte, órgão…"></div>
+  <section id="aba-fim" class="oculto">
+    <div class="card raised">
+      <h2><span class="num">03</span>Notas sem tarefa no SUPP</h2>
+      <div class="metricas" id="metricas"></div>
+      <div class="grid-3">
+        <div><label for="selFiltro">Filtro</label><select id="selFiltro"></select></div>
+        <div><label for="selVista">Exibir</label>
+          <select id="selVista">
+            <option value="pendentes">Sem tarefa (pendentes)</option>
+            <option value="tratadas">Já tratadas</option>
+            <option value="erro">Não consultados</option>
+            <option value="todos">Todos</option>
+          </select></div>
+        <div><label for="busca">Buscar</label><input type="text" id="busca" placeholder="processo, parte, órgão…"></div>
       </div>
-      <div class="tw"><table id="tab"><thead></thead><tbody></tbody></table></div>
-      <div class="grid g3" style="margin-top:18px">
-        <button class="b" id="btnCsv">⬇ Planilha deste filtro</button>
-        <button class="b" id="btnCsvAll">⬇ Planilha de todos</button>
-        <button class="b gr" id="btnEml">✉ Preparar e-mail</button>
+      <div id="tab-wrap" style="margin-top:var(--s-5)"><table id="tab"><thead></thead><tbody></tbody></table></div>
+      <div class="acoes">
+        <button class="btn" id="btnCsv">⬇ Planilha deste filtro</button>
+        <button class="btn" id="btnCsvAll">⬇ Planilha de todos</button>
+        <button class="btn amber" id="btnEml">✉ Preparar e-mail</button>
       </div>
+
       <details>
-        <summary>Detalhes técnicos</summary>
-        <div class="grid g2" style="margin-top:16px">
-          <div><label>Espécies que contam como tratada</label>
-            <textarea id="tipos" style="min-height:76px;font-size:13px"></textarea></div>
-          <div><label>Comparação da data</label>
+        <summary>Regras do cruzamento</summary>
+        <div class="grid" style="margin-top:var(--s-5)">
+          <div><label for="tipos">Espécies que contam como tratada</label><textarea id="tipos" style="min-height:80px"></textarea></div>
+          <div>
+            <label for="modoData">Comparação da data</label>
             <select id="modoData">
               <option value="nota">Data da nota (recomendado)</option>
               <option value="qualquer">Ignorar a data — só a espécie</option>
             </select>
-            <div style="margin-top:14px"><label>Destinatário do e-mail</label>
+            <div style="margin-top:var(--s-4)"><label for="para">Destinatário do e-mail</label>
               <input type="text" id="para" value="paulo-oliveira@pge.rs.gov.br"></div>
           </div>
         </div>
-        <div style="margin-top:12px"><button class="b" id="btnRecruzar">Recalcular</button></div>
-        <div id="log"></div>
+        <div class="acoes"><button class="btn" id="btnRecruzar">Recalcular</button></div>
       </details>
     </div>
   </section>
+
+  <hr class="rule">
+  <p class="band-label">Log de execução</p>
+  <div id="log">Aguardando execução…</div>
 </main>
 
 <script type="text/plain" id="srcColetor">
@@ -476,8 +545,8 @@ if (IDS_EMBUTIDOS.length) {
 </script>
 
 <script>
-const $ = s => document.querySelector(s);
-const $$ = s => [...document.querySelectorAll(s)];
+const $ = id => document.getElementById(id);
+const $$ = s => Array.from(document.querySelectorAll(s));
 
 const IDX = {PRAZO:5,PUB:6,DISP:7,PROC:8,SUPP:9,FONTE:10,ORGAO:11,TEXTO:12,TERMOS:13,UF:17,COMARCA:18,TIPO:20,PARTE:23};
 const FILTROS_PADRAO = ["[s] [audiencia]","[s] [pauta]","int[CEEE","[ELETRICA PARTICIPACOES]"];
@@ -486,17 +555,46 @@ const TIPOS_PADRAO = ["Analisar Intimação","Analisar Notificação","Analisar 
 const MESES = {JANEIRO:"01",FEVEREIRO:"02",MARCO:"03","MARÇO":"03",ABRIL:"04",MAIO:"05",JUNHO:"06",
                JULHO:"07",AGOSTO:"08",SETEMBRO:"09",OUTUBRO:"10",NOVEMBRO:"11",DEZEMBRO:"12"};
 
-let DADOS=null, RESULT=null, SUPP=null, FINAL=null, LOG=[];
+let DADOS=null, RESULT=null, SUPP=null, FINAL=null, VISTA=[], LOG=[];
 
 const strip = s => String(s ?? "").replace(/<.*?>/g,"");
 const txt   = s => strip(s).replace(/\s+/g," ").trim();
 const dig   = s => String(s ?? "").replace(/\D/g,"");
 const norm  = s => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim();
-const esc   = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const hoje  = () => {const d=new Date();return String(d.getDate()).padStart(2,"0")+"/"+String(d.getMonth()+1).padStart(2,"0")+"/"+d.getFullYear();};
-const arqNome = d => (d||hoje()).replace(/\//g,"-");
-function log(m){LOG.push(m); const e=$("#log"); if(e){e.textContent=LOG.join("\n"); e.scrollTop=e.scrollHeight;}}
+const escapar = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const hoje = () => {const d=new Date();return String(d.getDate()).padStart(2,"0")+"/"+String(d.getMonth()+1).padStart(2,"0")+"/"+d.getFullYear();};
+const arqData = d => (d||hoje()).replace(/\//g,"-");
+function logar(txt){
+  const linha = `[${new Date().toLocaleTimeString('pt-BR')}] ${txt}`;
+  LOG.push(linha);
+  const el = $('log');
+  if(el.textContent.startsWith('Aguardando')) el.textContent = '';
+  el.textContent += linha + '\n'; el.scrollTop = el.scrollHeight;
+}
 
+/* ================== TEMA ================== */
+function aplicarTema(t){
+  document.documentElement.setAttribute('data-tema', t);
+  $('tema-btn').textContent = t==='escuro' ? '☀ Tema claro' : '☾ Tema escuro';
+  try{ localStorage.setItem('djen_tema', t); }catch(e){}
+}
+function alternarTema(){
+  aplicarTema(document.documentElement.getAttribute('data-tema')==='escuro' ? 'claro' : 'escuro');
+}
+
+/* ================== NAVEGAÇÃO ================== */
+function mudarAba(nome){
+  ['dados','supp','fim'].forEach(n=>{
+    $('aba-'+n).classList.toggle('oculto', n!==nome);
+    $('tab-'+n).classList.toggle('ativo', n===nome);
+  });
+  document.documentElement.setAttribute('data-guia', nome);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+const liberar = p => { $('tab-'+p).disabled = false; };
+const concluir = p => { $('tab-'+p).classList.add('feito'); };
+
+/* ================== NORMALIZAÇÃO DAS NOTAS ================== */
 const RE_PROC = /\d{7}-\d{2}\.\d{4}\.\d\.\d{2}\.\d{4}/;
 function processo(row){
   const b = txt(row[IDX.PROC]); let m = b.match(RE_PROC); if(m) return m[0];
@@ -505,7 +603,6 @@ function processo(row){
   return d.length===20 ? `${d.slice(0,7)}-${d.slice(7,9)}.${d.slice(9,13)}.${d.slice(13,14)}.${d.slice(14,16)}.${d.slice(16,20)}` : (b||"—");
 }
 function links(row){const o=[],re=/href='([^']+)'/g;let m;while((m=re.exec(String(row[IDX.PROC]||"")))!==null)o.push(m[1]);return o;}
-
 function textoNota(row){
   return String(row[IDX.TEXTO]||"")
     .replace(/<(?!\/?mark\b)[^>]*>/gi," ")
@@ -526,7 +623,6 @@ const linksPje = p => ehTRT4(p)
   ? [["PJe 1g.", `https://pje.trt4.jus.br/consultaprocessual/detalhe-processo/${p}/1`],
      ["PJe 2g.", `https://pje.trt4.jus.br/consultaprocessual/detalhe-processo/${p}/2`]]
   : [];
-
 function normaliza(row){
   return {processo:processo(row), dataNota:dataNota(row), prazo:txt(row[IDX.PRAZO]),
     disponibilizacao:txt(row[IDX.DISP]), supp:txt(row[IDX.SUPP]), fonte:txt(row[IDX.FONTE]),
@@ -543,18 +639,7 @@ function dedup(regs){
   return {unicos:[...m.values()], removidos:rem};
 }
 
-/* ---------------- navegação ---------------- */
-function irPara(p){
-  $$("#passos button").forEach(b=>b.classList.toggle("on", b.dataset.p===p));
-  ["dados","supp","fim"].forEach(x=>$("#p-"+x).classList.toggle("hide", x!==p));
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-const libera = p => { $(`#passos button[data-p="${p}"]`).disabled = false; };
-const feito  = p => { $(`#passos button[data-p="${p}"]`).classList.add("feito"); };
-$$("#passos button").forEach(b=>b.onclick=()=>{ if(!b.disabled) irPara(b.dataset.p); });
-irPara("dados");
-
-/* ---------------- passo 1 ---------------- */
+/* ================== PASSO 1 ================== */
 const snippetBd = () =>
 `(async()=>{const d=prompt('Data (dd/mm/aaaa):','${hoje()}');if(!d)return;`+
 `const u=location.origin+'/app/nes_trab?json=&todas=&d1='+encodeURIComponent(d)+'&origem=cache&_='+Date.now();`+
@@ -562,50 +647,65 @@ const snippetBd = () =>
 `const t=await r.text();const b=new Blob([t],{type:'application/json'});const a=document.createElement('a');`+
 `a.href=URL.createObjectURL(b);a.download='notas_'+d.replace(/\\//g,'-')+'.json';a.click();alert('Arquivo baixado.');})();`;
 
-function copia(texto, okId, btn){
+function copiar(texto, okId, btn){
   navigator.clipboard.writeText(texto).then(()=>{
-    $(okId).classList.remove("hide");
-    btn.closest(".etapa").classList.add("pronta");
-    setTimeout(()=>$(okId).classList.add("hide"), 3000);
-  }).catch(()=>alert("Não foi possível copiar. Verifique as permissões do navegador."));
+    $(okId).classList.remove('oculto');
+    btn.closest('.etapa').classList.add('pronta');
+    setTimeout(()=>$(okId).classList.add('oculto'), 3000);
+  }).catch(()=>alert('Não foi possível copiar. Verifique as permissões do navegador.'));
 }
-$("#btnCopiaBd").onclick = e => copia(snippetBd(), "#okBd", e.target);
-$("#btnAbrirBd").onclick = () => window.open("http://parla.pge.reders/app/nes_trab", "_blank");
+$('btnCopiaBd').onclick = e => copiar(snippetBd(), 'okBd', e.target);
+$('btnAbrirBd').onclick = () => window.open('http://parla.pge.reders/app/nes_trab','_blank');
 
-function recebeDados(j, origem){
+function receberDados(j, origem){
   const arr = Array.isArray(j) ? j : (j.data || j.aaData || []);
-  if(!Array.isArray(arr) || !arr.length) throw new Error("arquivo sem registros");
+  if(!Array.isArray(arr) || !arr.length) throw new Error('arquivo sem registros');
   DADOS = arr;
-  $("#qtdDados").textContent = `${arr.length} notas carregadas (${origem})`;
-  $("#okDados").classList.remove("hide");
-  $("#e1c").classList.add("pronta");
-  $("#btnProcessar").disabled = false;
-  $("#btnProcessar").textContent = "Continuar →";
-  log(`${arr.length} notas carregadas`);
+  $('okDados').innerHTML = `<b>${arr.length} notas carregadas</b> — origem: ${escapar(origem)}`;
+  $('okDados').classList.remove('oculto');
+  $('e1c').classList.add('pronta');
+  $('btnProcessar').disabled = false;
+  $('btnProcessar').textContent = 'Continuar →';
+  logar(`${arr.length} notas carregadas de ${origem}.`);
 }
-function leArquivo(f, fn){
+function lerArquivo(f, fn){
   const r = new FileReader();
   r.onload = () => { try{ fn(JSON.parse(r.result), f.name); }
-                     catch(e){ alert("Arquivo inválido: "+e.message); } };
-  r.readAsText(f,"utf-8");
+                     catch(e){ alert('Arquivo inválido: '+e.message); } };
+  r.readAsText(f,'UTF-8');
 }
-function ligaDrop(idDrop, idFile, fn){
+function ligarDrop(idDrop, idFile, fn){
   const d=$(idDrop), f=$(idFile);
   d.onclick=()=>f.click();
-  f.onchange=e=>e.target.files[0] && leArquivo(e.target.files[0], fn);
-  ["dragenter","dragover"].forEach(ev=>d.addEventListener(ev,e=>{e.preventDefault();d.classList.add("over");}));
-  ["dragleave","drop"].forEach(ev=>d.addEventListener(ev,e=>{e.preventDefault();d.classList.remove("over");}));
-  d.addEventListener("drop",e=>e.dataTransfer.files[0] && leArquivo(e.dataTransfer.files[0], fn));
+  f.onchange=e=>{ if(e.target.files[0]) lerArquivo(e.target.files[0], fn); e.target.value=''; };
+  ['dragenter','dragover'].forEach(ev=>d.addEventListener(ev,e=>{e.preventDefault();d.classList.add('hover');}));
+  ['dragleave','drop'].forEach(ev=>d.addEventListener(ev,e=>{e.preventDefault();d.classList.remove('hover');}));
 }
-ligaDrop("#drop","#file",recebeDados);
-$("#btnColar").onclick = async () => {
-  try{ recebeDados(JSON.parse(await navigator.clipboard.readText()),"colado"); }
-  catch(e){ alert("Não foi possível ler o conteúdo copiado."); }
+ligarDrop('drop','file',receberDados);
+ligarDrop('dropSupp','fileSupp',receberSupp);
+$('btnColar').onclick = async () => {
+  try{ receberDados(JSON.parse(await navigator.clipboard.readText()),'área de transferência'); }
+  catch(e){ alert('Não foi possível ler o conteúdo copiado.'); }
 };
+/* arrastar para qualquer lugar da página */
+(function(){
+  ['dragenter','dragover','dragleave','drop'].forEach(ev =>
+    document.body.addEventListener(ev, e=>{e.preventDefault();e.stopPropagation();}));
+  let c = 0;
+  document.body.addEventListener('dragenter', ()=>{c++; $('drop-overlay').classList.add('show');});
+  document.body.addEventListener('dragleave', ()=>{c--; if(c<=0){c=0; $('drop-overlay').classList.remove('show');}});
+  document.body.addEventListener('drop', e=>{
+    c=0; $('drop-overlay').classList.remove('show');
+    const f = e.dataTransfer.files[0]; if(!f) return;
+    /* na aba do SUPP o arquivo é o resultado do coletor; nas demais, as notas do BD-1 */
+    const naAbaSupp = !$('aba-supp').classList.contains('oculto');
+    lerArquivo(f, naAbaSupp ? receberSupp : receberDados);
+  });
+})();
 
-$("#btnProcessar").onclick = () => {
-  const filtros = $("#filtros").value.split("\n").map(s=>s.trim()).filter(Boolean);
-  const usaDedup = $("#dedup").value === "1";
+$('btnProcessar').onclick = () => {
+  const filtros = $('filtros').value.split('\n').map(s=>s.trim()).filter(Boolean);
+  const usaDedup = $('dedup').value === '1';
   const base = DADOS.map(normaliza);
   RESULT = {};
   for(const f of filtros){
@@ -613,15 +713,15 @@ $("#btnProcessar").onclick = () => {
     const ex = EXCLUIR[f]; if(ex) sel = sel.filter(r => !r._b.includes(ex));
     const d = usaDedup ? dedup(sel) : {unicos:sel.map(r=>({...r,ocorrencias:1})),removidos:0};
     RESULT[f] = {unicos:d.unicos, brutos:sel.length, removidos:d.removidos};
-    log(`«${f}» ${sel.length} → ${d.unicos.length} (removidos ${d.removidos})`);
+    logar(`«${f}» ${sel.length} filtradas → ${d.unicos.length} únicas (${d.removidos} repetidas).`);
   }
   const ids = idsSupp();
-  $("#txtIds").innerHTML = `Os <b>${ids.length}</b> processos já vão dentro dele — não precisa copiar mais nada.`;
-  feito("dados"); libera("supp"); irPara("supp");
+  $('txtIds').innerHTML = `Os <b>${ids.length}</b> processos já vão dentro dele — não precisa copiar mais nada.`;
+  concluir('dados'); liberar('supp'); mudarAba('supp');
 };
 
-/* ---------------- passo 2 ---------------- */
-const idSupp = u => {const m=String(u||"").match(/\/processo\/(\d+)\//); return m?m[1]:null;};
+/* ================== PASSO 2 ================== */
+const idSupp = u => {const m=String(u||'').match(/\/processo\/(\d+)\//); return m?m[1]:null;};
 function idsSupp(){
   const s = new Set();
   for(const v of Object.values(RESULT||{}))
@@ -629,16 +729,16 @@ function idsSupp(){
   return [...s];
 }
 function scriptColetor(){
-  const base = document.getElementById("srcColetor").textContent.trim();
-  return base.replace("const IDS_EMBUTIDOS = [];",
-                      "const IDS_EMBUTIDOS = " + JSON.stringify(idsSupp()) + ";");
+  const base = $('srcColetor').textContent.trim();
+  return base.replace('const IDS_EMBUTIDOS = [];',
+                      'const IDS_EMBUTIDOS = ' + JSON.stringify(idsSupp()) + ';');
 }
-$("#btnCopiaColetor").onclick = e => copia(scriptColetor(), "#okColetor", e.target);
-$("#btnAbrirSupp").onclick = () => window.open("https://supp.pge.rs.gov.br", "_blank");
+$('btnCopiaColetor').onclick = e => copiar(scriptColetor(), 'okColetor', e.target);
+$('btnAbrirSupp').onclick = () => window.open('https://supp.pge.rs.gov.br','_blank');
 
-function recebeSupp(j){
+function receberSupp(j){
   const itens = j.itens || j;
-  if(!Array.isArray(itens)) throw new Error("formato não reconhecido");
+  if(!Array.isArray(itens)) throw new Error('formato não reconhecido');
   SUPP = {};
   let erros = 0;
   for(const it of itens){
@@ -646,33 +746,31 @@ function recebeSupp(j){
     if(it.erro) erros++;
   }
   const n = Object.keys(SUPP).length;
-  $("#okSupp").innerHTML = `✓ ${n} processos recebidos` + (erros?` · <span style="color:var(--am)">${erros} não consultados</span>`:"");
-  $("#okSupp").classList.remove("hide");
-  $("#e2c").classList.add("pronta");
-  $("#btnCruzar").disabled = false;
-  log(`SUPP: ${n} processos, ${erros} com erro`);
+  $('okSupp').innerHTML = `<b>${n} processos recebidos</b>` +
+    (erros ? ` · <span class="tag ambar">${erros} não consultados</span>` : '');
+  $('okSupp').classList.remove('oculto');
+  $('e2c').classList.add('pronta');
+  $('btnCruzar').disabled = false;
+  logar(`SUPP: ${n} processos recebidos, ${erros} com erro.`);
 }
-ligaDrop("#dropSupp","#fileSupp",recebeSupp);
-$("#btnColarSupp").onclick = async () => {
-  try{ recebeSupp(JSON.parse(await navigator.clipboard.readText())); }
-  catch(e){ alert("Não foi possível ler o resultado copiado.\nUse o botão Baixar no painel do SUPP e arraste o arquivo."); }
+$('btnColarSupp').onclick = async () => {
+  try{ receberSupp(JSON.parse(await navigator.clipboard.readText())); }
+  catch(e){ alert('Não foi possível ler o resultado copiado.\nUse o botão Baixar no painel do SUPP e arraste o arquivo.'); }
 };
 
-/* ---------------- cruzamento ---------------- */
+/* ================== CRUZAMENTO ================== */
 function maisRecente(tarefas){
   if(!tarefas || !tarefas.length) return null;
   const comId = tarefas.filter(t => Number.isFinite(t.id));
   if(comId.length) return comId.reduce((a,b) => (b.id > a.id ? b : a));
   return tarefas[tarefas.length-1];
 }
-function avalia(reg, tipos, modo){
+function avaliar(reg, tipos, modo){
   const alvos = reg.links.map(idSupp).filter(Boolean);
-  if(!alvos.length) return {tratada:false, ok:true, motivo:"não cadastrado no SUPP", ultima:null};
-
+  if(!alvos.length) return {tratada:false, ok:true, motivo:'não cadastrado no SUPP', ultima:null};
   let consultado = false;
   const todas = [];
   const bate = (a,b) => !!(a && b && (a.includes(b) || b.includes(a)));
-
   for(const id of alvos){
     const e = SUPP[id];
     if(!e || e.erro) continue;
@@ -681,194 +779,199 @@ function avalia(reg, tipos, modo){
       todas.push(t);
       const casaTipo = tipos.some(x => norm(t.tipo).includes(norm(x)) || norm(x).includes(norm(t.tipo)));
       if(!casaTipo) continue;
-      if(modo === "qualquer") return {tratada:true, ok:true, motivo:"tem tarefa", tarefa:t, ultima:t};
+      if(modo === 'qualquer') return {tratada:true, ok:true, motivo:'tem tarefa', tarefa:t, ultima:t};
       if(reg.dataNota && bate(t.data, reg.dataNota))
-        return {tratada:true, ok:true, motivo:"tem tarefa", tarefa:t, ultima:t};
+        return {tratada:true, ok:true, motivo:'tem tarefa', tarefa:t, ultima:t};
     }
   }
-  if(!consultado) return {tratada:false, ok:false, motivo:"não consultado no SUPP", ultima:null};
-
+  if(!consultado) return {tratada:false, ok:false, motivo:'não consultado no SUPP', ultima:null};
   const ult = maisRecente(todas);
-  const motivo = !reg.dataNota ? "nota sem data — conferir"
-               : todas.length  ? "tarefa não corresponde"
-               : "sem tarefa";
+  const motivo = !reg.dataNota ? 'nota sem data — conferir'
+               : todas.length  ? 'tarefa não corresponde'
+               : 'sem tarefa';
   return {tratada:false, ok:true, motivo, ultima:ult};
 }
 function cruzar(){
-  const tipos = $("#tipos").value.split("\n").map(s=>s.trim()).filter(Boolean);
-  const modo = $("#modoData").value;
+  const tipos = $('tipos').value.split('\n').map(s=>s.trim()).filter(Boolean);
+  const modo = $('modoData').value;
   FINAL = {};
   for(const [k,v] of Object.entries(RESULT)){
     const pend=[], trat=[], erro=[];
     for(const r of v.unicos){
-      const a = avalia(r, tipos, modo);
+      const a = avaliar(r, tipos, modo);
       const reg = {...r, tratada:a.tratada, motivo:a.motivo, tarefaSupp:a.tarefa||null,
                    ultimaTarefa:a.ultima||null, ok:a.ok};
       if(a.tratada) trat.push(reg); else if(!a.ok) erro.push(reg); else pend.push(reg);
     }
     FINAL[k] = {pendentes:pend, tratadas:trat, erro};
-    log(`«${k}» pendentes=${pend.length} tratadas=${trat.length} não consultados=${erro.length}`);
+    logar(`«${k}» pendentes=${pend.length} · tratadas=${trat.length} · não consultados=${erro.length}`);
   }
-  $("#selFiltro").innerHTML = Object.keys(FINAL).map(k=>`<option>${k}</option>`).join("");
-  pinta();
+  $('selFiltro').innerHTML = Object.keys(FINAL).map(k=>`<option>${escapar(k)}</option>`).join('');
+  pintar();
 }
-$("#btnCruzar").onclick = () => { cruzar(); feito("supp"); libera("fim"); irPara("fim"); };
-$("#btnRecruzar").onclick = () => cruzar();
+$('btnCruzar').onclick = () => { cruzar(); concluir('supp'); liberar('fim'); mudarAba('fim'); };
+$('btnRecruzar').onclick = () => cruzar();
 
-/* ---------------- passo 3 ---------------- */
-let VISTA = [];
-function pinta(){
+/* ================== PASSO 3 ================== */
+function pintar(){
   const t = Object.values(FINAL);
-  const p = t.reduce((a,x)=>a+x.pendentes.length,0);
-  const tr= t.reduce((a,x)=>a+x.tratadas.length,0);
-  const er= t.reduce((a,x)=>a+x.erro.length,0);
-  $("#met").innerHTML = `
-    <div><b style="color:var(--er)">${p}</b><span>Sem tarefa</span></div>
+  const p  = t.reduce((a,x)=>a+x.pendentes.length,0);
+  const tr = t.reduce((a,x)=>a+x.tratadas.length,0);
+  const er = t.reduce((a,x)=>a+x.erro.length,0);
+  $('metricas').innerHTML = `
+    <div><b style="color:var(--err)">${p}</b><span>Sem tarefa</span></div>
     <div><b style="color:var(--ok)">${tr}</b><span>Já tratadas</span></div>
-    <div><b style="color:${er?'var(--am)':'inherit'}">${er}</b><span>Não consultados</span></div>
+    <div><b style="color:${er?'var(--accent-2)':'inherit'}">${er}</b><span>Não consultados</span></div>
     <div><b>${p+tr+er}</b><span>Total analisado</span></div>`;
 
-  const f = FINAL[$("#selFiltro").value]; if(!f) return;
-  const v = $("#selVista").value;
-  let regs = v==="pendentes"?f.pendentes : v==="tratadas"?f.tratadas : v==="erro"?f.erro
+  const f = FINAL[$('selFiltro').value]; if(!f) return;
+  const v = $('selVista').value;
+  let regs = v==='pendentes'?f.pendentes : v==='tratadas'?f.tratadas : v==='erro'?f.erro
            : f.pendentes.concat(f.tratadas,f.erro);
-  const q = $("#busca").value.trim().toLowerCase();
+  const q = $('busca').value.trim().toLowerCase();
   if(q) regs = regs.filter(r=>r._b.includes(q));
   VISTA = regs;
 
-  $("#tab thead").innerHTML = `<tr><th style="width:23%">Processo</th><th>Data da nota</th>
-    <th>Órgão / Parte</th><th>Situação no SUPP</th><th style="width:70px">Nota</th></tr>`;
+  $('tab').querySelector('thead').innerHTML =
+    `<tr><th style="width:24%">Processo</th><th>Data da nota</th><th>Órgão / Parte</th>
+         <th>Situação no SUPP</th><th style="width:78px">Nota</th></tr>`;
 
-  $("#tab tbody").innerHTML = regs.map((r,i)=>{
+  $('tab').querySelector('tbody').innerHTML = regs.map((r,i)=>{
     const l = r.links[0];
     const pje = linksPje(r.processo)
-      .map(([rot,u])=>`<a href="${u}" target="_blank" rel="noopener noreferrer">${rot}</a>`).join("");
-    const proc = `${l?`<a class="mono" href="${l}" target="_blank" style="color:var(--ac)">${r.processo}</a>`
-                    :`<span class="mono">${r.processo}</span>`}${pje?`<div class="pje">${pje}</div>`:""}`;
-
+      .map(([rot,u])=>`<a href="${u}" target="_blank" rel="noopener noreferrer">${rot}</a>`).join('');
+    const proc = (l ? `<a class="mono" href="${l}" target="_blank" style="color:var(--accent)">${r.processo}</a>`
+                    : `<span class="mono">${r.processo}</span>`)
+               + (pje ? `<div class="pje">${pje}</div>` : '');
     const dt = r.dataNota
-      ? r.dataNota
-      : `<span class="tag a" title="a data não pôde ser lida no texto — a nota foi mantida">sem data</span>`;
-
+      ? `<span class="mono">${r.dataNota}</span>`
+      : `<span class="tag ambar" title="a data não pôde ser lida no texto — a nota foi mantida">sem data</span>`;
     let sit = r.tratada
-      ? `<span class="tag s">✓ tem tarefa</span>`
-      : `<span class="tag ${r.ok?"e":"a"}">${r.motivo}</span>`;
+      ? `<span class="tag verde">✓ tem tarefa</span>`
+      : `<span class="tag ${r.ok?'vermelho':'ambar'}">${escapar(r.motivo)}</span>`;
     if(!r.tratada && r.ultimaTarefa){
       const u = r.ultimaTarefa;
-      sit += `<div class="ult">última tarefa: <b>${esc(u.tipo||"—")}</b>`
-           + (u.data?` · <b>${u.data}</b>`:"") + (Number.isFinite(u.id)?` · id ${u.id}`:"") + `</div>`;
+      sit += `<div class="sub-info">última tarefa: <b>${escapar(u.tipo||'—')}</b>`
+           + (u.data?` · <b>${u.data}</b>`:'') + (Number.isFinite(u.id)?` · id ${u.id}`:'') + `</div>`;
     }
-
     return `<tr>
       <td>${proc}</td>
-      <td class="mono">${dt}<div class="ult">disp. ${r.disponibilizacao||"—"}</div></td>
-      <td>${esc(r.orgao)}<div class="ult">${esc(r.parte)}</div></td>
+      <td>${dt}<div class="sub-info">disp. ${escapar(r.disponibilizacao||'—')}</div></td>
+      <td>${escapar(r.orgao)}<div class="sub-info">${escapar(r.parte)}</div></td>
       <td>${sit}</td>
-      <td><button class="ver" data-i="${i}">ver</button></td></tr>`;
-  }).join("") || `<tr><td colspan="5" style="padding:26px;text-align:center;color:var(--tx2)">Nenhum registro</td></tr>`;
+      <td><button class="btn" style="padding:4px 10px;font-size:10px" data-i="${i}">Ver</button></td></tr>`;
+  }).join('') || `<tr><td colspan="5" style="text-align:center;color:var(--ink-2);padding:32px">Nenhum registro</td></tr>`;
 
-  $$("#tab .ver").forEach(b => b.onclick = () => abreNota(VISTA[+b.dataset.i]));
+  $$('#tab tbody button[data-i]').forEach(b => b.onclick = () => abrirNota(VISTA[+b.dataset.i]));
 }
-["#selFiltro","#selVista"].forEach(s=>$(s).onchange=pinta);
-$("#busca").oninput = pinta;
+['selFiltro','selVista'].forEach(s=>$(s).onchange=pintar);
+$('busca').oninput = pintar;
 
-/* ---------------- modal do texto da nota ---------------- */
-function abreNota(r){
+/* ================== MODAL DA NOTA ================== */
+function abrirNota(r){
   const pje = linksPje(r.processo)
-    .map(([rot,u])=>`<a class="b sec" style="padding:7px 12px;text-decoration:none;font-size:12px" href="${u}" target="_blank" rel="noopener noreferrer">${rot}</a>`).join("");
-  const d = document.createElement("div");
-  d.className = "modal";
+    .map(([rot,u])=>`<a class="btn" style="text-decoration:none" href="${u}" target="_blank" rel="noopener noreferrer">${rot}</a>`).join('');
+  const d = document.createElement('div');
+  d.className = 'modal';
   d.innerHTML = `<div class="cx">
     <div class="top">
       <div>
-        <h3>${esc(r.processo)}</h3>
-        <div class="meta">${esc(r.orgao||"—")} · ${esc(r.tipo||"—")} ·
-          nota de ${r.dataNota||"data não identificada"} · disponibilizada em ${r.disponibilizacao||"—"}</div>
-        ${r.termos?`<div class="meta">termos: ${esc(r.termos)}</div>`:""}
+        <h3>${escapar(r.processo)}</h3>
+        <div class="meta">${escapar(r.orgao||'—')} · ${escapar(r.tipo||'—')} · nota de ${r.dataNota||'data não identificada'} · disponibilizada em ${escapar(r.disponibilizacao||'—')}</div>
+        ${r.termos?`<div class="meta">termos: ${escapar(r.termos)}</div>`:''}
       </div>
       <button class="fechar" title="fechar">×</button>
     </div>
-    <div class="corpo">${r.texto || "<i>texto não disponível</i>"}</div>
+    <div class="corpo">${r.texto || '<i>texto não disponível</i>'}</div>
     <div class="rod">
-      ${r.links[0]?`<a class="b sec" style="padding:7px 12px;text-decoration:none;font-size:12px" href="${r.links[0]}" target="_blank">Abrir no SUPP</a>`:""}
+      ${r.links[0]?`<a class="btn brand supp" style="text-decoration:none" href="${r.links[0]}" target="_blank">Abrir no SUPP</a>`:''}
       ${pje}
-      <button class="b" id="mCopiar">📋 Copiar texto</button>
-      <button class="b" id="mFechar">Fechar</button>
+      <button class="btn" id="mCopiar">Copiar texto</button>
+      <button class="btn primary" id="mFechar">Fechar</button>
     </div></div>`;
   document.body.appendChild(d);
   const sair = () => d.remove();
-  d.querySelector(".fechar").onclick = sair;
-  d.querySelector("#mFechar").onclick = sair;
+  d.querySelector('.fechar').onclick = sair;
+  d.querySelector('#mFechar').onclick = sair;
   d.onclick = e => { if(e.target === d) sair(); };
-  d.querySelector("#mCopiar").onclick = () =>
-    navigator.clipboard.writeText(strip(r.texto)).then(()=>{ d.querySelector("#mCopiar").textContent="✓ copiado"; });
-  document.addEventListener("keydown", function esc2(ev){
-    if(ev.key === "Escape"){ sair(); document.removeEventListener("keydown", esc2); }
+  d.querySelector('#mCopiar').onclick = () =>
+    navigator.clipboard.writeText(strip(r.texto)).then(()=>{ d.querySelector('#mCopiar').textContent='✓ copiado'; });
+  document.addEventListener('keydown', function fechaEsc(ev){
+    if(ev.key === 'Escape'){ sair(); document.removeEventListener('keydown', fechaEsc); }
   });
 }
 
-/* ---------------- saídas ---------------- */
-function baixa(nome, texto, tipo="text/plain;charset=utf-8"){
-  const b=new Blob(["\ufeff"+texto],{type:tipo}), a=document.createElement("a");
+/* ================== EXPORTAÇÕES ================== */
+function baixar(nome, texto, tipo){
+  const b=new Blob(['\ufeff'+texto],{type:tipo+';charset=utf-8'});
+  const a=document.createElement('a');
   a.href=URL.createObjectURL(b); a.download=nome; a.click();
   setTimeout(()=>URL.revokeObjectURL(a.href),4000);
 }
 function csv(regs){
-  const cab=["Processo","Data_NOTA","Disponibilizacao","Prazo","Orgao","Parte","Tipo","Comarca","UF",
-             "Situacao","Ultima_Tarefa","Data_Ultima_Tarefa","Id_Ultima_Tarefa","URL_SUPP","PJe_1g","PJe_2g","Texto_Nota"];
-  const e=v=>`"${String(v??"").replace(/"/g,'""')}"`;
-  return [cab.join(";")].concat(regs.map(r=>{
+  const cab=['Processo','Data_NOTA','Disponibilizacao','Prazo','Orgao','Parte','Tipo','Comarca','UF',
+             'Situacao','Ultima_Tarefa','Data_Ultima_Tarefa','Id_Ultima_Tarefa','URL_SUPP','PJe_1g','PJe_2g','Texto_Nota'];
+  const e=v=>`"${String(v??'').replace(/"/g,'""')}"`;
+  return [cab.join(';')].concat(regs.map(r=>{
     const u = r.ultimaTarefa || {}, pje = linksPje(r.processo);
-    return [r.processo, r.dataNota||"SEM DATA", r.disponibilizacao, r.prazo, r.orgao, r.parte, r.tipo,
-      r.comarca, r.uf, r.tratada?"Já tratada":r.motivo, u.tipo||"", u.data||"", Number.isFinite(u.id)?u.id:"",
-      r.links[0]||"", pje[0]?pje[0][1]:"", pje[1]?pje[1][1]:"", strip(r.texto)].map(e).join(";");
-  })).join("\r\n");
+    return [r.processo, r.dataNota||'SEM DATA', r.disponibilizacao, r.prazo, r.orgao, r.parte, r.tipo,
+      r.comarca, r.uf, r.tratada?'Já tratada':r.motivo, u.tipo||'', u.data||'', Number.isFinite(u.id)?u.id:'',
+      r.links[0]||'', pje[0]?pje[0][1]:'', pje[1]?pje[1][1]:'', strip(r.texto)].map(e).join(';');
+  })).join('\r\n');
 }
-const nomeCsv = f => `NEs_${f.replace(/[\\/:*?"<>|]/g,"_")}_SemTarefa_${arqNome($("#d1").value)}.csv`;
-$("#btnCsv").onclick = () => {const k=$("#selFiltro").value; baixa(nomeCsv(k), csv(FINAL[k].pendentes),"text/csv;charset=utf-8");};
-$("#btnCsvAll").onclick = () => Object.entries(FINAL).forEach(([k,v],i)=>
-  setTimeout(()=>baixa(nomeCsv(k), csv(v.pendentes),"text/csv;charset=utf-8"), i*350));
+const nomeCsv = f => `NEs_${f.replace(/[\\/:*?"<>|]/g,'_')}_SemTarefa_${arqData($('d1').value)}.csv`;
+$('btnCsv').onclick = () => {const k=$('selFiltro').value; baixar(nomeCsv(k), csv(FINAL[k].pendentes),'text/csv');};
+$('btnCsvAll').onclick = () => Object.entries(FINAL).forEach(([k,v],i)=>
+  setTimeout(()=>baixar(nomeCsv(k), csv(v.pendentes),'text/csv'), i*350));
 
-function htmlResumo(){
+function corpoHTML(){
   const linhas = Object.entries(FINAL).map(([k,v])=>`
-    <tr><td style="padding:10px 14px;border-bottom:1px solid #ddd"><b>${k}</b></td>
-        <td style="padding:10px 14px;border-bottom:1px solid #ddd">${v.pendentes.length} sem tarefa · ${v.tratadas.length} tratadas</td></tr>`).join("");
-  return `<div style="font-family:Georgia,serif;font-size:15px;color:#333"><p>Prezados,</p>
-<p>Segue o resultado das NEs Trabalhistas.</p>
-<table style="width:100%;border-collapse:collapse;font-size:14px;border:1px solid #ddd">
-<thead><tr style="background:#2F4F4F;color:#fff"><th style="padding:11px 14px;text-align:left;font-weight:normal">Filtro</th>
-<th style="padding:11px 14px;text-align:left;font-weight:normal">Resultado</th></tr></thead>
-<tbody><tr><td style="padding:10px 14px;border-bottom:1px solid #ddd"><b>Data</b></td>
-<td style="padding:10px 14px;border-bottom:1px solid #ddd">${$("#d1").value||hoje()}</td></tr>
-${linhas}</tbody></table></div>`;
+    <tr><td style="padding:12px 15px;border-bottom:1px solid #dddddd;background-color:#ffffff"><b>${escapar(k)}</b></td>
+        <td style="padding:12px 15px;border-bottom:1px solid #dddddd;background-color:#ffffff">${v.pendentes.length} sem tarefa · ${v.tratadas.length} tratadas</td></tr>`).join('');
+  return `<div style="font-family: Georgia, serif; font-size: 16px; color: #333333;">
+  <p>Origem: Site BDxSUPP</p><p>Prezados,</p>
+  <p>Segue o resultado do cruzamento entre as NEs Trabalhistas do BD-1 e as tarefas cadastradas no SUPP.</p>
+  <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse; font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif; font-size: 14px; margin-top: 20px; border-radius: 8px; overflow: hidden; border: 1px solid #dddddd;">
+    <thead><tr style="background-color: #2F4F4F; color: #ffffff;">
+      <th style="padding: 12px 15px; text-align: left; border-bottom: 1px solid #203636; font-weight: normal;">Item</th>
+      <th style="padding: 12px 15px; text-align: left; border-bottom: 1px solid #203636; font-weight: normal;">Valor</th>
+    </tr></thead><tbody>
+    <tr><td style="padding:12px 15px;border-bottom:1px solid #dddddd;background-color:#ffffff"><b>Data</b></td>
+        <td style="padding:12px 15px;border-bottom:1px solid #dddddd;background-color:#ffffff">${escapar($('d1').value||hoje())}</td></tr>
+    ${linhas}</tbody></table>
+  <p style="margin-top: 30px;">Atenciosamente,</p></div>`;
 }
-$("#btnEml").onclick = () => {
-  const b64 = s => btoa(unescape(encodeURIComponent(s)));
-  const bd = "==NES"+Date.now();
-  let m = `To: ${$("#para").value}\r\nSubject: NEs Trabalhistas — ${$("#d1").value||hoje()}\r\n`
-        + `MIME-Version: 1.0\r\nContent-Type: multipart/mixed; boundary="${bd}"\r\n\r\n--${bd}\r\n`
-        + `Content-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n\r\n`
-        + b64(htmlResumo()).replace(/(.{76})/g,"$1\r\n")+"\r\n";
+$('btnEml').onclick = () => {
+  const b64 = s => btoa(unescape(encodeURIComponent(s))).replace(/(.{76})/g,'$1\r\n');
+  const lim = '----=_BDXSUPP_'+Date.now();
+  const partes = [
+    `To: ${$('para').value.trim().replace(/;/g,', ')}`,
+    `Subject: =?UTF-8?B?${btoa(unescape(encodeURIComponent('NEs Trabalhistas - BDxSUPP - '+($('d1').value||hoje()))))}?=`,
+    'X-Unsent: 1','MIME-Version: 1.0',
+    `Content-Type: multipart/mixed; boundary="${lim}"`,'',
+    `--${lim}`,'Content-Type: text/html; charset=UTF-8','Content-Transfer-Encoding: base64','',
+    b64(corpoHTML()),''
+  ];
   for(const [k,v] of Object.entries(FINAL)){
     if(!v.pendentes.length) continue;
-    m += `--${bd}\r\nContent-Type: text/csv; charset=UTF-8; name="${nomeCsv(k)}"\r\n`
-       + `Content-Transfer-Encoding: base64\r\nContent-Disposition: attachment; filename="${nomeCsv(k)}"\r\n\r\n`
-       + b64("\ufeff"+csv(v.pendentes)).replace(/(.{76})/g,"$1\r\n")+"\r\n";
+    partes.push(`--${lim}`, `Content-Type: text/csv; name="${nomeCsv(k)}"`,
+      'Content-Transfer-Encoding: base64', `Content-Disposition: attachment; filename="${nomeCsv(k)}"`,
+      '', b64('\ufeff'+csv(v.pendentes)), '');
   }
-  m += `--${bd}--`;
-  baixa(`NEs_Trabalhistas_${arqNome($("#d1").value)}.eml`, m, "message/rfc822");
+  partes.push(`--${lim}--`,'');
+  baixar(`Email_BDxSUPP_${arqData($('d1').value)}.eml`, partes.join('\r\n'), 'message/rfc822');
+  logar('Arquivo .eml gerado com as planilhas de pendências.');
 };
 
-/* ---------------- inicialização ---------------- */
-$("#filtros").value = FILTROS_PADRAO.join("\n");
-$("#tipos").value = TIPOS_PADRAO.join("\n");
-$("#d1").value = hoje();
-$("#btnTema").onclick = () => {
-  const t = document.documentElement.dataset.tema==="claro" ? "escuro" : "claro";
-  document.documentElement.dataset.tema = t; localStorage.setItem("nes_tema",t);
-};
-document.documentElement.dataset.tema = localStorage.getItem("nes_tema") || "claro";
-log("pronto");
+/* ================== INIT ================== */
+(function(){
+  let t = 'claro';
+  try{ t = localStorage.getItem('djen_tema') || 'claro'; }catch(e){}
+  aplicarTema(t);
+})();
+$('filtros').value = FILTROS_PADRAO.join('\n');
+$('tipos').value = TIPOS_PADRAO.join('\n');
+$('d1').value = hoje();
 </script>
 </body>
 </html>
