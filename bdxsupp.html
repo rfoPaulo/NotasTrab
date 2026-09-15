@@ -8,9 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ============================================================
-   TOKENS
-   ============================================================ */
 :root{
   --bg:#F4F5F7; --surface:#FFFFFF; --ink:#101114; --ink-2:#6B7280; --line:#101114;
   --accent:#2563EB; --accent-2:#F59E0B; --ok:#166534; --err:#B3261E;
@@ -19,12 +16,11 @@
   --font-mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
   --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:20px; --s-6:24px; --s-7:32px; --s-8:48px;
   --bw:1px; --bw-thick:3px; --radius:0px; --shadow:4px 4px 0 var(--line);
-  --brand-supp:#0F6CBD; --brand-bd:#742774; --brand-pje:#5B21B6;
+  --brand-supp:#0F6CBD; --brand-pje:#5B21B6;
 }
 html[data-tema="escuro"]{
   --bg:#0C0D10; --surface:#16181D; --ink:#F4F5F7; --ink-2:#8B929F; --line:#2A2D35;
-  --ok:#4ADE80; --err:#F87171;
-  --brand-supp:#4FA3E3; --brand-bd:#B76FB7; --brand-pje:#A78BFA;
+  --ok:#4ADE80; --err:#F87171; --brand-supp:#4FA3E3; --brand-pje:#A78BFA;
 }
 html[data-guia="dados"]{ --accent:#2563EB; }
 html[data-guia="supp"]{  --accent:#0E7490; }
@@ -33,11 +29,7 @@ html[data-tema="escuro"][data-guia="dados"]{ --accent:#60A5FA; }
 html[data-tema="escuro"][data-guia="supp"]{  --accent:#22D3EE; }
 html[data-tema="escuro"][data-guia="fim"]{   --accent:#FBBF24; }
 html[data-tema="escuro"] .nav button.ativo,
-html[data-tema="escuro"] .btn.primary,
-html[data-tema="escuro"] .note-badge{ color:#0C0D10 }
-/* ============================================================
-   BASE
-   ============================================================ */
+html[data-tema="escuro"] .btn.primary{ color:#0C0D10 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-weight:400;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
@@ -55,7 +47,6 @@ code{font-family:var(--font-mono);font-size:.9em;background:var(--bg);border:var
 .appnav a:last-child{border-right:0}
 .appnav a:hover{background:var(--ink);color:var(--surface)}
 .appnav a.atual{background:var(--accent);color:#fff}
-.appnav a.atual:hover{background:var(--accent);color:#fff}
 html[data-tema="escuro"] .appnav a.atual{color:#0C0D10}
 .appnav .pt{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.55}
 .appnav a.atual .pt{opacity:1}
@@ -64,7 +55,7 @@ html[data-tema="escuro"] .appnav a.atual{color:#0C0D10}
 main{max-width:1360px;margin:0 auto;padding:var(--s-7) var(--s-6) var(--s-8)}
 .rule{border:0;border-top:var(--bw-thick) solid var(--line);margin:var(--s-7) 0}
 .band-label{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-2);font-weight:600;margin:0 0 var(--s-3)}
-.nav{display:flex;flex-wrap:wrap;gap:0;border:var(--bw) solid var(--line);margin-bottom:var(--s-6)}
+.nav{display:flex;flex-wrap:wrap;border:var(--bw) solid var(--line);margin-bottom:var(--s-6)}
 .nav button{flex:1 1 auto;background:var(--surface);color:var(--ink);border:0;border-right:var(--bw) solid var(--line);padding:var(--s-3) var(--s-5);cursor:pointer;font-family:var(--font-body);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:var(--s-3)}
 .nav button:last-child{border-right:0}
 .nav button:hover:not(:disabled){background:var(--ink);color:var(--surface)}
@@ -74,24 +65,21 @@ main{max-width:1360px;margin:0 auto;padding:var(--s-7) var(--s-6) var(--s-8)}
 .nav button.ativo .num{background:#fff;color:var(--accent);border-color:#fff}
 html[data-tema="escuro"] .nav button.ativo .num{background:#0C0D10;color:var(--accent);border-color:#0C0D10}
 .nav button.feito .num{background:var(--ok);color:var(--surface);border-color:var(--ok)}
-.card{background:var(--surface);border:var(--bw) solid var(--line);border-radius:var(--radius);padding:var(--s-6);margin-bottom:var(--s-5)}
+.card{background:var(--surface);border:var(--bw) solid var(--line);padding:var(--s-6);margin-bottom:var(--s-5)}
 .card.raised{box-shadow:var(--shadow)}
 .card > h2{font-size:20px;padding-bottom:var(--s-3);margin-bottom:var(--s-5);border-bottom:var(--bw-thick) solid var(--line)}
 .card > h2 .num{color:var(--accent);margin-right:var(--s-2)}
-.card h3{font-size:14px;margin:var(--s-6) 0 var(--s-3)}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s-5)}
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-5)}
-.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s-5)}
-.full{grid-column:1/-1}
-@media (max-width:820px){.grid,.grid-3,.grid-4{grid-template-columns:1fr}main{padding:var(--s-5) var(--s-4)}.masthead{padding:var(--s-5) var(--s-4)}.masthead .direita{align-items:flex-start}.nav{flex-direction:column}.nav button{justify-content:flex-start}}
+@media (max-width:820px){.grid,.grid-3{grid-template-columns:1fr}main{padding:var(--s-5) var(--s-4)}.masthead{padding:var(--s-5) var(--s-4)}.masthead .direita{align-items:flex-start}.nav{flex-direction:column}.nav button{justify-content:flex-start}}
 label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-2);margin-bottom:var(--s-2)}
-input,select,textarea{width:100%;padding:10px var(--s-3);border:var(--bw) solid var(--line);border-radius:var(--radius);background:var(--surface);color:var(--ink);font-family:var(--font-body);font-size:14px}
+input,select,textarea{width:100%;padding:10px var(--s-3);border:var(--bw) solid var(--line);background:var(--surface);color:var(--ink);font-family:var(--font-body);font-size:14px}
 input:focus,select:focus,textarea:focus{outline:var(--bw-thick) solid var(--accent);outline-offset:-3px}
 textarea{min-height:110px;font-family:var(--font-mono);font-size:13px;resize:vertical;line-height:1.5}
 select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--ink) 50%),linear-gradient(135deg,var(--ink) 50%,transparent 50%);background-position:calc(100% - 16px) 50%,calc(100% - 11px) 50%;background-size:5px 5px;background-repeat:no-repeat;padding-right:var(--s-7)}
 .hint{font-size:12px;color:var(--ink-2);margin:var(--s-2) 0 0}
 .acoes{display:flex;flex-wrap:wrap;gap:var(--s-2);margin-top:var(--s-5)}
-.btn{background:var(--surface);color:var(--ink);border:var(--bw) solid var(--line);border-radius:var(--radius);padding:10px var(--s-4);cursor:pointer;font-family:var(--font-body);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.btn{background:var(--surface);color:var(--ink);border:var(--bw) solid var(--line);padding:10px var(--s-4);cursor:pointer;font-family:var(--font-body);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
 .btn:hover{background:var(--ink);color:var(--surface)}
 .btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
 .btn.primary:hover{background:var(--surface);color:var(--accent)}
@@ -102,22 +90,17 @@ select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,va
 .btn.brand:hover{background:var(--surface)}
 .btn.supp{background:var(--brand-supp);border-color:var(--brand-supp)}
 .btn.supp:hover{color:var(--brand-supp)}
-.btn.bd{background:var(--brand-bd);border-color:var(--brand-bd)}
-.btn.bd:hover{color:var(--brand-bd)}
 .btn.ghost{border-style:dashed;color:var(--ink-2)}
 .btn.ghost:hover{background:var(--ink);color:var(--surface);border-style:solid}
 .btn.mini{padding:4px 10px;font-size:10px}
 html[data-tema="escuro"] .btn.brand{color:#0C0D10}
-.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn:disabled{opacity:.35;cursor:not-allowed}
 .btn:disabled:hover{background:var(--surface);color:var(--ink)}
 .note{border:var(--bw) solid var(--line);border-left:var(--bw-thick) solid var(--accent);padding:var(--s-3) var(--s-4);font-size:13px;margin-bottom:var(--s-5);background:var(--surface)}
 .note.warn{border-left-color:var(--accent-2)}
 .note.ok{border-left-color:var(--ok)}
 .tag{display:inline-block;padding:2px var(--s-2);border:var(--bw) solid var(--line);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
-.tag.ok{background:var(--accent);color:#fff;border-color:var(--accent)}
-html[data-tema="escuro"] .tag.ok{color:#0C0D10}
 .tag.zero{background:transparent;color:var(--ink-2)}
-.tag.dup{background:var(--accent-2);color:#101114;border-color:var(--accent-2)}
 .tag.verde{background:transparent;color:var(--ok);border-color:var(--ok)}
 .tag.vermelho{background:transparent;color:var(--err);border-color:var(--err)}
 .tag.ambar{background:transparent;color:var(--accent-2);border-color:var(--accent-2)}
@@ -133,8 +116,6 @@ html[data-tema="escuro"] .etapa h3 .b{color:#0C0D10}
 .dropzone{border:var(--bw-thick) dashed var(--line);padding:var(--s-6);background:var(--surface);text-align:center;cursor:pointer;color:var(--ink-2);font-size:13px}
 .dropzone:hover,.dropzone.hover{border-color:var(--accent);background:var(--bg);color:var(--accent)}
 .dropzone .dica{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin:0}
-.progress{height:12px;border:var(--bw) solid var(--line);margin-top:var(--s-5)}
-.progress i{display:block;height:100%;background:var(--accent);width:0;transition:width .2s linear}
 #log{background:var(--ink);color:var(--bg);border:var(--bw) solid var(--line);font-family:var(--font-mono);font-size:12px;line-height:1.5;padding:var(--s-4);max-height:260px;overflow:auto;white-space:pre-wrap}
 html[data-tema="escuro"] #log{background:#000;color:#D6DAE2}
 table{width:100%;border-collapse:collapse;font-size:13px}
@@ -151,7 +132,6 @@ tr.analisada td{background:color-mix(in srgb, var(--ok) 8%, transparent)!importa
 tr.analisada td:not(.col-check){text-decoration:line-through;text-decoration-thickness:1px}
 tr.analisada .tag,tr.analisada .pje a,tr.analisada .sup a{opacity:.45}
 tr.analisada a{color:var(--ink-2)!important}
-/* ---- instâncias no SUPP ---- */
 .sup{display:flex;flex-wrap:wrap;gap:var(--s-2);margin-top:var(--s-2)}
 .sup a{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;text-transform:uppercase;
   letter-spacing:.06em;padding:2px var(--s-2);text-decoration:none;border:var(--bw) solid var(--brand-supp);
@@ -172,7 +152,7 @@ html[data-tema="escuro"] .sup a:hover{color:#0C0D10}
 .conf{border:var(--bw) solid var(--line);background:var(--surface);padding:var(--s-4) var(--s-5);margin-bottom:var(--s-5)}
 .conf .linha{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s-4);flex-wrap:wrap}
 .conf .rot{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-2);font-weight:600}
-.conf .val{font-family:var(--font-display);font-size:17px;font-weight:700;letter-spacing:-.01em}
+.conf .val{font-family:var(--font-display);font-size:17px;font-weight:700}
 .conf .val b{font-size:22px}
 .conf .barra{height:10px;border:var(--bw) solid var(--line);margin-top:var(--s-3);background:var(--bg)}
 .conf .barra i{display:block;height:100%;background:var(--ok);width:0;transition:width .25s}
@@ -187,29 +167,89 @@ html[data-tema="escuro"] .sup a:hover{color:#0C0D10}
 html[data-tema="escuro"] .pje a:hover{color:#0C0D10}
 .sub-info{font-size:11.5px;color:var(--ink-2);margin-top:var(--s-1);line-height:1.45}
 .sub-info b{color:var(--ink);font-weight:600}
+.badge-notas{display:inline-block;margin-left:var(--s-2);padding:1px 6px;border:var(--bw) solid var(--accent);
+  color:var(--accent);font-size:10px;font-weight:700;letter-spacing:.06em}
 .metricas{display:grid;grid-template-columns:repeat(5,1fr);border:var(--bw) solid var(--line);margin-bottom:var(--s-5);background:var(--surface)}
 .metricas div{padding:var(--s-5);border-right:var(--bw) solid var(--line)}
 .metricas div:last-child{border-right:0}
-.metricas b{display:block;font-family:var(--font-display);font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.metricas b{display:block;font-family:var(--font-display);font-size:30px;font-weight:700;line-height:1}
 .metricas span{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
 .metricas .destaque{background:color-mix(in srgb, var(--err) 8%, transparent)}
 @media (max-width:820px){.metricas{grid-template-columns:1fr 1fr}}
-#drop-overlay{position:fixed;inset:0;background:var(--accent);z-index:1000;display:none;justify-content:center;align-items:center;color:#fff;font-family:var(--font-display);font-size:clamp(24px,5vw,56px);text-transform:uppercase;letter-spacing:-.02em;text-align:center;border:var(--s-2) solid var(--ink)}
+#drop-overlay{position:fixed;inset:0;background:var(--accent);z-index:1000;display:none;justify-content:center;align-items:center;color:#fff;font-family:var(--font-display);font-size:clamp(24px,5vw,56px);text-transform:uppercase;text-align:center;border:var(--s-2) solid var(--ink)}
 #drop-overlay.show{display:flex}
 .oculto{display:none!important}
 details{margin-top:var(--s-6);border-top:var(--bw) solid var(--line);padding-top:var(--s-4)}
 summary{cursor:pointer;color:var(--ink-2);font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:600}
+/* ---------------- modal navegável ---------------- */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:900;display:grid;place-items:center;padding:var(--s-6)}
-.modal .cx{background:var(--surface);border:var(--bw-thick) solid var(--line);box-shadow:var(--shadow);max-width:960px;width:100%;max-height:88vh;display:flex;flex-direction:column}
-.modal .top{padding:var(--s-5) var(--s-6);border-bottom:var(--bw-thick) solid var(--line);display:flex;gap:var(--s-4);align-items:flex-start}
-.modal .top h3{font-size:18px}
-.modal .top .meta{font-size:12px;color:var(--ink-2);margin-top:var(--s-1)}
-.modal .instancias{margin-top:var(--s-3);display:flex;flex-wrap:wrap;gap:var(--s-2)}
-.modal .corpo{padding:var(--s-6);overflow:auto;font-size:13.5px;line-height:1.75;white-space:pre-wrap;word-break:break-word}
-.modal .corpo mark{background:var(--accent-2);color:#101114;padding:0 2px;font-weight:600}
-.modal .rod{padding:var(--s-4) var(--s-6);border-top:var(--bw) solid var(--line);display:flex;gap:var(--s-2);justify-content:flex-end;flex-wrap:wrap}
+.modal .cx{background:var(--surface);border:var(--bw-thick) solid var(--line);box-shadow:var(--shadow);
+  max-width:1060px;width:100%;height:88vh;display:flex;flex-direction:column;overflow:hidden}
+.modal .topo{padding:var(--s-4) var(--s-6);border-bottom:var(--bw-thick) solid var(--line);display:flex;gap:var(--s-4);align-items:center}
+.modal .topo .pos{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-2);font-weight:700}
+.modal .topo .pos b{color:var(--accent);font-size:13px}
 .modal .fechar{background:none;border:0;color:var(--ink-2);font-size:26px;cursor:pointer;line-height:1;margin-left:auto;padding:0}
 .modal .fechar:hover{color:var(--ink)}
+.modal .trilha{height:4px;background:var(--bg);border-bottom:var(--bw) solid var(--line)}
+.modal .trilha i{display:block;height:100%;background:var(--accent);transition:width .3s}
+.palco{flex:1;overflow:auto;position:relative}
+.palco.anim-esq{animation:desliza-esq .28s cubic-bezier(.22,.8,.3,1)}
+.palco.anim-dir{animation:desliza-dir .28s cubic-bezier(.22,.8,.3,1)}
+@keyframes desliza-esq{from{opacity:0;transform:translateX(38px)}to{opacity:1;transform:translateX(0)}}
+@keyframes desliza-dir{from{opacity:0;transform:translateX(-38px)}to{opacity:1;transform:translateX(0)}}
+@media (prefers-reduced-motion:reduce){.palco.anim-esq,.palco.anim-dir{animation:none}}
+.modal .rod{padding:var(--s-4) var(--s-6);border-top:var(--bw-thick) solid var(--line);display:flex;gap:var(--s-2);align-items:center;flex-wrap:wrap}
+.modal .rod .espaco{flex:1}
+.cabecalho-proc{padding:var(--s-5) var(--s-6);border-bottom:var(--bw) solid var(--line)}
+.cabecalho-proc h3{font-size:18px}
+.cabecalho-proc .meta{font-size:12px;color:var(--ink-2);margin-top:var(--s-1)}
+.cabecalho-proc .links{display:flex;gap:var(--s-2);flex-wrap:wrap;margin-top:var(--s-3)}
+/* ---- notas ---- */
+.nota{border-bottom:var(--bw) solid var(--line)}
+.nota:last-child{border-bottom:0}
+.nota .cab{padding:var(--s-4) var(--s-6);display:flex;gap:var(--s-3);align-items:flex-start;
+  background:var(--bg);border-bottom:var(--bw) solid var(--line)}
+.nota.foco .cab{background:color-mix(in srgb, var(--accent) 12%, var(--bg))}
+.nota .abre{flex:1;display:flex;gap:var(--s-3);align-items:flex-start;cursor:pointer;background:none;border:0;
+  text-align:left;padding:0;color:inherit;font:inherit}
+.nota .seta{font-size:12px;transition:transform .2s;margin-top:3px}
+.nota.aberta .seta{transform:rotate(90deg)}
+.nota .rotulo{font-family:var(--font-display);font-size:14px;font-weight:700;text-transform:uppercase}
+.nota .campos{font-size:12px;color:var(--ink-2);margin-top:var(--s-1);line-height:1.7}
+.nota .campos b{color:var(--ink);font-weight:600}
+.nota .corpo-nota{display:none;padding:var(--s-5) var(--s-6);font-size:13.5px;line-height:1.75;
+  white-space:pre-wrap;word-break:break-word}
+.nota.aberta .corpo-nota{display:block}
+.nota .dif{color:var(--accent-2)!important;border-color:var(--accent-2)!important;font-weight:700}
+.barra-notas{padding:var(--s-3) var(--s-6);background:var(--bg);border-bottom:var(--bw) solid var(--line);
+  display:flex;gap:var(--s-3);align-items:center;flex-wrap:wrap;font-size:12px;color:var(--ink-2)}
+.aviso-iguais{margin:var(--s-5) var(--s-6) 0;border:var(--bw) solid var(--ok);border-left:var(--bw-thick) solid var(--ok);
+  padding:var(--s-3) var(--s-4);font-size:13px;background:color-mix(in srgb, var(--ok) 7%, transparent)}
+.aviso-iguais b{color:var(--ok)}
+.aviso-iguais ul{margin:var(--s-2) 0 0;padding-left:var(--s-5)}
+.aviso-iguais li{margin:2px 0}
+/* destaques no texto (padrão do userscript) */
+.corpo-nota mark{background:#FFF59D;color:#101114;padding:0 2px;border-radius:2px}
+.intimado-highlight{font-weight:700;font-style:italic;text-decoration:underline;text-underline-offset:2px}
+.intimado-highlight mark{font-weight:inherit;font-style:inherit;text-decoration:underline}
+.diario-alert{background:#ffcccc;color:#8b0000;font-weight:700;padding:2px 6px;border-radius:4px;font-size:11px}
+.legenda-cores{display:flex;flex-wrap:wrap;gap:var(--s-3);align-items:center;font-size:11px;color:var(--ink-2)}
+.legenda-cores span.am{display:inline-flex;align-items:center;gap:5px}
+.legenda-cores i{width:12px;height:12px;display:inline-block;border:var(--bw) solid var(--line)}
+/* ---- cards intermediários ---- */
+.card-transicao{height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;padding:var(--s-8) var(--s-6);gap:var(--s-4)}
+.card-transicao .ico{font-family:var(--font-display);font-size:64px;line-height:1;color:var(--accent)}
+.card-transicao h3{font-size:clamp(20px,3vw,30px);max-width:24ch}
+.card-transicao p{margin:0;color:var(--ink-2);font-size:14px;max-width:52ch}
+.card-transicao .caixa{border:var(--bw) solid var(--line);padding:var(--s-4) var(--s-5);background:var(--bg);
+  display:flex;gap:var(--s-6);flex-wrap:wrap;justify-content:center}
+.card-transicao .caixa div{min-width:120px}
+.card-transicao .caixa b{display:block;font-family:var(--font-display);font-size:26px;line-height:1}
+.card-transicao .caixa span{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-2);font-weight:700}
+.card-transicao.fim .ico{color:var(--ok)}
+.card-transicao .nome-filtro{font-family:var(--font-mono);font-size:15px;color:var(--ink);
+  border:var(--bw) solid var(--line);padding:2px var(--s-3);display:inline-block}
 </style>
 </head>
 <body>
@@ -235,12 +275,10 @@ summary{cursor:pointer;color:var(--ink-2);font-size:11px;text-transform:uppercas
     <button id="tab-fim" disabled onclick="mudarAba('fim')"><span class="num">3</span>Resultado</button>
   </nav>
 
-  <!-- ============ PASSO 1 ============ -->
   <section id="aba-dados">
     <div class="card raised">
       <h2><span class="num">01</span>Trazer as notas do BD-1</h2>
       <div class="note"><b>Rede interna.</b> O BD-1 só responde de dentro da rede da PGE, então o arquivo é gerado lá e trazido para cá. Todo o processamento é local.</div>
-
       <div class="etapa" id="e1a">
         <h3><span class="b">A</span>Copie o comando</h3>
         <p>Ele pergunta a data e baixa a lista de notas do dia.</p>
@@ -250,12 +288,10 @@ summary{cursor:pointer;color:var(--ink-2);font-size:11px;text-transform:uppercas
           <span id="okBd" class="oculto ok-inline">✓ copiado</span>
         </div>
       </div>
-
       <div class="etapa" id="e1b">
         <h3><span class="b">B</span>Rode no BD-1</h3>
         <p>Na página do BD-1, tecle <code>F12</code> → aba <b>Console</b> → cole com <code>Ctrl+V</code> → <code>Enter</code>. Informe a data e o arquivo será baixado.</p>
       </div>
-
       <div class="etapa" id="e1c">
         <h3><span class="b">C</span>Traga o arquivo para cá</h3>
         <p>Arraste o arquivo baixado para a área abaixo.</p>
@@ -269,9 +305,7 @@ summary{cursor:pointer;color:var(--ink-2);font-size:11px;text-transform:uppercas
           <div id="okDados" class="oculto note ok" style="margin:var(--s-4) 0 0"></div>
         </div>
       </div>
-
       <button class="btn primary block" id="btnProcessar" disabled style="margin-top:var(--s-5)">Continuar</button>
-
       <details>
         <summary>Opções de filtro — já configuradas</summary>
         <div style="margin-top:var(--s-5)">
@@ -287,12 +321,10 @@ summary{cursor:pointer;color:var(--ink-2);font-size:11px;text-transform:uppercas
     </div>
   </section>
 
-  <!-- ============ PASSO 2 ============ -->
   <section id="aba-supp" class="oculto">
     <div class="card raised">
       <h2><span class="num">02</span>Verificar as tarefas no SUPP</h2>
       <div class="note">O SUPP fica em outro domínio, então o programa roda dentro dele, aproveitando a sua sessão já aberta.</div>
-
       <div class="etapa" id="e2a">
         <h3><span class="b">A</span>Copie o programa</h3>
         <p id="txtIds">A lista de processos já vai dentro dele — não precisa copiar mais nada.</p>
@@ -302,12 +334,10 @@ summary{cursor:pointer;color:var(--ink-2);font-size:11px;text-transform:uppercas
           <span id="okColetor" class="oculto ok-inline">✓ copiado</span>
         </div>
       </div>
-
       <div class="etapa" id="e2b">
         <h3><span class="b">B</span>Rode no SUPP</h3>
         <p>No SUPP, tecle <code>F12</code> → aba <b>Console</b> → cole com <code>Ctrl+V</code> → <code>Enter</code>. A coleta começa sozinha; aguarde a barra terminar.</p>
       </div>
-
       <div class="etapa" id="e2c">
         <h3><span class="b">C</span>Traga o resultado</h3>
         <p>Clique em <b>Copiar resultado</b> no painel do SUPP e depois no botão abaixo.</p>
@@ -320,26 +350,19 @@ summary{cursor:pointer;color:var(--ink-2);font-size:11px;text-transform:uppercas
           <div id="okSupp" class="oculto note ok" style="margin:var(--s-4) 0 0"></div>
         </div>
       </div>
-
       <button class="btn primary block" id="btnCruzar" disabled style="margin-top:var(--s-5)">Ver resultado</button>
     </div>
   </section>
 
-  <!-- ============ PASSO 3 ============ -->
   <section id="aba-fim" class="oculto">
     <div class="card raised">
       <h2><span class="num">03</span>Notas para conferir</h2>
       <div class="note warn"><b>Conferência manual.</b> A lista reúne tudo que precisa de olho humano: notas sem tarefa, notas cuja tarefa não corresponde, notas sem data no texto e processos que não puderam ser consultados no SUPP.</div>
-
       <div class="conf" id="conf">
-        <div class="linha">
-          <span class="rot">Progresso da conferência</span>
-          <span class="val" id="conf-nums"></span>
-        </div>
+        <div class="linha"><span class="rot">Progresso da conferência</span><span class="val" id="conf-nums"></span></div>
         <div class="barra"><i id="conf-barra"></i></div>
         <div class="detalhe" id="conf-detalhe"></div>
       </div>
-
       <div class="metricas" id="metricas"></div>
       <div class="grid-3">
         <div><label for="selFiltro">Filtro</label><select id="selFiltro"></select></div>
@@ -351,37 +374,31 @@ summary{cursor:pointer;color:var(--ink-2);font-size:11px;text-transform:uppercas
             <option value="naoCorresponde">— apenas tarefa não corresponde</option>
             <option value="semData">— apenas nota sem data</option>
             <option value="naoConsultado">— apenas não consultados</option>
-            <option value="multiplos">— apenas com mais de uma instância</option>
+            <option value="variasNotas">— apenas com mais de uma nota</option>
             <option value="tratadas">Já tratadas</option>
             <option value="todos">Todos</option>
           </select></div>
         <div><label for="busca">Buscar</label><input type="text" id="busca" placeholder="processo, parte, órgão…"></div>
       </div>
-
       <div class="acoes" style="margin-top:var(--s-4)">
+        <button class="btn primary" id="btnRevisar">▶ Revisar uma a uma</button>
         <button class="btn mini" id="btnMarcarVista">✓ Marcar todos desta vista</button>
         <button class="btn mini" id="btnDesmarcarVista">Desmarcar desta vista</button>
         <button class="btn mini ghost" id="btnLimparMarcas">Limpar todas as marcações</button>
       </div>
-
       <div id="tab-wrap" style="margin-top:var(--s-4)"><table id="tab"><thead></thead><tbody></tbody></table></div>
       <p class="hint" id="rodape-tabela"></p>
-      <p class="hint" style="margin-top:var(--s-1)">
-        Links do SUPP: quando alguma instância <span class="tag verde">já tem a tarefa</span>, aparece só ela.
-        Quando <b>nenhuma</b> tem, aparecem todas — <span class="tag vermelho">consultada sem a tarefa</span> e
-        <span class="tag ambar">não consultada</span> — para você escolher onde abrir.
-      </p>
       <div class="acoes">
         <button class="btn" id="btnCsv">⬇ Planilha deste filtro</button>
         <button class="btn" id="btnCsvAll">⬇ Planilha de todos</button>
         <button class="btn amber" id="btnEml">✉ Preparar e-mail</button>
       </div>
-
       <details>
         <summary>Regras do cruzamento</summary>
         <div class="note" style="margin-top:var(--s-5)">
           A nota só é dada como <b>tratada</b> quando existe tarefa da espécie esperada cuja data de
-          <b>Início</b> coincide com a data da nota. Basta uma das instâncias (1º ou 2º grau) atender.
+          <b>Início</b> coincide com a data da nota. O <b>destinatário</b> é o trecho entre
+          <code>INTIMADO(S) / CITADO(S)</code> e <code>|||</code>.
         </div>
         <div class="grid">
           <div><label for="tipos">Espécies que contam como tratada</label><textarea id="tipos" style="min-height:80px"></textarea></div>
@@ -453,7 +470,6 @@ function mapaColunas(tabela) {
   return { iInicio, iEspecie, rotulos };
 }
 
-/* id da tarefa: links (/tarefa/123, ?id=123), atributos e células numéricas */
 function idDaTarefa(tr) {
   const a = tr.querySelector("a[href]");
   if (a) {
@@ -469,7 +485,6 @@ function idDaTarefa(tr) {
   return null;
 }
 
-/* ---------- coleta de um processo ---------- */
 function coleta(id) {
   return new Promise(resolve => {
     const f = document.createElement("iframe");
@@ -491,7 +506,6 @@ function coleta(id) {
         if (linhas[0].querySelectorAll("td").length < 3) return;
 
         const { iInicio, iEspecie, rotulos } = mapaColunas(tabela);
-
         const tarefas = [...linhas].map((tr, i) => {
           const td = [...tr.querySelectorAll("td")].map(x => x.innerText.trim());
           if (td.length < 3) return null;
@@ -510,7 +524,6 @@ function coleta(id) {
   });
 }
 
-/* ---------- laço principal ---------- */
 async function coletar(ids) {
   parar = false;
   const saida = [];
@@ -552,7 +565,6 @@ async function coletar(ids) {
   $("aviso").style.borderLeftColor = "#22C55E";
 }
 
-/* ---------- interface ---------- */
 const $ = id => document.getElementById("sc_" + id);
 function log(m, t = "info") {
   const c = { info: "#8FE388", ok: "#4ADE80", err: "#F87171", warn: "#FBBF24" }[t];
@@ -604,7 +616,6 @@ painel.innerHTML = `
 </div>`;
 document.body.appendChild(painel);
 
-/* arrastar */
 (() => {
   let dx = 0, dy = 0, on = false;
   $("cab").onmousedown = e => { if (e.target.id === "sc_fechar") return;
@@ -660,23 +671,20 @@ if (IDS_EMBUTIDOS.length) {
 const $ = id => document.getElementById(id);
 const $$ = s => Array.from(document.querySelectorAll(s));
 
-const IDX = {PRAZO:5,PUB:6,DISP:7,PROC:8,SUPP:9,FONTE:10,ORGAO:11,TEXTO:12,TERMOS:13,UF:17,COMARCA:18,TIPO:20,PARTE:23};
+const IDX = {PRAZO:5,PUB:6,DISP:7,PROC:8,SUPP:9,FONTE:10,ORGAO:11,TEXTO:12,TERMOS:13,
+             CITADOS:16,UF:17,COMARCA:18,DIARIO:19,TIPO:20,PARTE:23,CAPTURA:27};
 const FILTROS_PADRAO = ["[s] [audiencia]","[s] [pauta]","int[CEEE","[ELETRICA PARTICIPACOES]"];
 const EXCLUIR = {"[s] [pauta]":"audiencia","[ELETRICA PARTICIPACOES]":"int[ceee"};
 const TIPOS_PADRAO = ["Analisar Intimação","Analisar Notificação","Analisar Citação"];
 const MESES = {JANEIRO:"01",FEVEREIRO:"02",MARCO:"03","MARÇO":"03",ABRIL:"04",MAIO:"05",JUNHO:"06",
                JULHO:"07",AGOSTO:"08",SETEMBRO:"09",OUTUBRO:"10",NOVEMBRO:"11",DEZEMBRO:"12"};
+const CAT = {TRATADA:'tratada',SEM_TAREFA:'semTarefa',NAO_CORRESPONDE:'naoCorresponde',
+             SEM_DATA:'semData',NAO_CONSULTADO:'naoConsultado'};
+const ROTULO = {semTarefa:'sem tarefa',naoCorresponde:'tarefa não corresponde',
+                semData:'nota sem data — conferir',naoConsultado:'não consultado no SUPP'};
+const SEM_DEST = 'Não Informado';
 
-const CAT = {
-  TRATADA:'tratada', SEM_TAREFA:'semTarefa', NAO_CORRESPONDE:'naoCorresponde',
-  SEM_DATA:'semData', NAO_CONSULTADO:'naoConsultado'
-};
-const ROTULO = {
-  semTarefa:'sem tarefa', naoCorresponde:'tarefa não corresponde',
-  semData:'nota sem data — conferir', naoConsultado:'não consultado no SUPP'
-};
-
-let DADOS=null, RESULT=null, SUPP=null, FINAL=null, VISTA=[], LOG=[];
+let DADOS=null, BASE=[], PORPROC=new Map(), RESULT=null, SUPP=null, FINAL=null, VISTA=[], LOG=[];
 let ANALISADAS = new Set();
 
 const strip = s => String(s ?? "").replace(/<.*?>/g,"");
@@ -686,15 +694,14 @@ const norm  = s => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g,"
 const escapar = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const hoje = () => {const d=new Date();return String(d.getDate()).padStart(2,"0")+"/"+String(d.getMonth()+1).padStart(2,"0")+"/"+d.getFullYear();};
 const arqData = d => (d||hoje()).replace(/\//g,"-");
-function logar(txt){
-  const linha = `[${new Date().toLocaleTimeString('pt-BR')}] ${txt}`;
+function logar(t){
+  const linha = `[${new Date().toLocaleTimeString('pt-BR')}] ${t}`;
   LOG.push(linha);
   const el = $('log');
   if(el.textContent.startsWith('Aguardando')) el.textContent = '';
   el.textContent += linha + '\n'; el.scrollTop = el.scrollHeight;
 }
 
-/* ================== TEMA ================== */
 function aplicarTema(t){
   document.documentElement.setAttribute('data-tema', t);
   $('tema-btn').textContent = t==='escuro' ? '☀ Tema claro' : '☾ Tema escuro';
@@ -703,8 +710,6 @@ function aplicarTema(t){
 function alternarTema(){
   aplicarTema(document.documentElement.getAttribute('data-tema')==='escuro' ? 'claro' : 'escuro');
 }
-
-/* ================== NAVEGAÇÃO ================== */
 function mudarAba(nome){
   ['dados','supp','fim'].forEach(n=>{
     $('aba-'+n).classList.toggle('oculto', n!==nome);
@@ -716,7 +721,7 @@ function mudarAba(nome){
 const liberar = p => { $('tab-'+p).disabled = false; };
 const concluir = p => { $('tab-'+p).classList.add('feito'); };
 
-/* ================== NORMALIZAÇÃO DAS NOTAS ================== */
+/* ================== NORMALIZAÇÃO ================== */
 const RE_PROC = /\d{7}-\d{2}\.\d{4}\.\d\.\d{2}\.\d{4}/;
 function processo(row){
   const b = txt(row[IDX.PROC]); let m = b.match(RE_PROC); if(m) return m[0];
@@ -724,31 +729,47 @@ function processo(row){
   const d = dig(b);
   return d.length===20 ? `${d.slice(0,7)}-${d.slice(7,9)}.${d.slice(9,13)}.${d.slice(13,14)}.${d.slice(14,16)}.${d.slice(16,20)}` : (b||"—");
 }
-/* TODAS as instâncias do processo no SUPP (1º grau, 2º grau, etc.) */
 function instancias(row){
-  const html = String(row[IDX.PROC]||"");
-  const out = [];
+  const html = String(row[IDX.PROC]||""), out = [];
   const re = /<a\s[^>]*href='([^']+)'[^>]*>([\s\S]*?)<\/a>\s*(?:<span[^>]*title='([^']*)'[^>]*>\s*(\[[^\]]*\])?)?/gi;
   let m;
   while((m = re.exec(html)) !== null){
-    const url = m[1];
-    const rotulo = txt(m[2]);
+    const url = m[1], rotulo = txt(m[2]);
     const id = (url.match(/\/processo\/(\d+)\//) || [])[1] || null;
     const g = rotulo.match(/_(\d)\s*G\b/i) || rotulo.match(/\b(\d)\s*G\b/i);
-    const grau = g ? g[1]+'º grau' : '';
-    const trt = (rotulo.match(/TRT\s*(\d+)/i) || [])[0] || '';
-    if(!id) continue;
-    if(out.some(x=>x.id===id)) continue;
-    out.push({id, url, rotulo, grau, trt,
-              meio: (m[3]||'').trim(), sigla: (m[4]||'').trim()});
+    const trt = (rotulo.match(/TRT\s*\d+/i) || [])[0] || '';
+    if(!id || out.some(x=>x.id===id)) continue;
+    out.push({id,url,rotulo,grau:g?g[1]+'º grau':'',trt,meio:(m[3]||'').trim()});
   }
   return out;
 }
+/* destinatário: trecho entre INTIMADO(S) / CITADO(S) e ||| */
+const RE_INTIMADO = /INTIMADO\(S\)\s*\/\s*CITADO\(S\)/i;
+function acharTerminador(t, de){
+  const a = t.indexOf('|||', de);
+  if(a !== -1) return a;
+  return t.indexOf('III', de);
+}
+function destinatario(row){
+  const t = strip(row[IDX.TEXTO]||'');
+  const m = t.match(RE_INTIMADO);
+  if(!m) return SEM_DEST;
+  const ini = m.index + m[0].length;
+  const fim = acharTerminador(t, ini);
+  if(fim === -1) return SEM_DEST;
+  const trecho = t.slice(ini,fim).replace(/^[\s:;.,\-–—]+/,'').replace(/[\s:;.,\-–—]+$/,'').replace(/\s+/g,' ').trim();
+  return trecho || SEM_DEST;
+}
+const citados = row => txt(String(row[IDX.CITADOS]||'').replace(/<br\s*\/?>/gi,' · '));
+/* texto: "||" e "|||" viram quebra de parágrafo; o "|||" fica visível no fim do trecho */
 function textoNota(row){
   return String(row[IDX.TEXTO]||"")
     .replace(/<(?!\/?mark\b)[^>]*>/gi," ")
+    .replace(/\|\|\|/g,"\u0001")
     .replace(/[ \t]+/g," ")
     .replace(/\s*\|\|\s*/g,"\n\n")
+    .replace(/\s*\u0001\s*/g," |||\n\n")
+    .replace(/\n{3,}/g,"\n\n")
     .trim();
 }
 function dataNota(row){
@@ -762,13 +783,15 @@ function dataNota(row){
 const ehTRT4 = p => /\.5\.04\./.test(p);
 const linksPje = p => ehTRT4(p)
   ? [["PJe 1g.", `https://pje.trt4.jus.br/consultaprocessual/detalhe-processo/${p}/1`],
-     ["PJe 2g.", `https://pje.trt4.jus.br/consultaprocessual/detalhe-processo/${p}/2`]]
-  : [];
+     ["PJe 2g.", `https://pje.trt4.jus.br/consultaprocessual/detalhe-processo/${p}/2`]] : [];
+const diarioAtipico = f => { const t=String(f||'').trim(); return t && t!=='[TRT4]' && t!=='[TRT4DJEN]'; };
+
 function normaliza(row){
   return {processo:processo(row), dataNota:dataNota(row), prazo:txt(row[IDX.PRAZO]),
     disponibilizacao:txt(row[IDX.DISP]), supp:txt(row[IDX.SUPP]), fonte:txt(row[IDX.FONTE]),
     orgao:txt(row[IDX.ORGAO]), uf:txt(row[IDX.UF]), comarca:txt(row[IDX.COMARCA]),
     tipo:txt(row[IDX.TIPO]), parte:txt(row[IDX.PARTE]), termos:txt(row[IDX.TERMOS]),
+    destinatario:destinatario(row), citados:citados(row),
     texto:textoNota(row), inst:instancias(row),
     _b: row.map(strip).join(" ").toLowerCase(), _raw:row};
 }
@@ -779,6 +802,41 @@ function dedup(regs){
   const m=new Map(); let rem=0;
   for(const r of regs){const k=chave(r); if(m.has(k)){m.get(k).ocorrencias++;rem++;} else m.set(k,{...r,ocorrencias:1});}
   return {unicos:[...m.values()], removidos:rem};
+}
+/* Corpo da nota ATÉ "INTIMADO(S) / CITADO(S)".
+   Só esse trecho é comparado para saber se duas notas são iguais: o que vem
+   depois muda sempre (destinatário e identificador do documento). */
+function corpoAteIntimado(texto){
+  const t = String(texto||'');
+  const m = t.match(RE_INTIMADO);
+  return norm(m ? t.slice(0, m.index) : t);
+}
+function indexarPorProcesso(base){
+  const m = new Map();
+  base.forEach((r,i)=>{
+    const k = dig(r.processo); if(!k) return;
+    if(!m.has(k)) m.set(k,[]);
+    m.get(k).push({...r,_i:i});
+  });
+  for(const [k,lista] of m){
+    const vistos = new Set(), unicas = [];
+    for(const n of lista){
+      const ck = [n.dataNota,n.disponibilizacao,norm(n.orgao),norm(n.tipo),norm(n.texto)].join('|');
+      if(vistos.has(ck)) continue;
+      vistos.add(ck); unicas.push(n);
+    }
+    m.set(k, unicas);
+  }
+  return m;
+}
+const notasDoProcesso = r => PORPROC.get(dig(r.processo)) || [];
+/* true quando todas as notas têm o mesmo corpo e destinatários diferentes */
+function soMudaDestinatario(lista){
+  if(lista.length < 2) return false;
+  const corpos = new Set(lista.map(n=>corpoAteIntimado(n.texto)));
+  if(corpos.size !== 1) return false;               /* o texto antes do INTIMADO é o mesmo */
+  const dests = new Set(lista.map(n=>norm(n.destinatario)));
+  return dests.size > 1;                            /* e os destinatários diferem */
 }
 
 /* ================== MARCAÇÕES ================== */
@@ -824,8 +882,7 @@ function receberDados(j, origem){
 }
 function lerArquivo(f, fn){
   const r = new FileReader();
-  r.onload = () => { try{ fn(JSON.parse(r.result), f.name); }
-                     catch(e){ alert('Arquivo inválido: '+e.message); } };
+  r.onload = () => { try{ fn(JSON.parse(r.result), f.name); }catch(e){ alert('Arquivo inválido: '+e.message); } };
   r.readAsText(f,'UTF-8');
 }
 function ligarDrop(idDrop, idFile, fn){
@@ -850,28 +907,28 @@ $('btnColar').onclick = async () => {
   document.body.addEventListener('drop', e=>{
     c=0; $('drop-overlay').classList.remove('show');
     const f = e.dataTransfer.files[0]; if(!f) return;
-    const naAbaSupp = !$('aba-supp').classList.contains('oculto');
-    lerArquivo(f, naAbaSupp ? receberSupp : receberDados);
+    lerArquivo(f, !$('aba-supp').classList.contains('oculto') ? receberSupp : receberDados);
   });
 })();
 
 $('btnProcessar').onclick = () => {
   const filtros = $('filtros').value.split('\n').map(s=>s.trim()).filter(Boolean);
   const usaDedup = $('dedup').value === '1';
-  const base = DADOS.map(normaliza);
+  BASE = DADOS.map(normaliza);
+  PORPROC = indexarPorProcesso(BASE);
   RESULT = {};
   for(const f of filtros){
-    let sel = base.filter(r => casa(r._b, f));
+    let sel = BASE.filter(r => casa(r._b, f));
     const ex = EXCLUIR[f]; if(ex) sel = sel.filter(r => !r._b.includes(ex));
     const d = usaDedup ? dedup(sel) : {unicos:sel.map(r=>({...r,ocorrencias:1})),removidos:0};
     RESULT[f] = {unicos:d.unicos, brutos:sel.length, removidos:d.removidos};
     logar(`«${f}» ${sel.length} filtradas → ${d.unicos.length} únicas (${d.removidos} repetidas).`);
   }
-  const ids = idsSupp();
-  const multi = Object.values(RESULT).flatMap(v=>v.unicos).filter(r=>r.inst.length>1).length;
-  $('txtIds').innerHTML = `Os <b>${ids.length}</b> processos já vão dentro dele — não precisa copiar mais nada.` +
-    (multi ? ` <b>${multi}</b> nota(s) têm mais de uma instância (1º e 2º grau) e todas serão consultadas.` : '');
-  if(multi) logar(`${multi} nota(s) com mais de uma instância no SUPP.`);
+  const semDest = BASE.filter(r=>r.destinatario===SEM_DEST).length;
+  if(semDest) logar(`${semDest} nota(s) sem "INTIMADO(S) / CITADO(S) … |||" — destinatário "${SEM_DEST}".`);
+  const soDest = [...PORPROC.values()].filter(soMudaDestinatario).length;
+  if(soDest) logar(`${soDest} processo(s) com notas iguais que mudam apenas o destinatário.`);
+  $('txtIds').innerHTML = `Os <b>${idsSupp().length}</b> processos já vão dentro dele — não precisa copiar mais nada.`;
   concluir('dados'); liberar('supp'); mudarAba('supp');
 };
 
@@ -883,9 +940,8 @@ function idsSupp(){
   return [...s];
 }
 function scriptColetor(){
-  const base = $('srcColetor').textContent.trim();
-  return base.replace('const IDS_EMBUTIDOS = [];',
-                      'const IDS_EMBUTIDOS = ' + JSON.stringify(idsSupp()) + ';');
+  return $('srcColetor').textContent.trim()
+    .replace('const IDS_EMBUTIDOS = [];','const IDS_EMBUTIDOS = ' + JSON.stringify(idsSupp()) + ';');
 }
 $('btnCopiaColetor').onclick = e => copiar(scriptColetor(), 'okColetor', e.target);
 $('btnAbrirSupp').onclick = () => window.open('https://supp.pge.rs.gov.br','_blank');
@@ -893,15 +949,14 @@ $('btnAbrirSupp').onclick = () => window.open('https://supp.pge.rs.gov.br','_bla
 function receberSupp(j){
   const itens = j.itens || j;
   if(!Array.isArray(itens)) throw new Error('formato não reconhecido');
-  SUPP = {};
-  let erros = 0;
+  SUPP = {}; let erros = 0;
   for(const it of itens){
     SUPP[String(it.id)] = {tarefas: it.tarefas||[], erro: it.erro||null};
     if(it.erro) erros++;
   }
   const n = Object.keys(SUPP).length;
   $('okSupp').innerHTML = `<b>${n} processos recebidos</b>` +
-    (erros ? ` · <span class="tag ambar">${erros} não consultados — entram na lista de conferência</span>` : '');
+    (erros ? ` · <span class="tag ambar">${erros} não consultados — entram na conferência</span>` : '');
   $('okSupp').classList.remove('oculto');
   $('e2c').classList.add('pronta');
   $('btnCruzar').disabled = false;
@@ -917,24 +972,18 @@ $('btnColarSupp').onclick = async () => {
 function maisRecente(tarefas){
   if(!tarefas || !tarefas.length) return null;
   const comId = tarefas.filter(t => Number.isFinite(t.id));
-  if(comId.length) return comId.reduce((a,b) => (b.id > a.id ? b : a));
+  if(comId.length) return comId.reduce((a,b)=>(b.id>a.id?b:a));
   return tarefas[tarefas.length-1];
 }
-/* Avalia TODAS as instâncias e devolve o estado de cada uma. */
 function avaliar(reg, tipos, modo){
   const bate = (a,b) => !!(a && b && (a.includes(b) || b.includes(a)));
   if(!reg.inst.length)
     return {categoria:CAT.NAO_CONSULTADO, motivo:'não cadastrado no SUPP', ultima:null, estados:[]};
-
   const estados = [];
   let achou = null, algumConsultado = false, todasTarefas = [];
-
   for(const ins of reg.inst){
     const e = SUPP[ins.id];
-    if(!e || e.erro){
-      estados.push({...ins, status:'falhou', detalhe: e ? e.erro : 'não veio na coleta', nTarefas:0});
-      continue;
-    }
+    if(!e || e.erro){ estados.push({...ins,status:'falhou',detalhe:e?e.erro:'não veio na coleta',nTarefas:0}); continue; }
     algumConsultado = true;
     todasTarefas = todasTarefas.concat(e.tarefas);
     let daInst = null;
@@ -943,20 +992,13 @@ function avaliar(reg, tipos, modo){
       if(!casaTipo) continue;
       if(modo === 'qualquer' || (reg.dataNota && bate(t.data, reg.dataNota))){ daInst = t; break; }
     }
-    if(daInst){
-      estados.push({...ins, status:'tem', tarefa:daInst, nTarefas:e.tarefas.length});
-      if(!achou) achou = daInst;
-    }else{
-      estados.push({...ins, status:'nao', nTarefas:e.tarefas.length,
-                    ultima: maisRecente(e.tarefas)});
-    }
+    if(daInst){ estados.push({...ins,status:'tem',tarefa:daInst,nTarefas:e.tarefas.length}); if(!achou) achou = daInst; }
+    else estados.push({...ins,status:'nao',nTarefas:e.tarefas.length,ultima:maisRecente(e.tarefas)});
   }
-
   if(achou) return {categoria:CAT.TRATADA, motivo:'tem tarefa', tarefa:achou, ultima:achou, estados};
   const ult = maisRecente(todasTarefas);
-  if(!algumConsultado)
-    return {categoria:CAT.NAO_CONSULTADO, motivo:'não consultado no SUPP', ultima:null, estados};
-  if(!reg.dataNota)  return {categoria:CAT.SEM_DATA, motivo:ROTULO.semData, ultima:ult, estados};
+  if(!algumConsultado) return {categoria:CAT.NAO_CONSULTADO, motivo:'não consultado no SUPP', ultima:null, estados};
+  if(!reg.dataNota)    return {categoria:CAT.SEM_DATA, motivo:ROTULO.semData, ultima:ult, estados};
   if(todasTarefas.length) return {categoria:CAT.NAO_CORRESPONDE, motivo:ROTULO.naoCorresponde, ultima:ult, estados};
   return {categoria:CAT.SEM_TAREFA, motivo:ROTULO.semTarefa, ultima:null, estados};
 }
@@ -973,6 +1015,7 @@ function cruzar(){
                    ultimaTarefa:a.ultima||null, estados:a.estados||[],
                    tratada:a.categoria===CAT.TRATADA, _filtro:k};
       reg._chave = chaveLinha(k, reg);
+      reg._nNotas = notasDoProcesso(reg).length;
       if(reg.tratada) tratadas.push(reg); else conferir.push(reg);
     }
     FINAL[k] = {conferir, tratadas};
@@ -980,51 +1023,37 @@ function cruzar(){
     logar(`«${k}» conferir=${conferir.length} (sem tarefa ${c(CAT.SEM_TAREFA)} · não corresponde ${c(CAT.NAO_CORRESPONDE)} · sem data ${c(CAT.SEM_DATA)} · não consultado ${c(CAT.NAO_CONSULTADO)}) · tratadas=${tratadas.length}`);
   }
   $('selFiltro').innerHTML = Object.keys(FINAL).map(k=>`<option>${escapar(k)}</option>`).join('');
+  montarFila();
   pintar();
 }
 $('btnCruzar').onclick = () => { cruzar(); concluir('supp'); liberar('fim'); mudarAba('fim'); };
 $('btnRecruzar').onclick = () => cruzar();
 
-/* ================== PASSO 3 ================== */
+/* ================== TABELA ================== */
 const conta = (lista,cat) => lista.filter(r=>r.categoria===cat).length;
 const analisadasEm = lista => lista.filter(r=>ANALISADAS.has(r._chave)).length;
 
-/* Links do SUPP.
-   Regra: se alguma instância JÁ TEM a tarefa, mostra só ela — não há o que decidir.
-   Se NENHUMA tem, mostra todas para você escolher onde abrir/criar a tarefa. */
 function linksSupp(r){
   if(!r.inst.length)
     return `<div class="sup"><span class="semlink" title="a nota não traz link para o SUPP">não cadastrado no SUPP</span></div>`;
-
   const est = (r.estados && r.estados.length) ? r.estados : r.inst.map(i=>({...i,status:'?'}));
   const comTarefa = est.find(e=>e.status==='tem');
-
-  /* já resolvido: um único link, o da instância que tem a tarefa */
   if(comTarefa){
     const rot = comTarefa.grau || comTarefa.trt || 'SUPP';
     return `<div class="sup"><a class="tem" href="${comTarefa.url}" target="_blank" rel="noopener noreferrer"
-      title="${escapar(rot + ' — tem a tarefa: ' + (comTarefa.tarefa?comTarefa.tarefa.tipo:'') +
-              ' · início ' + (comTarefa.tarefa?comTarefa.tarefa.data||'—':'—'))}">
+      title="${escapar(rot+' — tem a tarefa: '+(comTarefa.tarefa?comTarefa.tarefa.tipo:'')+' · início '+(comTarefa.tarefa?comTarefa.tarefa.data||'—':'—'))}">
       <span class="marca">✓</span>${escapar(rot)}</a></div>`;
   }
-
-  /* nenhuma tem a tarefa: mostra todas para escolher */
   const chips = est.map(e=>{
     const rot = e.grau || e.trt || ('proc '+e.id);
     let cls='', marca='', titulo='';
-    if(e.status==='nao'){ cls='nao'; marca='✕';
-      titulo = `consultada: ${e.nTarefas} tarefa(s), nenhuma corresponde — abrir para criar a tarefa`; }
-    else if(e.status==='falhou'){ cls='falhou'; marca='!';
-      titulo = `não consultada (${e.detalhe||'falha'}) — verificar manualmente`; }
-    else { titulo = 'abrir no SUPP'; }
-    const extra = [e.trt, e.meio].filter(Boolean).join(' · ');
+    if(e.status==='nao'){ cls='nao'; marca='✕'; titulo=`consultada: ${e.nTarefas} tarefa(s), nenhuma corresponde — abrir para criar a tarefa`; }
+    else if(e.status==='falhou'){ cls='falhou'; marca='!'; titulo=`não consultada (${e.detalhe||'falha'}) — verificar manualmente`; }
+    else titulo='abrir no SUPP';
     return `<a class="${cls}" href="${e.url}" target="_blank" rel="noopener noreferrer"
-       title="${escapar(rot + (extra?' — '+extra:'') + ' — ' + titulo)}"><span class="marca">${marca}</span>${escapar(rot)}</a>`;
+       title="${escapar(rot+' — '+titulo)}"><span class="marca">${marca}</span>${escapar(rot)}</a>`;
   }).join('');
-
-  const aviso = est.length>1
-    ? `<span class="escolha" title="nenhuma instância tem a tarefa — escolha em qual abrir">escolha a instância</span>`
-    : '';
+  const aviso = est.length>1 ? `<span class="escolha" title="nenhuma instância tem a tarefa — escolha em qual abrir">escolha a instância</span>` : '';
   return `<div class="sup">${chips}${aviso}</div>`;
 }
 
@@ -1032,16 +1061,11 @@ function pintar(){
   const t = Object.values(FINAL);
   const todosConf = t.flatMap(x=>x.conferir);
   const trat = t.reduce((a,x)=>a+x.tratadas.length,0);
-  const nSem  = conta(todosConf, CAT.SEM_TAREFA);
-  const nNao  = conta(todosConf, CAT.NAO_CORRESPONDE);
-  const nData = conta(todosConf, CAT.SEM_DATA);
-  const nCons = conta(todosConf, CAT.NAO_CONSULTADO);
-
   $('metricas').innerHTML = `
     <div class="destaque"><b style="color:var(--err)">${todosConf.length}</b><span>Para conferir</span></div>
-    <div><b>${nSem}</b><span>Sem tarefa</span></div>
-    <div><b>${nNao}</b><span>Não corresponde</span></div>
-    <div><b>${nData + nCons}</b><span>Sem data / não consultado</span></div>
+    <div><b>${conta(todosConf,CAT.SEM_TAREFA)}</b><span>Sem tarefa</span></div>
+    <div><b>${conta(todosConf,CAT.NAO_CORRESPONDE)}</b><span>Não corresponde</span></div>
+    <div><b>${conta(todosConf,CAT.SEM_DATA)+conta(todosConf,CAT.NAO_CONSULTADO)}</b><span>Sem data / não consultado</span></div>
     <div><b style="color:var(--ok)">${trat}</b><span>Já tratadas</span></div>`;
 
   const f = FINAL[$('selFiltro').value]; if(!f) return;
@@ -1049,86 +1073,61 @@ function pintar(){
   let regs;
   if(v==='conferir')                      regs = f.conferir;
   else if(v==='pendentesNaoAnalisadas')   regs = f.conferir.filter(r=>!ANALISADAS.has(r._chave));
-  else if(v==='multiplos')                regs = f.conferir.concat(f.tratadas).filter(r=>r.inst.length>1);
+  else if(v==='variasNotas')              regs = f.conferir.concat(f.tratadas).filter(r=>r._nNotas>1);
   else if(v==='tratadas')                 regs = f.tratadas;
   else if(v==='todos')                    regs = f.conferir.concat(f.tratadas);
   else                                    regs = f.conferir.filter(r=>r.categoria===v);
-
   const q = $('busca').value.trim().toLowerCase();
   if(q) regs = regs.filter(r=>r._b.includes(q));
   VISTA = regs;
 
-  const okFiltro  = analisadasEm(f.conferir),  totFiltro = f.conferir.length;
-  const okTotal   = analisadasEm(todosConf),   totTotal  = todosConf.length;
-  const pct = totTotal ? Math.round(okTotal/totTotal*100) : 0;
-  $('conf-nums').innerHTML =
-    `<b>${okFiltro}</b> de <b>${totFiltro}</b> neste filtro · <b>${okTotal}</b> de <b>${totTotal}</b> no total`;
-  $('conf-barra').style.width = pct + '%';
-  $('conf').classList.toggle('completo', totTotal>0 && okTotal===totTotal);
-  const faltam = totTotal - okTotal;
-  $('conf-detalhe').textContent = totTotal===0 ? 'Nada para conferir.'
-    : (faltam===0 ? `✓ Conferência concluída — ${pct}% das notas analisadas.`
-                  : `${pct}% concluído · faltam ${faltam} nota(s) para analisar.`);
+  atualizarProgresso();
 
-  const pendentesVista = regs.filter(r=>!r.tratada);
-  const todasMarcadas = pendentesVista.length>0 && pendentesVista.every(r=>ANALISADAS.has(r._chave));
+  const pend = regs.filter(r=>!r.tratada);
+  const todasMarcadas = pend.length>0 && pend.every(r=>ANALISADAS.has(r._chave));
   $('tab').querySelector('thead').innerHTML =
-    `<tr><th class="col-check" title="marcar/desmarcar todos desta vista">
-           <input type="checkbox" id="chkTodos" ${todasMarcadas?'checked':''}></th>
-         <th style="width:26%">Processo / instâncias no SUPP</th><th>Data da nota</th><th>Órgão / Parte</th>
-         <th>Situação</th><th style="width:70px">Nota</th></tr>`;
+    `<tr><th class="col-check"><input type="checkbox" id="chkTodos" ${todasMarcadas?'checked':''}></th>
+         <th style="width:26%">Processo / instâncias no SUPP</th><th>Data da nota</th>
+         <th>Órgão / Destinatário</th><th>Situação</th><th style="width:70px">Nota</th></tr>`;
 
   $('tab').querySelector('tbody').innerHTML = regs.map((r,i)=>{
     const marcada = ANALISADAS.has(r._chave);
-    const pje = linksPje(r.processo)
-      .map(([rot,u])=>`<a href="${u}" target="_blank" rel="noopener noreferrer">${rot}</a>`).join('');
-    const proc = `<span class="mono">${r.processo}</span>`
-               + linksSupp(r)
-               + (pje ? `<div class="pje">${pje}</div>` : '');
-    const dt = r.dataNota
-      ? `<span class="mono">${r.dataNota}</span>`
-      : `<span class="tag ambar" title="a data não pôde ser lida no texto — a nota foi mantida">sem data</span>`;
-
+    const pje = linksPje(r.processo).map(([rot,u])=>`<a href="${u}" target="_blank" rel="noopener noreferrer">${rot}</a>`).join('');
+    const notas = notasDoProcesso(r);
+    const selo = r._nNotas>1
+      ? `<span class="badge-notas" title="${soMudaDestinatario(notas)?'as notas são iguais, mudando só o destinatário':'este processo teve várias notas no dia'}">${r._nNotas} notas${soMudaDestinatario(notas)?' · só dest.':''}</span>` : '';
+    const proc = `<span class="mono">${r.processo}</span>${selo}` + linksSupp(r) + (pje?`<div class="pje">${pje}</div>`:'');
+    const dt = r.dataNota ? `<span class="mono">${r.dataNota}</span>`
+      : `<span class="tag ambar" title="a data não pôde ser lida no texto">sem data</span>`;
+    const dest = r.destinatario===SEM_DEST
+      ? `<span class="tag ambar" title="não há trecho entre INTIMADO(S) / CITADO(S) e |||">${SEM_DEST}</span>`
+      : escapar(r.destinatario);
     let sit;
     if(r.tratada){
       sit = `<span class="tag verde">✓ tem tarefa</span>`;
       if(r.tarefaSupp) sit += `<div class="sub-info">início <b>${r.tarefaSupp.data||'—'}</b> · ${escapar(r.tarefaSupp.tipo||'')}</div>`;
     }else{
-      const cor = (r.categoria===CAT.SEM_TAREFA || r.categoria===CAT.NAO_CORRESPONDE) ? 'vermelho' : 'ambar';
+      const cor = (r.categoria===CAT.SEM_TAREFA||r.categoria===CAT.NAO_CORRESPONDE)?'vermelho':'ambar';
       sit = `<span class="tag ${cor}">${escapar(r.motivo)}</span>`;
       if(r.ultimaTarefa){
         const u = r.ultimaTarefa;
         sit += `<div class="sub-info">última tarefa: <b>${escapar(u.tipo||'—')}</b>`
              + (u.data?` · início <b>${u.data}</b>`:' · <i>sem início</i>')
-             + (Number.isFinite(u.id)?` · id ${u.id}`:'') + `</div>`;
+             + (Number.isFinite(u.id)?` · id ${u.id}`:'')+`</div>`;
       }
-      const falhou = (r.estados||[]).filter(e=>e.status==='falhou');
-      if(falhou.length)
-        sit += `<div class="sub-info">verificar manualmente: ${falhou.map(e=>escapar(e.grau||e.id)).join(', ')}</div>`;
     }
-
     const classes = [];
     if(marcada) classes.push('analisada');
-    else if(r.categoria===CAT.NAO_CONSULTADO || r.categoria===CAT.SEM_DATA) classes.push('linha-erro');
-    const cls = classes.length ? ` class="${classes.join(' ')}"` : '';
-
-    return `<tr${cls}>
-      <td class="col-check">${ r.tratada
-          ? '<span class="tag verde" title="já possui tarefa — não precisa conferir">ok</span>'
+    else if(r.categoria===CAT.NAO_CONSULTADO||r.categoria===CAT.SEM_DATA) classes.push('linha-erro');
+    return `<tr${classes.length?` class="${classes.join(' ')}"`:''}>
+      <td class="col-check">${ r.tratada ? '<span class="tag verde">ok</span>'
           : `<input type="checkbox" class="chk-linha" data-i="${i}" ${marcada?'checked':''} title="marcar como analisada">` }</td>
       <td>${proc}</td>
       <td>${dt}<div class="sub-info">disp. ${escapar(r.disponibilizacao||'—')}</div></td>
-      <td>${escapar(r.orgao)}<div class="sub-info">${escapar(r.parte)}</div></td>
+      <td>${escapar(r.orgao)}<div class="sub-info">${dest}</div></td>
       <td>${sit}</td>
-      <td><button class="btn mini" data-ver="${i}">Ver</button></td></tr>`;
+      <td><button class="btn mini" data-ver="${i}">Ver${r._nNotas>1?` (${r._nNotas})`:''}</button></td></tr>`;
   }).join('') || `<tr><td colspan="6" style="text-align:center;color:var(--ink-2);padding:32px">Nenhum registro</td></tr>`;
-
-  const okVista = pendentesVista.filter(r=>ANALISADAS.has(r._chave)).length;
-  const multi = regs.filter(r=>r.inst.length>1).length;
-  $('rodape-tabela').textContent =
-    `${regs.length} registro(s) nesta vista · ${okVista} de ${pendentesVista.length} analisado(s) aqui` +
-    (multi?` · ${multi} com mais de uma instância`:'') +
-    ` · a planilha e o e-mail levam as ${f.conferir.length} notas para conferir.`;
 
   $$('#tab .chk-linha').forEach(cb => cb.onchange = () => {
     const r = VISTA[+cb.dataset.i];
@@ -1136,49 +1135,40 @@ function pintar(){
     salvarMarcas();
     cb.closest('tr').classList.toggle('analisada', cb.checked);
     if(cb.checked) cb.closest('tr').classList.remove('linha-erro');
-    else if(r.categoria===CAT.NAO_CONSULTADO || r.categoria===CAT.SEM_DATA)
-      cb.closest('tr').classList.add('linha-erro');
+    else if(r.categoria===CAT.NAO_CONSULTADO||r.categoria===CAT.SEM_DATA) cb.closest('tr').classList.add('linha-erro');
     atualizarProgresso();
-    if($('selVista').value==='pendentesNaoAnalisadas' && cb.checked) setTimeout(pintar, 220);
+    if($('selVista').value==='pendentesNaoAnalisadas' && cb.checked) setTimeout(pintar,220);
   });
-  $$('#tab button[data-ver]').forEach(b => b.onclick = () => abrirNota(VISTA[+b.dataset.ver]));
-  const chkTodos = $('chkTodos');
-  if(chkTodos) chkTodos.onchange = () => marcarVista(chkTodos.checked);
+  $$('#tab button[data-ver]').forEach(b => b.onclick = () => abrirRevisor(VISTA[+b.dataset.ver]));
+  const ct = $('chkTodos');
+  if(ct) ct.onchange = () => marcarVista(ct.checked);
 }
 
 function atualizarProgresso(){
-  const t = Object.values(FINAL);
-  const todosConf = t.flatMap(x=>x.conferir);
+  if(!FINAL) return;
+  const todosConf = Object.values(FINAL).flatMap(x=>x.conferir);
   const f = FINAL[$('selFiltro').value]; if(!f) return;
-  const okFiltro = analisadasEm(f.conferir), totFiltro = f.conferir.length;
-  const okTotal  = analisadasEm(todosConf),  totTotal  = todosConf.length;
-  const pct = totTotal ? Math.round(okTotal/totTotal*100) : 0;
-  $('conf-nums').innerHTML =
-    `<b>${okFiltro}</b> de <b>${totFiltro}</b> neste filtro · <b>${okTotal}</b> de <b>${totTotal}</b> no total`;
-  $('conf-barra').style.width = pct + '%';
-  $('conf').classList.toggle('completo', totTotal>0 && okTotal===totTotal);
-  const faltam = totTotal - okTotal;
-  $('conf-detalhe').textContent = totTotal===0 ? 'Nada para conferir.'
+  const okF = analisadasEm(f.conferir), totF = f.conferir.length;
+  const okT = analisadasEm(todosConf),  totT = todosConf.length;
+  const pct = totT ? Math.round(okT/totT*100) : 0;
+  $('conf-nums').innerHTML = `<b>${okF}</b> de <b>${totF}</b> neste filtro · <b>${okT}</b> de <b>${totT}</b> no total`;
+  $('conf-barra').style.width = pct+'%';
+  $('conf').classList.toggle('completo', totT>0 && okT===totT);
+  const faltam = totT-okT;
+  $('conf-detalhe').textContent = totT===0 ? 'Nada para conferir.'
     : (faltam===0 ? `✓ Conferência concluída — ${pct}% das notas analisadas.`
                   : `${pct}% concluído · faltam ${faltam} nota(s) para analisar.`);
   const pend = VISTA.filter(r=>!r.tratada);
-  const okVista = pend.filter(r=>ANALISADAS.has(r._chave)).length;
-  const multi = VISTA.filter(r=>r.inst.length>1).length;
+  const okV = pend.filter(r=>ANALISADAS.has(r._chave)).length;
   $('rodape-tabela').textContent =
-    `${VISTA.length} registro(s) nesta vista · ${okVista} de ${pend.length} analisado(s) aqui` +
-    (multi?` · ${multi} com mais de uma instância`:'') +
-    ` · a planilha e o e-mail levam as ${f.conferir.length} notas para conferir.`;
-  const chkTodos = $('chkTodos');
-  if(chkTodos) chkTodos.checked = pend.length>0 && okVista===pend.length;
+    `${VISTA.length} registro(s) nesta vista · ${okV} de ${pend.length} analisado(s) aqui · ` +
+    `a planilha e o e-mail levam as ${f.conferir.length} notas para conferir.`;
+  const ct = $('chkTodos');
+  if(ct) ct.checked = pend.length>0 && okV===pend.length;
 }
-
 function marcarVista(marcar){
-  VISTA.filter(r=>!r.tratada).forEach(r=>{
-    if(marcar) ANALISADAS.add(r._chave); else ANALISADAS.delete(r._chave);
-  });
-  salvarMarcas();
-  logar(`${marcar?'Marcadas':'Desmarcadas'} ${VISTA.filter(r=>!r.tratada).length} linha(s) desta vista.`);
-  pintar();
+  VISTA.filter(r=>!r.tratada).forEach(r=>{ if(marcar) ANALISADAS.add(r._chave); else ANALISADAS.delete(r._chave); });
+  salvarMarcas(); pintar();
 }
 $('btnMarcarVista').onclick = () => marcarVista(true);
 $('btnDesmarcarVista').onclick = () => marcarVista(false);
@@ -1190,69 +1180,365 @@ $('btnLimparMarcas').onclick = () => {
 ['selFiltro','selVista'].forEach(s=>$(s).onchange=pintar);
 $('busca').oninput = pintar;
 
-/* ================== MODAL DA NOTA ================== */
-function abrirNota(r){
-  const pje = linksPje(r.processo)
-    .map(([rot,u])=>`<a class="btn" style="text-decoration:none" href="${u}" target="_blank" rel="noopener noreferrer">${rot}</a>`).join('');
-  const marcada = ANALISADAS.has(r._chave);
-  const todos = (r.estados && r.estados.length) ? r.estados : r.inst.map(i=>({...i,status:'?'}));
-  const comTarefa = todos.find(e=>e.status==='tem');
-  /* mesma regra da tabela: só mostra as opções quando nenhuma instância tem a tarefa */
-  const estados = comTarefa ? [comTarefa] : todos;
-  const linhasInst = estados.map(e=>{
-    const rot = e.grau || e.trt || ('processo '+e.id);
-    let txtStatus;
-    if(e.status==='tem')         txtStatus = `<b style="color:var(--ok)">tem a tarefa</b> — ${escapar(e.tarefa?e.tarefa.tipo:'')} · início ${e.tarefa?e.tarefa.data||'—':'—'}`;
-    else if(e.status==='nao')    txtStatus = `<b style="color:var(--err)">sem tarefa correspondente</b> — ${e.nTarefas} tarefa(s) no processo`
-                                           + (e.ultima?` · última: ${escapar(e.ultima.tipo||'')} (início ${e.ultima.data||'—'})`:'');
-    else if(e.status==='falhou') txtStatus = `<b style="color:var(--accent-2)">não consultada</b> — ${escapar(e.detalhe||'falha')}`;
-    else                         txtStatus = 'não avaliada';
-    return `<div class="meta" style="margin-top:var(--s-2)">
-      <a href="${e.url}" target="_blank" rel="noopener noreferrer" style="color:var(--brand-supp);font-weight:700">${escapar(rot)}</a>
-      ${e.meio?`<span class="tag zero" style="margin-left:6px">${escapar(e.meio)}</span>`:''}
-      · ${txtStatus}</div>`;
-  }).join('') || '<div class="meta" style="margin-top:var(--s-2)">Sem instância cadastrada no SUPP.</div>';
-
-  const d = document.createElement('div');
-  d.className = 'modal';
-  d.innerHTML = `<div class="cx">
-    <div class="top">
-      <div style="flex:1">
-        <h3>${escapar(r.processo)}</h3>
-        <div class="meta">${escapar(r.orgao||'—')} · ${escapar(r.tipo||'—')} · nota de ${r.dataNota||'data não identificada'} · disponibilizada em ${escapar(r.disponibilizacao||'—')}</div>
-        <div class="meta">situação: <b>${escapar(r.tratada?'tem tarefa':r.motivo)}</b></div>
-        ${r.termos?`<div class="meta">termos: ${escapar(r.termos)}</div>`:''}
-        <div style="margin-top:var(--s-3);border-top:var(--bw) solid var(--line);padding-top:var(--s-2)">
-          <div class="meta" style="text-transform:uppercase;letter-spacing:.1em;font-weight:600">${
-            comTarefa ? 'Instância com a tarefa' : (todos.length>1 ? 'Escolha a instância ('+todos.length+')' : 'Instância no SUPP')}</div>
-          ${linhasInst}
-        </div>
-      </div>
-      <button class="fechar" title="fechar">×</button>
-    </div>
-    <div class="corpo">${r.texto || '<i>texto não disponível</i>'}</div>
-    <div class="rod">
-      ${r.tratada?'':`<button class="btn ${marcada?'':'primary'}" id="mMarcar">${marcada?'Desmarcar analisada':'✓ Marcar como analisada'}</button>`}
-      ${estados.map(e=>`<a class="btn brand supp" style="text-decoration:none" href="${e.url}" target="_blank">SUPP ${escapar(e.grau||e.id)}</a>`).join('')}
-      ${pje}
-      <button class="btn" id="mCopiar">Copiar texto</button>
-      <button class="btn" id="mFechar">Fechar</button>
-    </div></div>`;
-  document.body.appendChild(d);
-  const sair = () => d.remove();
-  d.querySelector('.fechar').onclick = sair;
-  d.querySelector('#mFechar').onclick = sair;
-  d.onclick = e => { if(e.target === d) sair(); };
-  d.querySelector('#mCopiar').onclick = () =>
-    navigator.clipboard.writeText(strip(r.texto)).then(()=>{ d.querySelector('#mCopiar').textContent='✓ copiado'; });
-  const bm = d.querySelector('#mMarcar');
-  if(bm) bm.onclick = () => {
-    if(ANALISADAS.has(r._chave)) ANALISADAS.delete(r._chave); else ANALISADAS.add(r._chave);
-    salvarMarcas(); sair(); pintar();
-  };
-  document.addEventListener('keydown', function fechaEsc(ev){
-    if(ev.key === 'Escape'){ sair(); document.removeEventListener('keydown', fechaEsc); }
+/* ================== DESTAQUES NO TEXTO ================== */
+const CORES_MARK_TITULO = {"Representação Integral":"#90EE90","Representação Extraordinária":"#DDA0DD","Entidade Extinta":"#F08080"};
+const CORES_MARK_TEXTO = {"DE 2026":{bg:"#FF7F50",cor:""}};
+function aplicarCoresMark(root){
+  root.querySelectorAll('mark').forEach(mk=>{
+    const t = mk.innerText.trim();
+    const cfg = CORES_MARK_TEXTO[t];
+    if(cfg){ mk.style.backgroundColor = cfg.bg; if(cfg.cor) mk.style.color = cfg.cor; return; }
+    const c = CORES_MARK_TITULO[mk.title];
+    if(c) mk.style.backgroundColor = c;
   });
+}
+function destacarTrechoNode(node, ini, fim){
+  if(fim <= ini) return;
+  const alvo = (ini>0) ? node.splitText(ini) : node;
+  const tam = fim-ini;
+  if(tam < alvo.nodeValue.length) alvo.splitText(tam);
+  const span = document.createElement('span');
+  span.className = 'intimado-highlight';
+  alvo.parentNode.replaceChild(span, alvo);
+  span.appendChild(alvo);
+}
+function coletarNosTexto(root){
+  const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode: n => (n.parentNode && n.parentNode.closest('.intimado-highlight'))
+      ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT });
+  const nos=[]; let n;
+  while((n=w.nextNode())) nos.push(n);
+  return nos;
+}
+function destacarIntimados(el){
+  const inteiro = el.textContent;
+  if(!RE_INTIMADO.test(inteiro)) return;
+  const TERM = inteiro.indexOf('|||')!==-1 ? '|||' : (inteiro.indexOf('III')!==-1 ? 'III' : null);
+  if(!TERM) return;
+  for(let p=0;p<10;p++){
+    const nos = coletarNosTexto(el);
+    let iIni=-1, offIni=-1;
+    for(let i=0;i<nos.length;i++){
+      const m = nos[i].nodeValue.match(RE_INTIMADO);
+      if(m){ iIni=i; offIni=m.index+m[0].length; break; }
+    }
+    if(iIni===-1) return;
+    let iFim=-1, offFim=-1;
+    for(let j=iIni;j<nos.length;j++){
+      const de = (j===iIni)?offIni:0;
+      const k = nos[j].nodeValue.indexOf(TERM, de);
+      if(k!==-1){ iFim=j; offFim=k; break; }
+    }
+    if(iFim===-1) return;
+    if(iFim===iIni) destacarTrechoNode(nos[iIni], offIni, offFim);
+    else{
+      destacarTrechoNode(nos[iFim],0,offFim);
+      for(let k=iFim-1;k>iIni;k--) destacarTrechoNode(nos[k],0,nos[k].nodeValue.length);
+      destacarTrechoNode(nos[iIni], offIni, nos[iIni].nodeValue.length);
+    }
+  }
+}
+const aplicarDestaques = el => { aplicarCoresMark(el); destacarIntimados(el); };
+
+/* ============================================================
+   REVISOR — navega pelas notas atravessando os filtros
+   ============================================================ */
+let FILA = [], POS = -1, MODAL = null, ESTADO = 'nota';
+
+function montarFila(){
+  FILA = [];
+  Object.entries(FINAL).forEach(([filtro,v])=>{
+    v.conferir.forEach(reg => FILA.push({filtro, reg}));
+  });
+}
+const posDe = reg => FILA.findIndex(x => x.reg._chave === reg._chave);
+
+function abrirRevisor(reg){
+  montarFila();
+  const i = posDe(reg);
+  if(i === -1){ abrirAvulsa(reg); return; }   /* tratadas não entram na fila */
+  POS = i; ESTADO = 'nota';
+  criarModal();
+  render('esq');
+}
+$('btnRevisar').onclick = () => {
+  montarFila();
+  if(!FILA.length) return alert('Não há notas para conferir.');
+  const pendente = FILA.findIndex(x=>!ANALISADAS.has(x.reg._chave));
+  POS = pendente === -1 ? 0 : pendente;
+  ESTADO = 'nota'; criarModal(); render('esq');
+};
+
+function criarModal(){
+  if(MODAL) MODAL.remove();
+  MODAL = document.createElement('div');
+  MODAL.className = 'modal';
+  MODAL.innerHTML = `<div class="cx">
+    <div class="topo">
+      <span class="pos" id="rv-pos"></span>
+      <span class="pos" id="rv-filtro" style="color:var(--ink)"></span>
+      <button class="fechar" title="fechar (Esc)">×</button>
+    </div>
+    <div class="trilha"><i id="rv-trilha" style="width:0"></i></div>
+    <div class="palco" id="rv-palco"></div>
+    <div class="rod" id="rv-rod"></div>
+  </div>`;
+  document.body.appendChild(MODAL);
+  MODAL.querySelector('.fechar').onclick = fecharRevisor;
+  MODAL.onclick = e => { if(e.target === MODAL) fecharRevisor(); };
+  document.addEventListener('keydown', teclado);
+}
+function fecharRevisor(){
+  document.removeEventListener('keydown', teclado);
+  if(MODAL) MODAL.remove();
+  MODAL = null; pintar();
+}
+function teclado(ev){
+  if(!MODAL) return;
+  if(ev.key === 'Escape') fecharRevisor();
+  else if(ev.key === 'ArrowRight') avancar();
+  else if(ev.key === 'ArrowLeft') voltar();
+}
+
+/* troca de conteúdo com animação */
+function trocarPalco(html, sentido){
+  const p = $('rv-palco');
+  p.classList.remove('anim-esq','anim-dir');
+  void p.offsetWidth;
+  p.innerHTML = html;
+  p.classList.add(sentido==='dir' ? 'anim-dir' : 'anim-esq');
+  p.scrollTop = 0;
+}
+
+function avancar(){
+  if(ESTADO === 'fim'){ fecharRevisor(); return; }
+  if(ESTADO === 'transicao'){ POS = pendenteTransicao; ESTADO='nota'; render('esq'); return; }
+  const prox = POS + 1;
+  if(prox >= FILA.length){ ESTADO='fim'; render('esq'); return; }
+  if(FILA[prox].filtro !== FILA[POS].filtro){
+    pendenteTransicao = prox; ESTADO='transicao'; render('esq'); return;
+  }
+  POS = prox; render('esq');
+}
+let pendenteTransicao = -1;
+function voltar(){
+  if(ESTADO === 'transicao' || ESTADO === 'fim'){ ESTADO='nota'; render('dir'); return; }
+  if(POS <= 0) return;
+  POS--; render('dir');
+}
+function marcarEAvancar(){
+  const it = FILA[POS];
+  ANALISADAS.add(it.reg._chave);
+  salvarMarcas();
+  logar(`Analisada: ${it.reg.processo} (${it.filtro}).`);
+  avancar();
+}
+
+function render(sentido){
+  if(ESTADO === 'fim')        return renderFim(sentido);
+  if(ESTADO === 'transicao')  return renderTransicao(sentido);
+  return renderNota(sentido);
+}
+
+/* ---- cabeçalho comum ---- */
+function atualizarTopo(){
+  const totalFila = FILA.length;
+  const okTotal = FILA.filter(x=>ANALISADAS.has(x.reg._chave)).length;
+  $('rv-trilha').style.width = (totalFila ? (okTotal/totalFila*100) : 0) + '%';
+  if(ESTADO === 'nota' && FILA[POS]){
+    const it = FILA[POS];
+    const doFiltro = FILA.filter(x=>x.filtro===it.filtro);
+    const iNoFiltro = doFiltro.findIndex(x=>x.reg._chave===it.reg._chave)+1;
+    $('rv-pos').innerHTML = `Nota <b>${POS+1}</b> de <b>${totalFila}</b>`;
+    $('rv-filtro').innerHTML = `${escapar(it.filtro)} · ${iNoFiltro} de ${doFiltro.length}`;
+  }else{
+    $('rv-pos').innerHTML = `<b>${okTotal}</b> de <b>${totalFila}</b> analisadas`;
+    $('rv-filtro').textContent = '';
+  }
+}
+
+/* ---- card de troca de filtro ---- */
+function renderTransicao(sentido){
+  const atual = FILA[POS].filtro;
+  const prox  = FILA[pendenteTransicao].filtro;
+  const doAtual = FILA.filter(x=>x.filtro===atual);
+  const okAtual = doAtual.filter(x=>ANALISADAS.has(x.reg._chave)).length;
+  const doProx  = FILA.filter(x=>x.filtro===prox);
+  const pendProx = doProx.filter(x=>!ANALISADAS.has(x.reg._chave)).length;
+  trocarPalco(`<div class="card-transicao">
+    <div class="ico">✓</div>
+    <h3>Fim do filtro</h3>
+    <p>Você chegou ao fim de <span class="nome-filtro">${escapar(atual)}</span>.</p>
+    <div class="caixa">
+      <div><b>${okAtual}</b><span>analisadas</span></div>
+      <div><b>${doAtual.length - okAtual}</b><span>sem marcar</span></div>
+    </div>
+    <p style="margin-top:var(--s-4)">A seguir: <span class="nome-filtro">${escapar(prox)}</span> —
+       <b>${doProx.length}</b> nota(s), ${pendProx} ainda não analisada(s).</p>
+  </div>`, sentido);
+  atualizarTopo();
+  $('rv-rod').innerHTML = `
+    <button class="btn" id="rv-voltar">← Voltar</button>
+    <span class="espaco"></span>
+    <button class="btn primary" id="rv-continuar">Continuar para ${escapar(prox)} →</button>`;
+  $('rv-voltar').onclick = voltar;
+  $('rv-continuar').onclick = avancar;
+}
+
+/* ---- card final ---- */
+function renderFim(sentido){
+  const total = FILA.length;
+  const ok = FILA.filter(x=>ANALISADAS.has(x.reg._chave)).length;
+  const faltam = total - ok;
+  trocarPalco(`<div class="card-transicao fim">
+    <div class="ico">★</div>
+    <h3>${faltam===0 ? 'Conferência concluída' : 'Fim da lista'}</h3>
+    <p>${faltam===0
+      ? 'Todas as notas foram percorridas e marcadas como analisadas.'
+      : 'Você percorreu todas as notas. Ainda há notas sem marcação — use o botão abaixo para voltar às pendentes.'}</p>
+    <div class="caixa">
+      <div><b style="color:var(--ok)">${ok}</b><span>analisadas</span></div>
+      <div><b style="color:${faltam?'var(--err)':'inherit'}">${faltam}</b><span>sem marcar</span></div>
+      <div><b>${total}</b><span>total</span></div>
+    </div>
+  </div>`, sentido);
+  atualizarTopo();
+  $('rv-rod').innerHTML = `
+    <button class="btn" id="rv-voltar">← Voltar</button>
+    <span class="espaco"></span>
+    ${faltam ? `<button class="btn amber" id="rv-pendentes">Ir para a 1ª pendente</button>` : ''}
+    <button class="btn primary" id="rv-fechar">Fechar</button>`;
+  $('rv-voltar').onclick = voltar;
+  $('rv-fechar').onclick = fecharRevisor;
+  if(faltam) $('rv-pendentes').onclick = () => {
+    const i = FILA.findIndex(x=>!ANALISADAS.has(x.reg._chave));
+    if(i>=0){ POS=i; ESTADO='nota'; render('dir'); }
+  };
+}
+
+/* ---- nota ---- */
+const textoParaCopiar = (n,i,tot) =>
+  `Processo: ${n.processo}\n`+(tot>1?`Nota ${i+1} de ${tot}\n`:'')+
+  `Tipo: ${n.tipo||'—'}\nÓrgão: ${n.orgao||'—'}\nDiário: ${n.fonte||'—'}\n`+
+  `Data da nota: ${n.dataNota||'não identificada'}\nDisponibilizada: ${n.disponibilizacao||'—'}\n`+
+  `Prazo: ${n.prazo||'—'}\nDestinatário: ${n.destinatario}\n`+
+  (n.parte?`Parte monitorada: ${n.parte}\n`:'')+`\n${strip(n.texto)}`;
+
+function renderNota(sentido){
+  const it = FILA[POS], r = it.reg;
+  const notas = notasDoProcesso(r);
+  const lista = notas.length ? notas : [r];
+  const iFoco = Math.max(0, lista.findIndex(n =>
+    n.dataNota===r.dataNota && n.disponibilizacao===r.disponibilizacao &&
+    norm(n.orgao)===norm(r.orgao) && norm(n.texto)===norm(r.texto)));
+  const iguais = soMudaDestinatario(lista);
+  const varia = c => new Set(lista.map(n=>norm(n[c]))).size > 1;
+  const dif = { destinatario: lista.length>1 && varia('destinatario'),
+                tipo: lista.length>1 && varia('tipo'),
+                orgao: lista.length>1 && varia('orgao'),
+                fonte: lista.length>1 && varia('fonte') };
+
+  const avisoIguais = iguais ? `<div class="aviso-iguais">
+      <b>✓ As ${lista.length} notas deste processo são idênticas</b> — muda apenas o destinatário.
+      Basta ler uma delas.
+      <ul>${lista.map((n,i)=>`<li>Nota ${i+1}: <b>${escapar(n.destinatario)}</b></li>`).join('')}</ul>
+    </div>` : '';
+
+  const blocos = lista.map((n,i)=>{
+    const foco = i===iFoco;
+    /* com mais de uma nota, todas começam recolhidas — fica evidente que há várias */
+    const aberta = lista.length === 1;
+    const diario = diarioAtipico(n.fonte)
+      ? `<span class="diario-alert">${escapar(n.fonte)}</span>`
+      : `<span class="tag zero ${dif.fonte?'dif':''}">${escapar(n.fonte||'—')}</span>`;
+    const dest = n.destinatario===SEM_DEST
+      ? `<span class="tag ambar">${SEM_DEST}</span>`
+      : `<b class="${dif.destinatario?'dif':''}">${escapar(n.destinatario)}</b>`;
+    return `<div class="nota ${foco?'foco':''} ${aberta?'aberta':''}">
+      <div class="cab">
+        <button class="abre" type="button">
+          <span class="seta">▶</span>
+          <span style="flex:1">
+            <span class="rotulo">Nota ${i+1}${lista.length>1?' de '+lista.length:''}${foco&&lista.length>1?' — esta linha':''}</span>
+            <span class="campos" style="display:block">
+              <span class="tag ${dif.tipo?'ambar dif':'zero'}">${escapar(n.tipo||'—')}</span>
+              <span class="tag ${dif.orgao?'ambar dif':'zero'}">${escapar(n.orgao||'—')}</span>
+              ${diario}<br>
+              nota de <b>${n.dataNota||'data não identificada'}</b> ·
+              disponibilizada <b>${escapar(n.disponibilizacao||'—')}</b> ·
+              prazo <b>${escapar(n.prazo||'—')}</b><br>
+              destinatário: ${dest}
+              ${n.parte?`<br>parte monitorada: <b>${escapar(n.parte)}</b>`:''}
+            </span>
+          </span>
+        </button>
+        <button class="btn mini copiar-nota" data-c="${i}" title="copiar o texto desta nota">Copiar</button>
+      </div>
+      <div class="corpo-nota">${n.texto || '<i>texto não disponível</i>'}</div>
+    </div>`;
+  }).join('');
+
+  const est = (r.estados&&r.estados.length) ? r.estados : r.inst.map(i=>({...i,status:'?'}));
+  const comTarefa = est.find(e=>e.status==='tem');
+  const botoesSupp = (comTarefa?[comTarefa]:est)
+    .map(e=>`<a class="btn mini brand supp" style="text-decoration:none" href="${e.url}" target="_blank">SUPP ${escapar(e.grau||e.id)}</a>`).join('');
+  const pje = linksPje(r.processo)
+    .map(([rot,u])=>`<a class="btn mini" style="text-decoration:none" href="${u}" target="_blank" rel="noopener noreferrer">${rot}</a>`).join('');
+
+  trocarPalco(`
+    <div class="cabecalho-proc">
+      <h3>${escapar(r.processo)}</h3>
+      <div class="meta">situação: <b>${escapar(r.motivo)}</b>
+        ${r.ultimaTarefa?` · última tarefa: ${escapar(r.ultimaTarefa.tipo||'—')} (início ${r.ultimaTarefa.data||'—'})`:''}</div>
+      <div class="links">${botoesSupp}${pje}</div>
+    </div>
+    ${avisoIguais}
+    <div class="barra-notas">
+      ${lista.length>1?`<b style="color:var(--accent)">${lista.length} notas — recolhidas</b>
+      <button class="btn mini" id="rv-abrir">Abrir todas</button>
+      <button class="btn mini" id="rv-recolher">Recolher todas</button>`:''}
+      <span class="legenda-cores">
+        <span class="am"><i style="background:#FFF59D"></i>termo do filtro</span>
+        <span class="am"><i style="background:#90EE90"></i>repr. integral</span>
+        <span class="am"><i style="background:#DDA0DD"></i>repr. extraordinária</span>
+        <span class="am"><i style="background:#F08080"></i>entidade extinta</span>
+        <span class="am"><span class="intimado-highlight">intimado(s)/citado(s)</span></span>
+      </span>
+    </div>
+    ${blocos}`, sentido);
+
+  MODAL.querySelectorAll('.corpo-nota').forEach(aplicarDestaques);
+  MODAL.querySelectorAll('.nota .abre').forEach(b => b.onclick = () => b.closest('.nota').classList.toggle('aberta'));
+  MODAL.querySelectorAll('.copiar-nota').forEach(b => b.onclick = () => {
+    const n = lista[+b.dataset.c];
+    navigator.clipboard.writeText(textoParaCopiar(n,+b.dataset.c,lista.length))
+      .then(()=>{ const o=b.textContent; b.textContent='✓ copiado'; setTimeout(()=>{b.textContent=o;},1600); });
+  });
+  if($('rv-abrir')) $('rv-abrir').onclick = () => MODAL.querySelectorAll('.nota').forEach(n=>n.classList.add('aberta'));
+  if($('rv-recolher')) $('rv-recolher').onclick = () => MODAL.querySelectorAll('.nota').forEach(n=>n.classList.remove('aberta'));
+
+  atualizarTopo();
+  const marcada = ANALISADAS.has(r._chave);
+  const ultimo = POS === FILA.length-1;
+  $('rv-rod').innerHTML = `
+    <button class="btn" id="rv-voltar" ${POS===0?'disabled':''}>← Anterior</button>
+    <span class="espaco"></span>
+    ${marcada
+      ? `<button class="btn" id="rv-desmarcar">Desmarcar analisada</button>`
+      : `<button class="btn primary" id="rv-marcar">✓ Marcar analisada e avançar</button>`}
+    <button class="btn" id="rv-proxima">${ultimo?'Concluir':'Próxima'} →</button>`;
+  $('rv-voltar').onclick = voltar;
+  $('rv-proxima').onclick = avancar;
+  if($('rv-marcar')) $('rv-marcar').onclick = marcarEAvancar;
+  if($('rv-desmarcar')) $('rv-desmarcar').onclick = () => {
+    ANALISADAS.delete(r._chave); salvarMarcas(); render('esq');
+  };
+}
+
+/* nota fora da fila (já tratada) — visualização simples */
+function abrirAvulsa(r){
+  FILA = [{filtro:r._filtro||'—', reg:r}]; POS = 0; ESTADO='nota';
+  criarModal(); render('esq');
 }
 
 /* ================== EXPORTAÇÕES ================== */
@@ -1263,23 +1549,25 @@ function baixar(nome, texto, tipo){
   setTimeout(()=>URL.revokeObjectURL(a.href),4000);
 }
 function csv(regs){
-  const cab=['Analisada','Situacao','Precisa_conferir','Processo','Instancias','Detalhe_Instancias',
-             'Data_NOTA','Disponibilizacao','Prazo','Orgao','Parte','Tipo','Comarca','UF',
-             'Ultima_Tarefa','Inicio_Ultima_Tarefa','Id_Ultima_Tarefa','URLs_SUPP','PJe_1g','PJe_2g','Texto_Nota'];
+  const cab=['Analisada','Situacao','Precisa_conferir','Processo','Notas_do_processo','Notas_so_mudam_destinatario',
+             'Instancias','Detalhe_Instancias','Data_NOTA','Disponibilizacao','Prazo','Orgao','Diario','Destinatario',
+             'Parte_monitorada','Tipo','Comarca','UF','Ultima_Tarefa','Inicio_Ultima_Tarefa','Id_Ultima_Tarefa',
+             'URLs_SUPP','PJe_1g','PJe_2g','Texto_Nota'];
   const e=v=>`"${String(v??'').replace(/"/g,'""')}"`;
   return [cab.join(';')].concat(regs.map(r=>{
     const u = r.ultimaTarefa || {}, pje = linksPje(r.processo);
-    const est = (r.estados&&r.estados.length) ? r.estados : r.inst.map(i=>({...i,status:'?'}));
+    const est = (r.estados&&r.estados.length)?r.estados:r.inst.map(i=>({...i,status:'?'}));
     const detalhe = est.map(x=>{
-      const rot = x.grau || x.trt || x.id;
-      const s = x.status==='tem' ? 'tem a tarefa'
-              : x.status==='nao' ? `sem correspondente (${x.nTarefas} tarefa(s))`
-              : x.status==='falhou' ? `NÃO CONSULTADA (${x.detalhe||'falha'})` : 'não avaliada';
+      const rot = x.grau||x.trt||x.id;
+      const s = x.status==='tem'?'tem a tarefa'
+              : x.status==='nao'?`sem correspondente (${x.nTarefas} tarefa(s))`
+              : x.status==='falhou'?`NÃO CONSULTADA (${x.detalhe||'falha'})`:'não avaliada';
       return `${rot}: ${s}`;
     }).join(' | ');
     return [ANALISADAS.has(r._chave)?'SIM':'NAO', r.tratada?'Já tratada':r.motivo, r.tratada?'NAO':'SIM',
-      r.processo, r.inst.length, detalhe,
-      r.dataNota||'SEM DATA', r.disponibilizacao, r.prazo, r.orgao, r.parte, r.tipo, r.comarca, r.uf,
+      r.processo, r._nNotas||1, soMudaDestinatario(notasDoProcesso(r))?'SIM':'NAO',
+      r.inst.length, detalhe, r.dataNota||'SEM DATA', r.disponibilizacao, r.prazo, r.orgao, r.fonte,
+      r.destinatario, r.parte, r.tipo, r.comarca, r.uf,
       u.tipo||'', u.data||'', Number.isFinite(u.id)?u.id:'',
       r.inst.map(i=>i.url).join(' '), pje[0]?pje[0][1]:'', pje[1]?pje[1][1]:'', strip(r.texto)].map(e).join(';');
   })).join('\r\n');
@@ -1293,7 +1581,6 @@ function corpoHTML(){
   const td = "padding: 12px 15px; border-bottom: 1px solid #dddddd; background-color: #ffffff;";
   const todosConf = Object.values(FINAL).flatMap(x=>x.conferir);
   const okTotal = analisadasEm(todosConf);
-  const multi = todosConf.filter(r=>r.inst.length>1).length;
   const linhas = Object.entries(FINAL).map(([k,v])=>{
     const c = n => v.conferir.filter(r=>r.categoria===n).length;
     return `<tr><td style="${td}"><b>${escapar(k)}</b></td>
@@ -1304,9 +1591,7 @@ function corpoHTML(){
   }).join('');
   return `<div style="font-family: Georgia, serif; font-size: 16px; color: #333333;">
   <p>Origem: Site BDxSUPP</p><p>Prezados,</p>
-  <p>Segue o resultado do cruzamento entre as NEs Trabalhistas do BD-1 e as tarefas cadastradas no SUPP.
-  As planilhas em anexo trazem todas as notas que precisam de conferência manual, inclusive os processos
-  que não puderam ser consultados.</p>
+  <p>Segue o resultado do cruzamento entre as NEs Trabalhistas do BD-1 e as tarefas cadastradas no SUPP.</p>
   <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse; font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif; font-size: 14px; margin-top: 20px; border-radius: 8px; overflow: hidden; border: 1px solid #dddddd;">
     <thead><tr style="background-color: #2F4F4F; color: #ffffff;">
       <th style="padding: 12px 15px; text-align: left; font-weight: normal;">Filtro</th>
@@ -1314,9 +1599,7 @@ function corpoHTML(){
     </tr></thead><tbody>
     <tr><td style="${td}"><b>Data</b></td><td style="${td}">${escapar($('d1').value||hoje())}</td></tr>
     <tr><td style="${td}"><b>Conferência</b></td><td style="${td}">${okTotal} de ${todosConf.length} nota(s) analisada(s)</td></tr>
-    ${multi?`<tr><td style="${td}"><b>Mais de uma instância</b></td><td style="${td}">${multi} nota(s) com 1º e 2º grau no SUPP</td></tr>`:''}
     ${linhas}</tbody></table>
-  <p style="margin-top: 30px;">A tarefa é considerada existente quando a espécie confere e a data de <b>Início</b> coincide com a data da nota, em qualquer uma das instâncias.</p>
   <p style="margin-top: 30px;">Atenciosamente,</p></div>`;
 }
 $('btnEml').onclick = () => {
