@@ -11,6 +11,7 @@
 :root{
   --bg:#F4F5F7; --surface:#FFFFFF; --ink:#101114; --ink-2:#6B7280; --line:#101114;
   --accent:#2563EB; --accent-2:#F59E0B; --ok:#166534; --err:#B3261E;
+  --tag-zero:#3c68c3;
   --font-display:"Oswald","Archivo Black","Archivo",Impact,sans-serif;
   --font-body:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   --font-mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
@@ -21,13 +22,14 @@
 html[data-tema="escuro"]{
   --bg:#0C0D10; --surface:#16181D; --ink:#F4F5F7; --ink-2:#8B929F; --line:#2A2D35;
   --ok:#4ADE80; --err:#F87171; --brand-supp:#4FA3E3; --brand-pje:#A78BFA;
+  --tag-zero:#7FA3E8;
 }
 html[data-guia="dados"]{ --accent:#2563EB; }
 html[data-guia="supp"]{  --accent:#0E7490; }
-html[data-guia="fim"]{   --accent:#B45309; }
+html[data-guia="fim"]{   --accent:#0F766E; }
 html[data-tema="escuro"][data-guia="dados"]{ --accent:#60A5FA; }
 html[data-tema="escuro"][data-guia="supp"]{  --accent:#22D3EE; }
-html[data-tema="escuro"][data-guia="fim"]{   --accent:#FBBF24; }
+html[data-tema="escuro"][data-guia="fim"]{   --accent:#2DD4BF; }
 html[data-tema="escuro"] .nav button.ativo,
 html[data-tema="escuro"] .btn.primary{ color:#0C0D10 }
 *{box-sizing:border-box}
@@ -99,8 +101,8 @@ html[data-tema="escuro"] .btn.brand{color:#0C0D10}
 .note{border:var(--bw) solid var(--line);border-left:var(--bw-thick) solid var(--accent);padding:var(--s-3) var(--s-4);font-size:13px;margin-bottom:var(--s-5);background:var(--surface)}
 .note.warn{border-left-color:var(--accent-2)}
 .note.ok{border-left-color:var(--ok)}
-.tag{display:inline-block;padding:2px var(--s-2);border:var(--bw) solid var(--line);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
-.tag.zero{background:transparent;color:var(--ink-2)}
+.tag{display:inline-block;padding:2px var(--s-2);border:var(--bw) solid var(--line);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.tag.zero{background:transparent;color:var(--tag-zero);border-color:var(--tag-zero)}
 .tag.verde{background:transparent;color:var(--ok);border-color:var(--ok)}
 .tag.vermelho{background:transparent;color:var(--err);border-color:var(--err)}
 .tag.ambar{background:transparent;color:var(--accent-2);border-color:var(--accent-2)}
@@ -133,7 +135,7 @@ tr.analisada td:not(.col-check){text-decoration:line-through;text-decoration-thi
 tr.analisada .tag,tr.analisada .pje a,tr.analisada .sup a{opacity:.45}
 tr.analisada a{color:var(--ink-2)!important}
 .sup{display:flex;flex-wrap:wrap;gap:var(--s-2);margin-top:var(--s-2)}
-.sup a{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;text-transform:uppercase;
+.sup a{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;text-transform:uppercase;
   letter-spacing:.06em;padding:2px var(--s-2);text-decoration:none;border:var(--bw) solid var(--brand-supp);
   color:var(--brand-supp);white-space:nowrap}
 .sup a:hover{background:var(--brand-supp);color:#fff}
@@ -145,10 +147,8 @@ html[data-tema="escuro"] .sup a:hover{color:#0C0D10}
 .sup a.falhou{border-color:var(--accent-2);color:var(--accent-2)}
 .sup a.falhou:hover{background:var(--accent-2);color:#101114}
 .sup .marca{font-size:11px;line-height:1}
-.sup .semlink{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
+.sup .semlink{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
   padding:2px var(--s-2);border:var(--bw) dashed var(--ink-2);color:var(--ink-2)}
-.sup .escolha{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
-  padding:2px var(--s-2);border:var(--bw) dashed var(--err);color:var(--err)}
 .conf{border:var(--bw) solid var(--line);background:var(--surface);padding:var(--s-4) var(--s-5);margin-bottom:var(--s-5)}
 .conf .linha{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s-4);flex-wrap:wrap}
 .conf .rot{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-2);font-weight:600}
@@ -161,14 +161,14 @@ html[data-tema="escuro"] .sup a:hover{color:#0C0D10}
 #tab-wrap{border:var(--bw) solid var(--line);max-height:64vh;overflow:auto;background:var(--surface)}
 .mono{font-family:var(--font-mono);font-size:12.5px;white-space:nowrap}
 .pje{display:flex;gap:var(--s-2);margin-top:var(--s-2)}
-.pje a{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--brand-pje);
+.pje a{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--brand-pje);
   border:var(--bw) solid var(--brand-pje);padding:1px var(--s-2);text-decoration:none}
 .pje a:hover{background:var(--brand-pje);color:#fff}
 html[data-tema="escuro"] .pje a:hover{color:#0C0D10}
 .sub-info{font-size:11.5px;color:var(--ink-2);margin-top:var(--s-1);line-height:1.45}
 .sub-info b{color:var(--ink);font-weight:600}
 .badge-notas{display:inline-block;margin-left:var(--s-2);padding:1px 6px;border:var(--bw) solid var(--accent);
-  color:var(--accent);font-size:10px;font-weight:700;letter-spacing:.06em}
+  color:var(--accent);font-size:11px;font-weight:700;letter-spacing:.06em}
 .metricas{display:grid;grid-template-columns:repeat(5,1fr);border:var(--bw) solid var(--line);margin-bottom:var(--s-5);background:var(--surface)}
 .metricas div{padding:var(--s-5);border-right:var(--bw) solid var(--line)}
 .metricas div:last-child{border-right:0}
@@ -200,10 +200,20 @@ summary{cursor:pointer;color:var(--ink-2);font-size:11px;text-transform:uppercas
 @media (prefers-reduced-motion:reduce){.palco.anim-esq,.palco.anim-dir{animation:none}}
 .modal .rod{padding:var(--s-4) var(--s-6);border-top:var(--bw-thick) solid var(--line);display:flex;gap:var(--s-2);align-items:center;flex-wrap:wrap}
 .modal .rod .espaco{flex:1}
+/* ---- cabeçalho do processo: rótulo cinza + informação preta + tag, em uma linha ---- */
 .cabecalho-proc{padding:var(--s-5) var(--s-6);border-bottom:var(--bw) solid var(--line)}
+.cabecalho-proc .titulo{display:flex;align-items:center;gap:var(--s-3);flex-wrap:wrap}
 .cabecalho-proc h3{font-size:18px}
-.cabecalho-proc .meta{font-size:12px;color:var(--ink-2);margin-top:var(--s-1)}
+.cabecalho-proc .meta{font-size:12px;color:var(--ink-2);margin-top:var(--s-3);line-height:1.7;
+  display:flex;align-items:center;gap:var(--s-2);flex-wrap:wrap}
+.cabecalho-proc .meta .rot{color:var(--ink-2)}
+.cabecalho-proc .meta .val{color:var(--ink);font-weight:600}
+.cabecalho-proc .meta .sep{color:var(--ink-2);opacity:.6}
 .cabecalho-proc .links{display:flex;gap:var(--s-2);flex-wrap:wrap;margin-top:var(--s-3)}
+.btn-copia-proc{background:var(--surface);border:var(--bw) solid var(--line);color:var(--ink-2);
+  cursor:pointer;padding:3px 8px;font-size:13px;line-height:1.2;display:inline-flex;align-items:center;gap:5px}
+.btn-copia-proc:hover{background:var(--ink);color:var(--surface)}
+.btn-copia-proc.ok{border-color:var(--ok);color:var(--ok);background:transparent}
 /* ---- notas ---- */
 .nota{border-bottom:var(--bw) solid var(--line)}
 .nota:last-child{border-bottom:0}
@@ -228,15 +238,15 @@ summary{cursor:pointer;color:var(--ink-2);font-size:11px;text-transform:uppercas
 .aviso-iguais b{color:var(--ok)}
 .aviso-iguais ul{margin:var(--s-2) 0 0;padding-left:var(--s-5)}
 .aviso-iguais li{margin:2px 0}
-/* destaques no texto (padrão do userscript) */
 .corpo-nota mark{background:#FFF59D;color:#101114;padding:0 2px;border-radius:2px}
+.corpo-nota strike,.corpo-nota s,.corpo-nota .suprimido{text-decoration:line-through;
+  text-decoration-thickness:1px;color:var(--ink-2);opacity:.85}
 .intimado-highlight{font-weight:700;font-style:italic;text-decoration:underline;text-underline-offset:2px}
 .intimado-highlight mark{font-weight:inherit;font-style:inherit;text-decoration:underline}
 .diario-alert{background:#ffcccc;color:#8b0000;font-weight:700;padding:2px 6px;border-radius:4px;font-size:11px}
 .legenda-cores{display:flex;flex-wrap:wrap;gap:var(--s-3);align-items:center;font-size:11px;color:var(--ink-2)}
 .legenda-cores span.am{display:inline-flex;align-items:center;gap:5px}
 .legenda-cores i{width:12px;height:12px;display:inline-block;border:var(--bw) solid var(--line)}
-/* ---- cards intermediários ---- */
 .card-transicao{height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;
   text-align:center;padding:var(--s-8) var(--s-6);gap:var(--s-4)}
 .card-transicao .ico{font-family:var(--font-display);font-size:64px;line-height:1;color:var(--accent)}
@@ -305,16 +315,35 @@ summary{cursor:pointer;color:var(--ink-2);font-size:11px;text-transform:uppercas
           <div id="okDados" class="oculto note ok" style="margin:var(--s-4) 0 0"></div>
         </div>
       </div>
+
+      <div class="grid" style="margin-top:var(--s-5)">
+        <div>
+          <label for="modoFiltros">Filtros a cruzar com o SUPP</label>
+          <select id="modoFiltros">
+            <option value="padrao" selected>Filtros padrão (4)</option>
+            <option value="todos">Todos os filtros (12)</option>
+          </select>
+          <p class="hint" id="hintFiltros"></p>
+        </div>
+        <div>
+          <label for="d1">Data da consulta</label>
+          <input type="text" id="d1" placeholder="dd/mm/aaaa">
+          <p class="hint">Os 12 filtros são sempre contados para o e-mail; o cruzamento com o SUPP roda só nos escolhidos.</p>
+        </div>
+      </div>
+
       <button class="btn primary block" id="btnProcessar" disabled style="margin-top:var(--s-5)">Continuar</button>
+
       <details>
-        <summary>Opções de filtro — já configuradas</summary>
+        <summary>Opções avançadas</summary>
         <div style="margin-top:var(--s-5)">
-          <label for="filtros">Filtros — um por linha</label>
+          <label for="filtros">Filtros selecionados — um por linha</label>
           <textarea id="filtros"></textarea>
           <div class="grid" style="margin-top:var(--s-4)">
-            <div><label for="d1">Data da consulta</label><input type="text" id="d1" placeholder="dd/mm/aaaa"></div>
             <div><label for="dedup">Remover repetidos</label>
               <select id="dedup"><option value="1">Sim (recomendado)</option><option value="0">Não</option></select></div>
+            <div><label for="para">Destinatário do e-mail</label>
+              <input type="text" id="para" value="paulo-oliveira@pge.rs.gov.br;marcelo-angelo@pge.rs.gov.br"></div>
           </div>
         </div>
       </details>
@@ -350,7 +379,8 @@ summary{cursor:pointer;color:var(--ink-2);font-size:11px;text-transform:uppercas
           <div id="okSupp" class="oculto note ok" style="margin:var(--s-4) 0 0"></div>
         </div>
       </div>
-      <button class="btn primary block" id="btnCruzar" disabled style="margin-top:var(--s-5)">Ver resultado</button>
+      <button class="btn primary block" id="btnCruzar" style="margin-top:var(--s-5)">Ver resultado</button>
+      <p class="hint" id="hintPular">Se nenhum processo estiver cadastrado no SUPP, siga direto: todas as notas entram na lista de conferência.</p>
     </div>
   </section>
 
@@ -391,7 +421,7 @@ summary{cursor:pointer;color:var(--ink-2);font-size:11px;text-transform:uppercas
       <div class="acoes">
         <button class="btn" id="btnCsv">⬇ Planilha deste filtro</button>
         <button class="btn" id="btnCsvAll">⬇ Planilha de todos</button>
-        <button class="btn amber" id="btnEml">✉ Preparar e-mail</button>
+        <button class="btn amber" id="btnEml">✉ Baixar e-mail (.eml)</button>
       </div>
       <details>
         <summary>Regras do cruzamento</summary>
@@ -408,8 +438,6 @@ summary{cursor:pointer;color:var(--ink-2);font-size:11px;text-transform:uppercas
               <option value="nota">Início da tarefa = data da nota (recomendado)</option>
               <option value="qualquer">Ignorar a data — só a espécie</option>
             </select>
-            <div style="margin-top:var(--s-4)"><label for="para">Destinatário do e-mail</label>
-              <input type="text" id="para" value="paulo-oliveira@pge.rs.gov.br"></div>
           </div>
         </div>
         <div class="acoes"><button class="btn" id="btnRecruzar">Recalcular</button></div>
@@ -430,8 +458,7 @@ summary{cursor:pointer;color:var(--ink-2);font-size:11px;text-transform:uppercas
 
    DATA DA TAREFA = coluna "Início".
    A coluna é localizada pelo CABEÇALHO da tabela, nunca por
-   posição fixa nem pela "última data da linha" — isso evitava
-   confundir Início com Prazo Final ou Conclusão.
+   posição fixa nem pela "última data da linha".
    ============================================================ */
 (() => {
 "use strict";
@@ -442,6 +469,7 @@ const TIPOS_TAREFA = ["Analisar Intimação", "Analisar Notificação", "Analisa
 const LS = "supp_coletor_cfg";
 const cfg = Object.assign({ timeout: 10000, pausa: 400 },
   JSON.parse(localStorage.getItem(LS) || "{}"));
+if (!cfg.timeout || cfg.timeout < 10000) cfg.timeout = 10000;
 const salvar = () => localStorage.setItem(LS, JSON.stringify(cfg));
 
 let parar = false, RESULTADO = null;
@@ -450,7 +478,6 @@ const esperar = ms => new Promise(r => setTimeout(r, ms));
 const norm = s => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 const soData = s => { const m = String(s ?? "").match(/\d{2}\/\d{2}\/\d{4}/); return m ? m[0] : ""; };
 
-/* ---------- localizar colunas pelo cabeçalho ---------- */
 const RE_INICIO   = /^(data\s*(de\s*)?)?inicio$|^inicio\b|^abertura$|^criacao$|^data\s*abertura$/;
 const RE_PROIBIDO = /final|fim|prazo|conclus|termino|encerr|entrega|vencim/;
 const RE_ESPECIE  = /especie|tipo|tarefa|assunto|descricao|nome/;
@@ -627,7 +654,7 @@ document.body.appendChild(painel);
 })();
 
 $("timeout").value = cfg.timeout;
-$("timeout").oninput = e => { cfg.timeout = Math.max(2000, +e.target.value || 6000); salvar(); };
+$("timeout").oninput = e => { cfg.timeout = Math.max(2000, +e.target.value || 10000); salvar(); };
 $("fechar").onclick = () => painel.remove();
 $("parar").onclick = () => { parar = true; };
 $("rodar").onclick = () => {
@@ -673,8 +700,22 @@ const $$ = s => Array.from(document.querySelectorAll(s));
 
 const IDX = {PRAZO:5,PUB:6,DISP:7,PROC:8,SUPP:9,FONTE:10,ORGAO:11,TEXTO:12,TERMOS:13,
              CITADOS:16,UF:17,COMARCA:18,DIARIO:19,TIPO:20,PARTE:23,CAPTURA:27};
-const FILTROS_PADRAO = ["[s] [audiencia]","[s] [pauta]","int[CEEE","[ELETRICA PARTICIPACOES]"];
-const EXCLUIR = {"[s] [pauta]":"audiencia","[ELETRICA PARTICIPACOES]":"int[ceee"};
+
+/* Os 12 filtros do fluxo PAD, na ordem exata da tabela do e-mail */
+const FILTROS_TODOS = ["#proc","[exprovas] [n] #pge","[corag]","GRAFICAS]",
+  "[audiencia] [s]","[pauta] [s]","[audiencia] [n] #pge_repint","[pauta] [n] #pge_repint",
+  "[audiencia] [n] PGE_Extinta","[pauta] [n] #PGE_Extinta","int[CEEE","[ELETRICA PARTICIPACOES]"];
+const FILTROS_PADRAO = ["[audiencia] [s]","[pauta] [s]","int[CEEE","[ELETRICA PARTICIPACOES]"];
+const FILTROS_DETALHE = ["[audiencia] [s]","[pauta] [s]","int[CEEE","[ELETRICA PARTICIPACOES]"];
+/* Filtro que "absorve": o que já apareceu no filtro-pai sai como duplicado.
+   O valor inicial permanece a contagem bruta — a limpeza só afeta os duplicados. */
+const ABSORVIDO_POR = {
+  "[pauta] [s]": "[audiencia] [s]",
+  "[ELETRICA PARTICIPACOES]": "int[CEEE",
+  "GRAFICAS]": "[corag]"
+};
+const NAO_PESQUISADO = "Não Pesquisado";
+
 const TIPOS_PADRAO = ["Analisar Intimação","Analisar Notificação","Analisar Citação"];
 const MESES = {JANEIRO:"01",FEVEREIRO:"02",MARCO:"03","MARÇO":"03",ABRIL:"04",MAIO:"05",JUNHO:"06",
                JULHO:"07",AGOSTO:"08",SETEMBRO:"09",OUTUBRO:"10",NOVEMBRO:"11",DEZEMBRO:"12"};
@@ -683,9 +724,11 @@ const CAT = {TRATADA:'tratada',SEM_TAREFA:'semTarefa',NAO_CORRESPONDE:'naoCorres
 const ROTULO = {semTarefa:'sem tarefa',naoCorresponde:'tarefa não corresponde',
                 semData:'nota sem data — conferir',naoConsultado:'não consultado no SUPP'};
 const SEM_DEST = 'Não Informado';
+const LISTA_SEC       = "https://rsgovbr-my.sharepoint.com/personal/paulo-oliveira_pge_rs_gov_br/Lists/SEC%20%20NEs%20Trabalhistas/AllItems.aspx?env=WebViewList";
+const LISTA_REGISTROS = "https://rsgovbr-my.sharepoint.com/personal/paulo-oliveira_pge_rs_gov_br/Lists/Registros%20NEs%20Trabalhistas/AllItems.aspx?env=WebViewList";
 
-let DADOS=null, BASE=[], PORPROC=new Map(), RESULT=null, SUPP=null, FINAL=null, VISTA=[], LOG=[];
-let ANALISADAS = new Set();
+let DADOS=null, BASE=[], PORPROC=new Map(), RESULT=null, SUPP={}, FINAL=null, VISTA=[], LOG=[];
+let BRUTOS={}, TOTAL_DIA=0, ANALISADAS=new Set();
 
 const strip = s => String(s ?? "").replace(/<.*?>/g,"");
 const txt   = s => strip(s).replace(/\s+/g," ").trim();
@@ -743,7 +786,6 @@ function instancias(row){
   }
   return out;
 }
-/* destinatário: trecho entre INTIMADO(S) / CITADO(S) e ||| */
 const RE_INTIMADO = /INTIMADO\(S\)\s*\/\s*CITADO\(S\)/i;
 function acharTerminador(t, de){
   const a = t.indexOf('|||', de);
@@ -761,10 +803,12 @@ function destinatario(row){
   return trecho || SEM_DEST;
 }
 const citados = row => txt(String(row[IDX.CITADOS]||'').replace(/<br\s*\/?>/gi,' · '));
-/* texto: "||" e "|||" viram quebra de parágrafo; o "|||" fica visível no fim do trecho */
+/* texto da nota: preserva <mark> e <strike>/<s> (termos suprimidos) */
 function textoNota(row){
   return String(row[IDX.TEXTO]||"")
-    .replace(/<(?!\/?mark\b)[^>]*>/gi," ")
+    .replace(/<\s*(strike|s)(\s[^>]*)?>/gi,'<strike>')
+    .replace(/<\s*\/\s*(strike|s)\s*>/gi,'</strike>')
+    .replace(/<(?!\/?(?:mark|strike)\b)[^>]*>/gi," ")
     .replace(/\|\|\|/g,"\u0001")
     .replace(/[ \t]+/g," ")
     .replace(/\s*\|\|\s*/g,"\n\n")
@@ -796,16 +840,21 @@ function normaliza(row){
     _b: row.map(strip).join(" ").toLowerCase(), _raw:row};
 }
 const casa = (t,q) => String(q||"").toLowerCase().split(/\s+/).filter(Boolean).every(x=>t.includes(x));
+/* seleção SEM exclusões: o valor inicial é tudo o que o filtro retorna */
+function selecionar(base, f){ return base.filter(r => casa(r._b, f)); }
 const chave = r => [dig(r.processo),r.dataNota,r.prazo,r.disponibilizacao,r.supp,r.orgao,r.tipo,
                     r.inst.map(i=>i.id).join(',')].join("|").toLowerCase();
-function dedup(regs){
+/* dedup dentro do filtro + remoção do que já apareceu no filtro-pai */
+function dedup(regs, jaVistos){
   const m=new Map(); let rem=0;
-  for(const r of regs){const k=chave(r); if(m.has(k)){m.get(k).ocorrencias++;rem++;} else m.set(k,{...r,ocorrencias:1});}
+  for(const r of regs){
+    const k=chave(r);
+    if(jaVistos && jaVistos.has(k)){ rem++; continue; }
+    if(m.has(k)){ m.get(k).ocorrencias++; rem++; continue; }
+    m.set(k,{...r,ocorrencias:1});
+  }
   return {unicos:[...m.values()], removidos:rem};
 }
-/* Corpo da nota ATÉ "INTIMADO(S) / CITADO(S)".
-   Só esse trecho é comparado para saber se duas notas são iguais: o que vem
-   depois muda sempre (destinatário e identificador do documento). */
 function corpoAteIntimado(texto){
   const t = String(texto||'');
   const m = t.match(RE_INTIMADO);
@@ -830,13 +879,12 @@ function indexarPorProcesso(base){
   return m;
 }
 const notasDoProcesso = r => PORPROC.get(dig(r.processo)) || [];
-/* true quando todas as notas têm o mesmo corpo e destinatários diferentes */
 function soMudaDestinatario(lista){
   if(lista.length < 2) return false;
   const corpos = new Set(lista.map(n=>corpoAteIntimado(n.texto)));
-  if(corpos.size !== 1) return false;               /* o texto antes do INTIMADO é o mesmo */
+  if(corpos.size !== 1) return false;
   const dests = new Set(lista.map(n=>norm(n.destinatario)));
-  return dests.size > 1;                            /* e os destinatários diferem */
+  return dests.size > 1;
 }
 
 /* ================== MARCAÇÕES ================== */
@@ -873,6 +921,7 @@ function receberDados(j, origem){
   const arr = Array.isArray(j) ? j : (j.data || j.aaData || []);
   if(!Array.isArray(arr) || !arr.length) throw new Error('arquivo sem registros');
   DADOS = arr;
+  TOTAL_DIA = arr.length;
   $('okDados').innerHTML = `<b>${arr.length} notas carregadas</b> — origem: ${escapar(origem)}`;
   $('okDados').classList.remove('oculto');
   $('e1c').classList.add('pronta');
@@ -911,25 +960,55 @@ $('btnColar').onclick = async () => {
   });
 })();
 
+function filtrosEscolhidos(){
+  return $('filtros').value.split('\n').map(s=>s.trim()).filter(Boolean);
+}
+function aplicarModoFiltros(){
+  const lista = $('modoFiltros').value==='todos' ? FILTROS_TODOS : FILTROS_PADRAO;
+  $('filtros').value = lista.join('\n');
+  $('hintFiltros').textContent = `${lista.length} filtro(s) serão cruzados com o SUPP.`;
+}
+$('modoFiltros').onchange = aplicarModoFiltros;
+
 $('btnProcessar').onclick = () => {
-  const filtros = $('filtros').value.split('\n').map(s=>s.trim()).filter(Boolean);
+  const escolhidos = filtrosEscolhidos();
   const usaDedup = $('dedup').value === '1';
   BASE = DADOS.map(normaliza);
   PORPROC = indexarPorProcesso(BASE);
+
+  /* contagem BRUTA dos 12 filtros — valor inicial da tabela do e-mail */
+  BRUTOS = {};
+  for(const f of FILTROS_TODOS) BRUTOS[f] = selecionar(BASE, f).length;
+  logar(`Contagem dos 12 filtros: ${FILTROS_TODOS.map(f=>`${f}=${BRUTOS[f]}`).join(' · ')}`);
+
+  const chavesPai = {};
+  for(const f of escolhidos){
+    const pai = ABSORVIDO_POR[f];
+    if(pai && !chavesPai[pai]) chavesPai[pai] = new Set(selecionar(BASE, pai).map(chave));
+  }
+
   RESULT = {};
-  for(const f of filtros){
-    let sel = BASE.filter(r => casa(r._b, f));
-    const ex = EXCLUIR[f]; if(ex) sel = sel.filter(r => !r._b.includes(ex));
-    const d = usaDedup ? dedup(sel) : {unicos:sel.map(r=>({...r,ocorrencias:1})),removidos:0};
+  for(const f of escolhidos){
+    const sel = selecionar(BASE, f);
+    const pai = ABSORVIDO_POR[f];
+    const jaVistos = (usaDedup && pai) ? chavesPai[pai] : null;
+    const d = usaDedup ? dedup(sel, jaVistos) : {unicos:sel.map(r=>({...r,ocorrencias:1})),removidos:0};
     RESULT[f] = {unicos:d.unicos, brutos:sel.length, removidos:d.removidos};
-    logar(`«${f}» ${sel.length} filtradas → ${d.unicos.length} únicas (${d.removidos} repetidas).`);
+    logar(`«${f}» ${sel.length} filtradas → ${d.unicos.length} únicas (${d.removidos} repetidas${pai?`, incluindo as já contadas em ${pai}`:''}).`);
   }
   const semDest = BASE.filter(r=>r.destinatario===SEM_DEST).length;
   if(semDest) logar(`${semDest} nota(s) sem "INTIMADO(S) / CITADO(S) … |||" — destinatário "${SEM_DEST}".`);
   const soDest = [...PORPROC.values()].filter(soMudaDestinatario).length;
   if(soDest) logar(`${soDest} processo(s) com notas iguais que mudam apenas o destinatário.`);
-  $('txtIds').innerHTML = `Os <b>${idsSupp().length}</b> processos já vão dentro dele — não precisa copiar mais nada.`;
-  concluir('dados'); liberar('supp'); mudarAba('supp');
+
+  const ids = idsSupp();
+  $('txtIds').innerHTML = ids.length
+    ? `Os <b>${ids.length}</b> processos já vão dentro dele — não precisa copiar mais nada.`
+    : `<b>Nenhum processo dos filtros está cadastrado no SUPP.</b> Pode seguir direto para o resultado.`;
+  $('hintPular').textContent = ids.length
+    ? 'Se algum processo não puder ser consultado, ele entra na lista de conferência.'
+    : 'Nenhum processo cadastrado no SUPP — siga direto para o resultado.';
+  concluir('dados'); liberar('supp'); liberar('fim'); mudarAba('supp');
 };
 
 /* ================== PASSO 2 ================== */
@@ -959,7 +1038,6 @@ function receberSupp(j){
     (erros ? ` · <span class="tag ambar">${erros} não consultados — entram na conferência</span>` : '');
   $('okSupp').classList.remove('oculto');
   $('e2c').classList.add('pronta');
-  $('btnCruzar').disabled = false;
   logar(`SUPP: ${n} processos recebidos, ${erros} não consultados.`);
   if(j.campoData) logar(`Data das tarefas lida da coluna "${j.campoData}".`);
 }
@@ -983,7 +1061,7 @@ function avaliar(reg, tipos, modo){
   let achou = null, algumConsultado = false, todasTarefas = [];
   for(const ins of reg.inst){
     const e = SUPP[ins.id];
-    if(!e || e.erro){ estados.push({...ins,status:'falhou',detalhe:e?e.erro:'não veio na coleta',nTarefas:0}); continue; }
+    if(!e || e.erro){ estados.push({...ins,status:'falhou',detalhe:e?e.erro:'não consultado',nTarefas:0}); continue; }
     algumConsultado = true;
     todasTarefas = todasTarefas.concat(e.tarefas);
     let daInst = null;
@@ -1018,7 +1096,7 @@ function cruzar(){
       reg._nNotas = notasDoProcesso(reg).length;
       if(reg.tratada) tratadas.push(reg); else conferir.push(reg);
     }
-    FINAL[k] = {conferir, tratadas};
+    FINAL[k] = {conferir, tratadas, brutos:v.brutos, unicos:v.unicos.length};
     const c = n => conferir.filter(r=>r.categoria===n).length;
     logar(`«${k}» conferir=${conferir.length} (sem tarefa ${c(CAT.SEM_TAREFA)} · não corresponde ${c(CAT.NAO_CORRESPONDE)} · sem data ${c(CAT.SEM_DATA)} · não consultado ${c(CAT.NAO_CONSULTADO)}) · tratadas=${tratadas.length}`);
   }
@@ -1032,6 +1110,7 @@ $('btnRecruzar').onclick = () => cruzar();
 /* ================== TABELA ================== */
 const conta = (lista,cat) => lista.filter(r=>r.categoria===cat).length;
 const analisadasEm = lista => lista.filter(r=>ANALISADAS.has(r._chave)).length;
+const faltaConferir = lista => lista.length - analisadasEm(lista);
 
 function linksSupp(r){
   if(!r.inst.length)
@@ -1053,8 +1132,23 @@ function linksSupp(r){
     return `<a class="${cls}" href="${e.url}" target="_blank" rel="noopener noreferrer"
        title="${escapar(rot+' — '+titulo)}"><span class="marca">${marca}</span>${escapar(rot)}</a>`;
   }).join('');
-  const aviso = est.length>1 ? `<span class="escolha" title="nenhuma instância tem a tarefa — escolha em qual abrir">escolha a instância</span>` : '';
-  return `<div class="sup">${chips}${aviso}</div>`;
+  return `<div class="sup">${chips}</div>`;
+}
+function htmlSituacao(r){
+  if(r.tratada){
+    let s = `<span class="tag verde">✓ tem tarefa</span>`;
+    if(r.tarefaSupp) s += `<div class="sub-info">início <b>${r.tarefaSupp.data||'—'}</b> · ${escapar(r.tarefaSupp.tipo||'')}</div>`;
+    return s;
+  }
+  const cor = (r.categoria===CAT.SEM_TAREFA||r.categoria===CAT.NAO_CORRESPONDE)?'vermelho':'ambar';
+  let s = `<span class="tag ${cor}">${escapar(r.motivo)}</span>`;
+  if(r.ultimaTarefa){
+    const u = r.ultimaTarefa;
+    s += `<div class="sub-info">última tarefa: <b>${escapar(u.tipo||'—')}</b>`
+       + (u.data?` · início <b>${u.data}</b>`:' · <i>sem início</i>')
+       + (Number.isFinite(u.id)?` · id ${u.id}`:'')+`</div>`;
+  }
+  return s;
 }
 
 function pintar(){
@@ -1102,20 +1196,6 @@ function pintar(){
     const dest = r.destinatario===SEM_DEST
       ? `<span class="tag ambar" title="não há trecho entre INTIMADO(S) / CITADO(S) e |||">${SEM_DEST}</span>`
       : escapar(r.destinatario);
-    let sit;
-    if(r.tratada){
-      sit = `<span class="tag verde">✓ tem tarefa</span>`;
-      if(r.tarefaSupp) sit += `<div class="sub-info">início <b>${r.tarefaSupp.data||'—'}</b> · ${escapar(r.tarefaSupp.tipo||'')}</div>`;
-    }else{
-      const cor = (r.categoria===CAT.SEM_TAREFA||r.categoria===CAT.NAO_CORRESPONDE)?'vermelho':'ambar';
-      sit = `<span class="tag ${cor}">${escapar(r.motivo)}</span>`;
-      if(r.ultimaTarefa){
-        const u = r.ultimaTarefa;
-        sit += `<div class="sub-info">última tarefa: <b>${escapar(u.tipo||'—')}</b>`
-             + (u.data?` · início <b>${u.data}</b>`:' · <i>sem início</i>')
-             + (Number.isFinite(u.id)?` · id ${u.id}`:'')+`</div>`;
-      }
-    }
     const classes = [];
     if(marcada) classes.push('analisada');
     else if(r.categoria===CAT.NAO_CONSULTADO||r.categoria===CAT.SEM_DATA) classes.push('linha-erro');
@@ -1125,7 +1205,7 @@ function pintar(){
       <td>${proc}</td>
       <td>${dt}<div class="sub-info">disp. ${escapar(r.disponibilizacao||'—')}</div></td>
       <td>${escapar(r.orgao)}<div class="sub-info">${dest}</div></td>
-      <td>${sit}</td>
+      <td>${htmlSituacao(r)}</td>
       <td><button class="btn mini" data-ver="${i}">Ver${r._nNotas>1?` (${r._nNotas})`:''}</button></td></tr>`;
   }).join('') || `<tr><td colspan="6" style="text-align:center;color:var(--ink-2);padding:32px">Nenhum registro</td></tr>`;
 
@@ -1240,26 +1320,18 @@ function destacarIntimados(el){
 }
 const aplicarDestaques = el => { aplicarCoresMark(el); destacarIntimados(el); };
 
-/* ============================================================
-   REVISOR — navega pelas notas atravessando os filtros
-   ============================================================ */
-let FILA = [], POS = -1, MODAL = null, ESTADO = 'nota';
-
+/* ============ REVISOR ============ */
+let FILA = [], POS = -1, MODAL = null, ESTADO = 'nota', pendenteTransicao = -1;
 function montarFila(){
   FILA = [];
-  Object.entries(FINAL).forEach(([filtro,v])=>{
-    v.conferir.forEach(reg => FILA.push({filtro, reg}));
-  });
+  Object.entries(FINAL).forEach(([filtro,v])=>{ v.conferir.forEach(reg => FILA.push({filtro, reg})); });
 }
 const posDe = reg => FILA.findIndex(x => x.reg._chave === reg._chave);
-
 function abrirRevisor(reg){
   montarFila();
   const i = posDe(reg);
-  if(i === -1){ abrirAvulsa(reg); return; }   /* tratadas não entram na fila */
-  POS = i; ESTADO = 'nota';
-  criarModal();
-  render('esq');
+  if(i === -1){ abrirAvulsa(reg); return; }
+  POS = i; ESTADO = 'nota'; criarModal(); render('esq');
 }
 $('btnRevisar').onclick = () => {
   montarFila();
@@ -1268,7 +1340,6 @@ $('btnRevisar').onclick = () => {
   POS = pendente === -1 ? 0 : pendente;
   ESTADO = 'nota'; criarModal(); render('esq');
 };
-
 function criarModal(){
   if(MODAL) MODAL.remove();
   MODAL = document.createElement('div');
@@ -1299,8 +1370,6 @@ function teclado(ev){
   else if(ev.key === 'ArrowRight') avancar();
   else if(ev.key === 'ArrowLeft') voltar();
 }
-
-/* troca de conteúdo com animação */
 function trocarPalco(html, sentido){
   const p = $('rv-palco');
   p.classList.remove('anim-esq','anim-dir');
@@ -1309,18 +1378,14 @@ function trocarPalco(html, sentido){
   p.classList.add(sentido==='dir' ? 'anim-dir' : 'anim-esq');
   p.scrollTop = 0;
 }
-
 function avancar(){
   if(ESTADO === 'fim'){ fecharRevisor(); return; }
   if(ESTADO === 'transicao'){ POS = pendenteTransicao; ESTADO='nota'; render('esq'); return; }
   const prox = POS + 1;
   if(prox >= FILA.length){ ESTADO='fim'; render('esq'); return; }
-  if(FILA[prox].filtro !== FILA[POS].filtro){
-    pendenteTransicao = prox; ESTADO='transicao'; render('esq'); return;
-  }
+  if(FILA[prox].filtro !== FILA[POS].filtro){ pendenteTransicao = prox; ESTADO='transicao'; render('esq'); return; }
   POS = prox; render('esq');
 }
-let pendenteTransicao = -1;
 function voltar(){
   if(ESTADO === 'transicao' || ESTADO === 'fim'){ ESTADO='nota'; render('dir'); return; }
   if(POS <= 0) return;
@@ -1328,19 +1393,15 @@ function voltar(){
 }
 function marcarEAvancar(){
   const it = FILA[POS];
-  ANALISADAS.add(it.reg._chave);
-  salvarMarcas();
+  ANALISADAS.add(it.reg._chave); salvarMarcas();
   logar(`Analisada: ${it.reg.processo} (${it.filtro}).`);
   avancar();
 }
-
 function render(sentido){
   if(ESTADO === 'fim')        return renderFim(sentido);
   if(ESTADO === 'transicao')  return renderTransicao(sentido);
   return renderNota(sentido);
 }
-
-/* ---- cabeçalho comum ---- */
 function atualizarTopo(){
   const totalFila = FILA.length;
   const okTotal = FILA.filter(x=>ANALISADAS.has(x.reg._chave)).length;
@@ -1356,18 +1417,14 @@ function atualizarTopo(){
     $('rv-filtro').textContent = '';
   }
 }
-
-/* ---- card de troca de filtro ---- */
 function renderTransicao(sentido){
-  const atual = FILA[POS].filtro;
-  const prox  = FILA[pendenteTransicao].filtro;
+  const atual = FILA[POS].filtro, prox  = FILA[pendenteTransicao].filtro;
   const doAtual = FILA.filter(x=>x.filtro===atual);
   const okAtual = doAtual.filter(x=>ANALISADAS.has(x.reg._chave)).length;
   const doProx  = FILA.filter(x=>x.filtro===prox);
   const pendProx = doProx.filter(x=>!ANALISADAS.has(x.reg._chave)).length;
   trocarPalco(`<div class="card-transicao">
-    <div class="ico">✓</div>
-    <h3>Fim do filtro</h3>
+    <div class="ico">✓</div><h3>Fim do filtro</h3>
     <p>Você chegou ao fim de <span class="nome-filtro">${escapar(atual)}</span>.</p>
     <div class="caixa">
       <div><b>${okAtual}</b><span>analisadas</span></div>
@@ -1377,35 +1434,26 @@ function renderTransicao(sentido){
        <b>${doProx.length}</b> nota(s), ${pendProx} ainda não analisada(s).</p>
   </div>`, sentido);
   atualizarTopo();
-  $('rv-rod').innerHTML = `
-    <button class="btn" id="rv-voltar">← Voltar</button>
-    <span class="espaco"></span>
+  $('rv-rod').innerHTML = `<button class="btn" id="rv-voltar">← Voltar</button><span class="espaco"></span>
     <button class="btn primary" id="rv-continuar">Continuar para ${escapar(prox)} →</button>`;
   $('rv-voltar').onclick = voltar;
   $('rv-continuar').onclick = avancar;
 }
-
-/* ---- card final ---- */
 function renderFim(sentido){
   const total = FILA.length;
   const ok = FILA.filter(x=>ANALISADAS.has(x.reg._chave)).length;
   const faltam = total - ok;
   trocarPalco(`<div class="card-transicao fim">
-    <div class="ico">★</div>
-    <h3>${faltam===0 ? 'Conferência concluída' : 'Fim da lista'}</h3>
-    <p>${faltam===0
-      ? 'Todas as notas foram percorridas e marcadas como analisadas.'
+    <div class="ico">★</div><h3>${faltam===0 ? 'Conferência concluída' : 'Fim da lista'}</h3>
+    <p>${faltam===0 ? 'Todas as notas foram percorridas e marcadas como analisadas.'
       : 'Você percorreu todas as notas. Ainda há notas sem marcação — use o botão abaixo para voltar às pendentes.'}</p>
     <div class="caixa">
       <div><b style="color:var(--ok)">${ok}</b><span>analisadas</span></div>
       <div><b style="color:${faltam?'var(--err)':'inherit'}">${faltam}</b><span>sem marcar</span></div>
       <div><b>${total}</b><span>total</span></div>
-    </div>
-  </div>`, sentido);
+    </div></div>`, sentido);
   atualizarTopo();
-  $('rv-rod').innerHTML = `
-    <button class="btn" id="rv-voltar">← Voltar</button>
-    <span class="espaco"></span>
+  $('rv-rod').innerHTML = `<button class="btn" id="rv-voltar">← Voltar</button><span class="espaco"></span>
     ${faltam ? `<button class="btn amber" id="rv-pendentes">Ir para a 1ª pendente</button>` : ''}
     <button class="btn primary" id="rv-fechar">Fechar</button>`;
   $('rv-voltar').onclick = voltar;
@@ -1415,14 +1463,6 @@ function renderFim(sentido){
     if(i>=0){ POS=i; ESTADO='nota'; render('dir'); }
   };
 }
-
-/* ---- nota ---- */
-const textoParaCopiar = (n,i,tot) =>
-  `Processo: ${n.processo}\n`+(tot>1?`Nota ${i+1} de ${tot}\n`:'')+
-  `Tipo: ${n.tipo||'—'}\nÓrgão: ${n.orgao||'—'}\nDiário: ${n.fonte||'—'}\n`+
-  `Data da nota: ${n.dataNota||'não identificada'}\nDisponibilizada: ${n.disponibilizacao||'—'}\n`+
-  `Prazo: ${n.prazo||'—'}\nDestinatário: ${n.destinatario}\n`+
-  (n.parte?`Parte monitorada: ${n.parte}\n`:'')+`\n${strip(n.texto)}`;
 
 function renderNota(sentido){
   const it = FILA[POS], r = it.reg;
@@ -1437,16 +1477,12 @@ function renderNota(sentido){
                 tipo: lista.length>1 && varia('tipo'),
                 orgao: lista.length>1 && varia('orgao'),
                 fonte: lista.length>1 && varia('fonte') };
-
   const avisoIguais = iguais ? `<div class="aviso-iguais">
-      <b>✓ As ${lista.length} notas deste processo são idênticas</b> — muda apenas o destinatário.
-      Basta ler uma delas.
-      <ul>${lista.map((n,i)=>`<li>Nota ${i+1}: <b>${escapar(n.destinatario)}</b></li>`).join('')}</ul>
-    </div>` : '';
+      <b>✓ As ${lista.length} notas deste processo são idênticas</b> — muda apenas o destinatário. Basta ler uma delas.
+      <ul>${lista.map((n,i)=>`<li>Nota ${i+1}: <b>${escapar(n.destinatario)}</b></li>`).join('')}</ul></div>` : '';
 
   const blocos = lista.map((n,i)=>{
     const foco = i===iFoco;
-    /* com mais de uma nota, todas começam recolhidas — fica evidente que há várias */
     const aberta = lista.length === 1;
     const diario = diarioAtipico(n.fonte)
       ? `<span class="diario-alert">${escapar(n.fonte)}</span>`
@@ -1472,7 +1508,7 @@ function renderNota(sentido){
             </span>
           </span>
         </button>
-        <button class="btn mini copiar-nota" data-c="${i}" title="copiar o texto desta nota">Copiar</button>
+        <button class="btn mini copiar-nota" data-c="${i}" title="copiar o texto desta nota">Copiar nota</button>
       </div>
       <div class="corpo-nota">${n.texto || '<i>texto não disponível</i>'}</div>
     </div>`;
@@ -1485,11 +1521,24 @@ function renderNota(sentido){
   const pje = linksPje(r.processo)
     .map(([rot,u])=>`<a class="btn mini" style="text-decoration:none" href="${u}" target="_blank" rel="noopener noreferrer">${rot}</a>`).join('');
 
+  /* situação em UMA linha: rótulo cinza + tag/valor em preto */
+  const meta = [`<span class="rot">Situação:</span> ${htmlSituacaoInline(r)}`];
+  if(r.ultimaTarefa){
+    const u = r.ultimaTarefa;
+    meta.push(`<span class="rot">Última tarefa:</span> <span class="val">${escapar(u.tipo||'—')}</span>`);
+    meta.push(u.data ? `<span class="rot">início</span> <span class="val">${u.data}</span>`
+                     : `<span class="rot">sem início</span>`);
+    if(Number.isFinite(u.id)) meta.push(`<span class="rot">id</span> <span class="val">${u.id}</span>`);
+  }
+
   trocarPalco(`
     <div class="cabecalho-proc">
-      <h3>${escapar(r.processo)}</h3>
-      <div class="meta">situação: <b>${escapar(r.motivo)}</b>
-        ${r.ultimaTarefa?` · última tarefa: ${escapar(r.ultimaTarefa.tipo||'—')} (início ${r.ultimaTarefa.data||'—'})`:''}</div>
+      <div class="titulo">
+        <h3>${escapar(r.processo)}</h3>
+        <button class="btn-copia-proc" id="rv-copia-proc" title="Copiar número do processo"
+                aria-label="Copiar número do processo">⧉<span style="font-size:11px;font-weight:600">copiar</span></button>
+      </div>
+      <div class="meta">${meta.join('<span class="sep">·</span>')}</div>
       <div class="links">${botoesSupp}${pje}</div>
     </div>
     ${avisoIguais}
@@ -1502,6 +1551,7 @@ function renderNota(sentido){
         <span class="am"><i style="background:#90EE90"></i>repr. integral</span>
         <span class="am"><i style="background:#DDA0DD"></i>repr. extraordinária</span>
         <span class="am"><i style="background:#F08080"></i>entidade extinta</span>
+        <span class="am"><s>termo suprimido</s></span>
         <span class="am"><span class="intimado-highlight">intimado(s)/citado(s)</span></span>
       </span>
     </div>
@@ -1511,8 +1561,15 @@ function renderNota(sentido){
   MODAL.querySelectorAll('.nota .abre').forEach(b => b.onclick = () => b.closest('.nota').classList.toggle('aberta'));
   MODAL.querySelectorAll('.copiar-nota').forEach(b => b.onclick = () => {
     const n = lista[+b.dataset.c];
-    navigator.clipboard.writeText(textoParaCopiar(n,+b.dataset.c,lista.length))
+    navigator.clipboard.writeText(strip(n.texto))
       .then(()=>{ const o=b.textContent; b.textContent='✓ copiado'; setTimeout(()=>{b.textContent=o;},1600); });
+  });
+  const bcp = $('rv-copia-proc');
+  if(bcp) bcp.onclick = () => navigator.clipboard.writeText(r.processo).then(()=>{
+    bcp.classList.add('ok');
+    const antes = bcp.innerHTML;
+    bcp.innerHTML = '✓<span style="font-size:11px;font-weight:600">copiado</span>';
+    setTimeout(()=>{ bcp.innerHTML = antes; bcp.classList.remove('ok'); }, 1600);
   });
   if($('rv-abrir')) $('rv-abrir').onclick = () => MODAL.querySelectorAll('.nota').forEach(n=>n.classList.add('aberta'));
   if($('rv-recolher')) $('rv-recolher').onclick = () => MODAL.querySelectorAll('.nota').forEach(n=>n.classList.remove('aberta'));
@@ -1523,19 +1580,19 @@ function renderNota(sentido){
   $('rv-rod').innerHTML = `
     <button class="btn" id="rv-voltar" ${POS===0?'disabled':''}>← Anterior</button>
     <span class="espaco"></span>
-    ${marcada
-      ? `<button class="btn" id="rv-desmarcar">Desmarcar analisada</button>`
-      : `<button class="btn primary" id="rv-marcar">✓ Marcar analisada e avançar</button>`}
+    ${marcada ? `<button class="btn" id="rv-desmarcar">Desmarcar analisada</button>`
+              : `<button class="btn primary" id="rv-marcar">✓ Marcar analisada e avançar</button>`}
     <button class="btn" id="rv-proxima">${ultimo?'Concluir':'Próxima'} →</button>`;
   $('rv-voltar').onclick = voltar;
   $('rv-proxima').onclick = avancar;
   if($('rv-marcar')) $('rv-marcar').onclick = marcarEAvancar;
-  if($('rv-desmarcar')) $('rv-desmarcar').onclick = () => {
-    ANALISADAS.delete(r._chave); salvarMarcas(); render('esq');
-  };
+  if($('rv-desmarcar')) $('rv-desmarcar').onclick = () => { ANALISADAS.delete(r._chave); salvarMarcas(); render('esq'); };
 }
-
-/* nota fora da fila (já tratada) — visualização simples */
+function htmlSituacaoInline(r){
+  if(r.tratada) return `<span class="tag verde">✓ tem tarefa</span>`;
+  const cor = (r.categoria===CAT.SEM_TAREFA||r.categoria===CAT.NAO_CORRESPONDE)?'vermelho':'ambar';
+  return `<span class="tag ${cor}">${escapar(r.motivo)}</span>`;
+}
 function abrirAvulsa(r){
   FILA = [{filtro:r._filtro||'—', reg:r}]; POS = 0; ESTADO='nota';
   criarModal(); render('esq');
@@ -1572,48 +1629,69 @@ function csv(regs){
       r.inst.map(i=>i.url).join(' '), pje[0]?pje[0][1]:'', pje[1]?pje[1][1]:'', strip(r.texto)].map(e).join(';');
   })).join('\r\n');
 }
-const nomeCsv = f => `NEs_${f.replace(/[\\/:*?"<>|]/g,'_')}_Conferir_${arqData($('d1').value)}.csv`;
+const nomeCsv = f => `dadosTarefaSupp_${f.replace(/[\\/:*?"<>|]/g,'_')}-Filtradas_${arqData($('d1').value)}.csv`;
 $('btnCsv').onclick = () => {const k=$('selFiltro').value; baixar(nomeCsv(k), csv(FINAL[k].conferir),'text/csv');};
 $('btnCsvAll').onclick = () => Object.entries(FINAL).forEach(([k,v],i)=>
   setTimeout(()=>baixar(nomeCsv(k), csv(v.conferir),'text/csv'), i*350));
 
+/* ============ E-MAIL — tabela do fluxo PAD (SEC - 03) ============ */
+const TD = "padding: 12px 15px; border-bottom: 1px solid #dddddd; background-color: #ffffff;";
+const linhaTab = (item, valor) =>
+  `<tr><td style="${TD}">${item}</td><td style="${TD}">${valor}</td></tr>`;
+function valorFiltro(f){
+  return BRUTOS && BRUTOS[f] !== undefined ? BRUTOS[f] : NAO_PESQUISADO;
+}
+function valorSemDup(f){
+  const v = FINAL && FINAL[f];
+  return v ? v.unicos : NAO_PESQUISADO;
+}
+function valorParaAnalise(f){
+  const v = FINAL && FINAL[f];
+  return v ? faltaConferir(v.conferir) : NAO_PESQUISADO;
+}
 function corpoHTML(){
-  const td = "padding: 12px 15px; border-bottom: 1px solid #dddddd; background-color: #ffffff;";
-  const todosConf = Object.values(FINAL).flatMap(x=>x.conferir);
-  const okTotal = analisadasEm(todosConf);
-  const linhas = Object.entries(FINAL).map(([k,v])=>{
-    const c = n => v.conferir.filter(r=>r.categoria===n).length;
-    return `<tr><td style="${td}"><b>${escapar(k)}</b></td>
-      <td style="${td}"><b>${v.conferir.length}</b> para conferir
-      (sem tarefa ${c(CAT.SEM_TAREFA)} · não corresponde ${c(CAT.NAO_CORRESPONDE)} ·
-       sem data ${c(CAT.SEM_DATA)} · não consultado ${c(CAT.NAO_CONSULTADO)}) ·
-       ${analisadasEm(v.conferir)} já analisada(s) · ${v.tratadas.length} já tratadas</td></tr>`;
-  }).join('');
+  const linhas = [];
+  linhas.push(linhaTab('<b>Data</b>', escapar($('d1').value||hoje())));
+  FILTROS_TODOS.forEach(f=>{
+    linhas.push(linhaTab(`Número de <b>${escapar(f)}</b>`, valorFiltro(f)));
+    if(FILTROS_DETALHE.includes(f)){
+      linhas.push(linhaTab(`Número de <b>${escapar(f)}</b> sem duplicados`, valorSemDup(f)));
+      linhas.push(linhaTab(`Número de <b>${escapar(f)}</b> para análise`, valorParaAnalise(f)));
+    }
+  });
+  linhas.push(linhaTab('Registros <b>Totais</b> no dia', TOTAL_DIA));
   return `<div style="font-family: Georgia, serif; font-size: 16px; color: #333333;">
-  <p>Origem: Site BDxSUPP</p><p>Prezados,</p>
-  <p>Segue o resultado do cruzamento entre as NEs Trabalhistas do BD-1 e as tarefas cadastradas no SUPP.</p>
-  <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse; font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif; font-size: 14px; margin-top: 20px; border-radius: 8px; overflow: hidden; border: 1px solid #dddddd;">
-    <thead><tr style="background-color: #2F4F4F; color: #ffffff;">
-      <th style="padding: 12px 15px; text-align: left; font-weight: normal;">Filtro</th>
-      <th style="padding: 12px 15px; text-align: left; font-weight: normal;">Resultado</th>
-    </tr></thead><tbody>
-    <tr><td style="${td}"><b>Data</b></td><td style="${td}">${escapar($('d1').value||hoje())}</td></tr>
-    <tr><td style="${td}"><b>Conferência</b></td><td style="${td}">${okTotal} de ${todosConf.length} nota(s) analisada(s)</td></tr>
-    ${linhas}</tbody></table>
-  <p style="margin-top: 30px;">Atenciosamente,</p></div>`;
+    <p>Origem: Site BDxSUPP</p>
+    <p>Prezados,</p>
+    <p>Segue abaixo o resumo da execução do Fluxo de extração de dados <b>BD x Supp:</b></p>
+    <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse; font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif; font-size: 14px; margin-top: 20px; border-radius: 8px; overflow: hidden; border: 1px solid #dddddd;">
+      <thead>
+      <tr style="background-color: #2F4F4F; color: #ffffff;">
+        <th style="padding: 12px 15px; text-align: left; border-bottom: 1px solid #203636; font-weight: normal;">Item</th>
+        <th style="padding: 12px 15px; text-align: left; border-bottom: 1px solid #203636; font-weight: normal;">Valor</th>
+      </tr>
+      </thead>
+      <tbody>
+      ${linhas.join('\n      ')}
+      </tbody>
+    </table>
+ <p style="margin-top: 30px;">Para o histórico completo dos relatórios acesse a <b><a style="color: #2F4F4F; text-decoration: none;" href="${LISTA_SEC}" target="_blank">Lista SEC - NEs Trabalhistas</a></b></p>
+ <p style="margin-top: 30px;">ou na <b><a style="color: #2F4F4F; text-decoration: none;" href="${LISTA_REGISTROS}" target="_blank">Lista Registros NEs Trabalhistas</a></b></p>
+    <p style="margin-top: 30px;">Atenciosamente,</p>
+</div>`;
 }
 $('btnEml').onclick = () => {
   const b64 = s => btoa(unescape(encodeURIComponent(s))).replace(/(.{76})/g,'$1\r\n');
   const lim = '----=_BDXSUPP_'+Date.now();
   const partes = [
     `To: ${$('para').value.trim().replace(/;/g,', ')}`,
-    `Subject: =?UTF-8?B?${btoa(unescape(encodeURIComponent('NEs Trabalhistas - BDxSUPP - '+($('d1').value||hoje()))))}?=`,
+    `Subject: =?UTF-8?B?${btoa(unescape(encodeURIComponent('NEs Trabalhistas - Automate')))}?=`,
     'X-Unsent: 1','MIME-Version: 1.0',
     `Content-Type: multipart/mixed; boundary="${lim}"`,'',
     `--${lim}`,'Content-Type: text/html; charset=UTF-8','Content-Transfer-Encoding: base64','',
     b64(corpoHTML()),''
   ];
-  for(const [k,v] of Object.entries(FINAL)){
+  for(const [k,v] of Object.entries(FINAL||{})){
     if(!v.conferir.length) continue;
     partes.push(`--${lim}`, `Content-Type: text/csv; name="${nomeCsv(k)}"`,
       'Content-Transfer-Encoding: base64', `Content-Disposition: attachment; filename="${nomeCsv(k)}"`,
@@ -1621,7 +1699,7 @@ $('btnEml').onclick = () => {
   }
   partes.push(`--${lim}--`,'');
   baixar(`Email_BDxSUPP_${arqData($('d1').value)}.eml`, partes.join('\r\n'), 'message/rfc822');
-  logar('Arquivo .eml gerado com as planilhas de conferência.');
+  logar('Arquivo .eml gerado com a tabela no formato do fluxo PAD.');
 };
 
 /* ================== INIT ================== */
@@ -1630,7 +1708,7 @@ $('btnEml').onclick = () => {
   try{ t = localStorage.getItem('djen_tema') || 'claro'; }catch(e){}
   aplicarTema(t);
 })();
-$('filtros').value = FILTROS_PADRAO.join('\n');
+aplicarModoFiltros();
 $('tipos').value = TIPOS_PADRAO.join('\n');
 $('d1').value = hoje();
 </script>
