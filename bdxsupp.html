@@ -467,9 +467,9 @@ if (window.__coletorSupp) { window.__coletorSupp.abrir(); return; }
 const IDS_EMBUTIDOS = [];
 const TIPOS_TAREFA = ["Analisar Intimação", "Analisar Notificação", "Analisar Citação"];
 const LS = "supp_coletor_cfg";
-const cfg = Object.assign({ timeout: 10000, pausa: 400 },
+const cfg = Object.assign({ timeout: 15000, pausa: 400 },
   JSON.parse(localStorage.getItem(LS) || "{}"));
-if (!cfg.timeout || cfg.timeout < 10000) cfg.timeout = 10000;
+if (!cfg.timeout || cfg.timeout < 15000) cfg.timeout = 15000;
 const salvar = () => localStorage.setItem(LS, JSON.stringify(cfg));
 
 let parar = false, RESULTADO = null;
